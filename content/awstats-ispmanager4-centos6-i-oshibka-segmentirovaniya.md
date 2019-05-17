@@ -97,7 +97,7 @@ Proxy с авторизацией
 http_proxy="http://33.22.44.44:8080" wget --proxy-user=user --proxy-password=password http://www.google.com/favicon.ico
 ```
 
-Параметры --proxy-user и --proxy-password, чтобы не указывать постоянно, можно прописать в файл \~/.wgetrc
+Параметры --proxy-user и --proxy-password, чтобы не указывать постоянно, можно прописать в файл ~/.wgetrc
 
 ```
 proxy-user = username
