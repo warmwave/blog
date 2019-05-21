@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block description %}Title: {{ article.title }}; Date: {{ article.date|strftime('%Y-%m-%d') }}; Author: {{ article.author }}{% endblock %}
+{% block title %}{{ article.title }} — {{ SITENAME }}{% endblock %}
+{% block content %}
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="article-header">
+		<h1 itemprop="name headline" class="article-title">{{ article.title }}</h1>
+		{% if article.category %}
+		<div>
+			<span itemprop="articleSection" class="pull-left">
+				<i class="fa fa-list"></i>
+				<a href="{{ SITEURL }}/{{ article.category.url }}" rel="category">{{ article.category }}</a>
+			</span>
+
+			<span itemprop="author" itemscope itemtype="http://schema.org/Person" class="pull-left">
+				<div itemprop="name"><i class="fa fa-user"></i> {{article.author or "Wilson Freitas"}}</div>
+			</span>
+
+			<i class="fa fa-clock-o"></i>
+			<time datetime="{{ article.date.isoformat() }}" itemprop="datePublished">{{ article.locale_date }}</time>
+		</div>
+		{% endif %}
+		{% if article.tags %} 
+		<div>
+			<i class="fa fa-tags"></i>
+			{% for tag in article.tags %}
+			<span itemprop="keywords">
+				<a href="{{ SITEURL }}/{{ tag.url }}" rel="tag">#{{ tag }}</a>
+			</span>
+			{% endfor %}
+		</div>
+	</div>
+	{% endif %}
+	<div itemprop="articleBody" class="article-body">{{ article.content }}</div>
+	<hr>
+	{% if article.related_posts %}
+        <ul>
+        {% for related_post in article.related_posts %}
+            <li><a href="{{ SITEURL }}/{{ related_post.url }}">{{ related_post.title }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+	<!--<h2>Comments</h2>-->
+	<!--{% include "twitter.html" %}-->
+	<!--{% include 'disqus.html' %}-->
+
+
+</div>
+{% endblock %}
