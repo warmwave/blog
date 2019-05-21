@@ -21,7 +21,7 @@ Status: published
 
 Для того чтобы загрузиться со своей системы, нужно в слот для MicroSD вставить карту с ОС, если такая есть, то железка в первую очередь будет стараться загрузиться с неё.
 
-1.  Скачиваем подходящий образ [тут](http://www.orangepi.org/downloadresources/) (http://www.orangepi.org/downloadresources/) и распаковываем(можно установить xz с помощью [homebrew](https://warmwave.ru/kompy-i-seti/kompy-i-setinastrojjka-mac-os-x.html#homebrew)).
+1.  Скачиваем подходящий образ [тут](http://www.orangepi.org/downloadresources/) (http://www.orangepi.org/downloadresources/) и распаковываем(можно установить xz с помощью [homebrew](tag/homebrew)).
 2.  Устанавливаем систему, раскатав скачанный образ на SD-флешку:
 
 ```
