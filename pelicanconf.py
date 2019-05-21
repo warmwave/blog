@@ -31,14 +31,13 @@ TAG_URL = 'tag/{slug}'
 TAG_SAVE_AS = 'tag/{slug}/index.html'
 AUTHOR_SAVE_AS = ''
 
-STATIC_PATHS = ['themes/aboutwilson_my/static','files', 'style.css', 'uploads']
+STATIC_PATHS = ['files', 'style.css', 'uploads']
 
 EXTRA_PATH_METADATA = {
     # 'themes/aboutwilson_my/static/': {'path': 'theme'},
     'style.css': {'path': 'style.css'},
-    # 'files': {'path': 'files'},
-    # 'uploads': {'path': 'uploads'},
-    # 'extra/favicon.ico': {'path': 'favicon.ico'},
+    'files': {'path': 'files'},
+    'uploads': {'path': 'uploads'},
     # 'extra/CNAME': {'path': 'CNAME'},
 
 }
