@@ -1,0 +1,56 @@
+@import url(./scaffold.less);
+
+@import url(./style.less);
+
+.footer-block {
+    .full-w;
+    position: fixed;
+    z-index: 999;
+    bottom: 0px;
+    border: 1px solid #dadada;
+    background: @c-r--gray_l;
+    height: 40px @imp;
+    a { color: @c-r--black; }
+    .row div {
+        .ta-c;
+        color: @c-r--black;
+        font-weight: bold;
+        padding: 10px;
+        font-size: 13px;
+        .fa { 
+            color: #76726f;
+            font-size: 15px; 
+        }
+        .fa-mobile {
+            font-size: 20px; 
+            padding-right: 5px;   
+        }
+        span {
+            font-weight: normal;
+            color: #76726f;
+            padding-left: 5px;
+        }
+        .footer-block__megafon img {
+            position: absolute;
+            margin: 0px -18px;
+        }
+        &[class*="__status"] {
+            border-radius: 4px;
+            background-color:  #fff5e1;
+            color:  #76726f;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 31.507px;
+            text-align: left;
+            padding: 5px 0 0 0;
+            & .fa { color: #ababab; }
+            & .fa-check { 
+                margin-left: 35px; 
+                color: #2cba37;
+                font-size: 20px;
+            }
+            & .fa-times { color: @c-r--danger; }
+
+        }
+    }
+}

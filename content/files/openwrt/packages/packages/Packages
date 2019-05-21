@@ -1,0 +1,856 @@
+Package: alsa-lib
+Version: 1.0.28-1
+Depends: libc, kmod-sound-core, libpthread, librt
+Source: feeds/packages/libs/alsa-lib
+License: LGPLv2.1 GPLv2
+LicenseFiles: COPYING aserver/COPYING
+Section: libs
+Maintainer: Peter Wagner <tripolar@gmx.at>
+Architecture: ramips_24kec
+Installed-Size: 294437
+Filename: alsa-lib_1.0.28-1_ramips_24kec.ipk
+Size: 292375
+MD5Sum: 355a4ee2dc74ddbe3acfdc6ccc03c915
+SHA256sum: 393a242647738f3fc7ea04a7263029c34d5aa3ae930c83f684a114b8ac24abf9
+Description:  This is the library package for alsa, needed by some userspace programs.
+ You must have enabled the ALSA support in the kernel.
+
+Package: etherwake
+Version: 1.09-3
+Depends: libc
+Source: feeds/packages/net/etherwake
+Section: net
+Maintainer: Peter Wagner <tripolar@gmx.at>
+Architecture: ramips_24kec
+Installed-Size: 5061
+Filename: etherwake_1.09-3_ramips_24kec.ipk
+Size: 5813
+MD5Sum: b9d7f692899bcae388d6ec93f08814a3
+SHA256sum: 4f706e6beee1db58fd126a3dd9a630fbcc9b5d8a5ff5e47fbf812a00927ac529
+Description:  You can wake up WOL compliant Computers which have been powered down to
+ sleep mode or start WOL compliant Computers with a BIOS feature.
+ WOL is an abbreviation for Wake-on-LAN. It is a standard that allows you
+ to turn on a computer from another location over a network connection.
+ ether-wake also supports WOL passwords.
+
+Package: ffmpeg
+Version: 2.5.3-1
+Depends: libc, libpthread, libffmpeg-full
+Source: feeds/packages/multimedia/ffmpeg
+License: LGPL-2.1+ GPL-2+ LGPL-3
+LicenseFiles: COPYING.GPLv2 COPYING.GPLv3 COPYING.LGPLv2.1 COPYING.LGPLv3
+Section: multimedia
+Maintainer: Ted Hess <thess@kitschensync.net>
+Architecture: ramips_24kec
+Installed-Size: 85396
+Filename: ffmpeg_2.5.3-1_ramips_24kec.ipk
+Size: 85952
+MD5Sum: cb6fea954b60e19996592492fcac1e0e
+SHA256sum: e313cd54ff15aa53e96814b522fcd6b88e9b4465cdb9d7cee9158371261b2a20
+Description:  FFmpeg is a a software package that can record, convert and stream digital
+ audio and video in numerous formats.
+ .
+ This package contains the FFmpeg command line tool.
+
+Package: ffserver
+Version: 2.5.3-1
+Depends: libc, libpthread, libffmpeg-full
+Source: feeds/packages/multimedia/ffmpeg
+License: LGPL-2.1+ GPL-2+ LGPL-3
+LicenseFiles: COPYING.GPLv2 COPYING.GPLv3 COPYING.LGPLv2.1 COPYING.LGPLv3
+Section: multimedia
+Maintainer: Ted Hess <thess@kitschensync.net>
+Architecture: ramips_24kec
+Installed-Size: 52466
+Filename: ffserver_2.5.3-1_ramips_24kec.ipk
+Size: 52865
+MD5Sum: 2168be333a7f8d7e6d29e11c3eb7cf3c
+SHA256sum: c3acdafb0dd585ed76270d29b66a829f8b623492869975f9cd432c1eabc7b0d0
+Description:  FFmpeg is a a software package that can record, convert and stream digital
+ audio and video in numerous formats.
+ .
+ This package contains the FFmpeg streaming server.
+
+Package: fswebcam
+Version: 20140113-1
+Depends: libc, libgd
+Source: feeds/packages/multimedia/fswebcam
+License: GPL-2.0
+LicenseFiles: LICENCE
+Section: multimedia
+Maintainer: Nicolas Thill <nico@openwrt.org>
+Architecture: ramips_24kec
+Installed-Size: 36220
+Filename: fswebcam_20140113-1_ramips_24kec.ipk
+Size: 36963
+MD5Sum: ec57b23e05398bee221f3ea75cd09fa1
+SHA256sum: 8a8ecdda1fc40bd46e5c30cc3b3b0d4cadc73f3ba7f72909cae91669aedf873d
+Description:  fswebcam is a neat and simple webcam app. It captures images from a V4L1/V4L2 compatible
+ device or file, averages them to reduce noise and draws a caption using the GD Graphics
+ Library which also handles compressing the image to PNG or JPEG. The resulting image
+ is saved to a file or sent to stdio where it can be piped to something like ncftpput or scp.
+
+Package: glib2
+Version: 2.43.3-1
+Depends: libc, zlib, libpthread, libffi, libattr
+Source: feeds/packages/libs/glib2
+Section: libs
+Maintainer: Peter Wagner <tripolar@gmx.at>
+Architecture: ramips_24kec
+Installed-Size: 907652
+Filename: glib2_2.43.3-1_ramips_24kec.ipk
+Size: 903455
+MD5Sum: 0503cec3478c65aa8766b94d0d73bc42
+SHA256sum: a904bd021359432da071ec47ac7651d5934caf0618e7cd953eea046f353b4a24
+Description:  The GLib library of C routines
+
+Package: hd-idle
+Version: 1.04-1
+Depends: libc
+Source: feeds/packages/utils/hd-idle
+License: GPL-2.0
+Section: utils
+Maintainer: Lim Guo Wei <limguowei@gmail.com>
+Architecture: ramips_24kec
+Installed-Size: 4735
+Filename: hd-idle_1.04-1_ramips_24kec.ipk
+Size: 5356
+MD5Sum: 7a480d43773e7d1d23ddf53f537070a9
+SHA256sum: 525534d100784e35ac2f42fc52cfe8ba0e6eedc1e4b81d4a040479fae651e595
+Description:  hd-idle is a utility program for spinning-down external disks after a period of idle time.
+
+Package: libattr
+Version: 20141020-1
+Depends: libc
+Source: feeds/packages/utils/attr
+License: LGPL-2.1 GPL-2.0
+LicenseFiles: doc/COPYING doc/COPYING.LGPL
+Section: libs
+Maintainer: Maxim Storchak <m.storchak@gmail.com>
+Architecture: ramips_24kec
+Installed-Size: 6428
+Filename: libattr_20141020-1_ramips_24kec.ipk
+Size: 7049
+MD5Sum: bc3b278aa4f8eda1b9f00e3c0f69310e
+SHA256sum: 37e4dee9a6eaa92f9d581054ead76c044dc90cbdf65906314acf025162e876cf
+Description:  Extended attributes support
+ This package provides libattr
+
+Package: libbz2
+Version: 1.0.6-1
+Depends: libc
+Source: feeds/packages/utils/bzip2
+License: BZIP2
+LicenseFiles: LICENSE
+Section: libs
+Maintainer: Steven Barth <cyrus@openwrt.org>
+Architecture: ramips_24kec
+Installed-Size: 25571
+Filename: libbz2_1.0.6-1_ramips_24kec.ipk
+Size: 26167
+MD5Sum: 7cc2cb9b4a2498075acc7d3a8d53ad07
+SHA256sum: 38e19dbb315c2bcff3d0c438a0d0ae924eb9fe5652933091ca14fc474b42c122
+Description:  bzip2 is a freely available, patent free, high-quality
+ data compressor. This packages provides libbz2 library.
+
+Package: libexif
+Version: 0.6.21-1
+Depends: libc
+Source: feeds/packages/libs/libexif
+License: LGPL-2.1
+LicenseFiles: COPYING
+Section: libs
+Maintainer: W. Michael Petullo <mike@flyn.org>
+Architecture: ramips_24kec
+Installed-Size: 62283
+Filename: libexif_0.6.21-1_ramips_24kec.ipk
+Size: 62299
+MD5Sum: 8d6eaad126452f6dd98ea312c23d192b
+SHA256sum: 1465154c3c8df1da6ff4cbf584f26101752d7f2574d67a0d96567cd69e03203f
+Description:  libexif is a library for parsing, editing, and saving EXIF data. It is
+ intended to replace lots of redundant implementations in command-line
+ utilities and programs with GUIs.
+
+Package: libexpat
+Version: 2.1.0-3
+Depends: libc
+Source: feeds/packages/libs/expat
+License: MIT
+LicenseFiles: COPYING
+Section: libs
+Maintainer: Steven Barth <cyrus@openwrt.org>
+Architecture: ramips_24kec
+Installed-Size: 53999
+Filename: libexpat_2.1.0-3_ramips_24kec.ipk
+Size: 54490
+MD5Sum: e4b3ee8161156646bdbee635b71df78f
+SHA256sum: 0dd3122f9e86f5298c4c8ab8b32b6aaa20147b5b6ec91b5cdc6736bf27671196
+Description:  A fast, non-validating, stream-oriented XML parsing library.
+
+Package: libffi
+Version: 3.0.13-1
+Depends: libc
+Source: feeds/packages/libs/libffi
+License: MIT
+LicenseFiles: LICENSE
+Section: libs
+Maintainer: Peter Wagner <tripolar@gmx.at>
+Architecture: ramips_24kec
+Installed-Size: 5227
+Filename: libffi_3.0.13-1_ramips_24kec.ipk
+Size: 6078
+MD5Sum: 84ccfb29a4f084796f06c912e309eb99
+SHA256sum: 73aacffe0a385ca7fa27eb2db93f28806a661835f229ea72abe16117d2f7c2b0
+Description:  The libffi library provides a portable, high level programming interface to
+ various calling conventions. This allows a programmer to call any function
+ specified by a call interface description at run-time.
+ 
+ FFI stands for Foreign Function Interface. A foreign function interface is the
+ popular name for the interface that allows code written in one language to call
+ code written in another language. The libffi library really only provides the
+ lowest, machine dependent layer of a fully featured foreign function interface.
+ A layer must exist above libffi that handles type conversions for values passed
+ between the two languages.
+
+Package: libffmpeg-full
+Version: 2.5.3-1
+Depends: libc, libpthread, zlib, libbz2, alsa-lib
+Provides: libffmpeg
+Source: feeds/packages/multimedia/ffmpeg
+License: LGPL-2.1+ GPL-2+ LGPL-3
+LicenseFiles: COPYING.GPLv2 COPYING.GPLv3 COPYING.LGPLv2.1 COPYING.LGPLv3
+Section: libs
+Maintainer: Ted Hess <thess@kitschensync.net>
+Architecture: ramips_24kec
+Installed-Size: 4669653
+Filename: libffmpeg-full_2.5.3-1_ramips_24kec.ipk
+Size: 4651515
+MD5Sum: 9e3d47eb14ebdb418f67927a34d8fdd6
+SHA256sum: bf758e7cc5d687a45e840ca0cd1d792d7b7e15a9ffc30c7e4feb556edc01348c
+Description:  FFmpeg is a a software package that can record, convert and stream digital
+ audio and video in numerous formats.
+ .
+ This package contains full-featured FFmpeg shared libraries.
+
+Package: libflac
+Version: 1.3.1-1
+Depends: libc
+Source: feeds/packages/libs/flac
+License: GFDL-1.2 GPL-2 LGPL-2.1 BSD-3-Clause
+LicenseFiles: README COPYING.FDL COPYING.GPL COPYING.LGPL COPYING.Xiph
+Section: libs
+Maintainer: Ted Hess <thess@kitschensync.net>
+Architecture: ramips_24kec
+Installed-Size: 86694
+Filename: libflac_1.3.1-1_ramips_24kec.ipk
+Size: 87363
+MD5Sum: 948121761a1987819c7a5ac8fd414170
+SHA256sum: 2bab4ae9f587d2742571a37efbd0f4df87b9dbfd862aa97f1872c0df8792e2c1
+Description:  Free Lossless Audio Codec library
+
+Package: libgd
+Version: 2.1.1-1
+Depends: libc, libjpeg, libpng
+Source: feeds/packages/libs/libgd
+License: MIT
+Section: libs
+Maintainer: Jo-Philipp Wich <jow@openwrt.org>
+Architecture: ramips_24kec
+Installed-Size: 103546
+Filename: libgd_2.1.1-1_ramips_24kec.ipk
+Size: 102771
+MD5Sum: 393ab01c747a04ad1e581f5d4d9b4cd3
+SHA256sum: 87a0416ecce4503632c19c4a38be4483d1580bce7e0263abc5aad0afc73cf564
+Description:  GD is an open source code library for the dynamic creation of images by
+ programmers. GD creates PNG, JPEG and GIF images, among other formats.
+
+Package: libgnutls
+Version: 3.3.12-1
+Depends: libc, libnettle, libgmp
+Source: feeds/packages/libs/gnutls
+Section: libs
+Maintainer: Nikos Mavrogiannopoulos <nmav@gnutls.org>
+Architecture: ramips_24kec
+Installed-Size: 293052
+Filename: libgnutls_3.3.12-1_ramips_24kec.ipk
+Size: 293036
+MD5Sum: 67307c94273e03500158b3364f8d1b2d
+SHA256sum: 9ae32b3b5616b02b18e3d7094d737cd449ddcf470f54440537f5e9825b981784
+Description:  GnuTLS is a secure communications library implementing the SSL, TLS
+ and DTLS protocols and technologies around them. It provides a simple
+ C language application programming interface (API) to access the secure
+ communications protocols as well as APIs to parse and write X.509, PKCS12,
+ OpenPGP and other required structures. It is aimed to be portable and
+ efficient with focus on security and interoperability.
+ This package contains the GnuTLS shared library, needed by other programs.
+
+Package: libid3tag
+Version: 0.15.1b-4
+Depends: libc, zlib
+Source: feeds/packages/libs/libid3tag
+License: GPL-2
+LicenseFiles: COPYING
+Section: libs
+Maintainer: Ted Hess <thess@kitschensync.net>
+Architecture: ramips_24kec
+Installed-Size: 24251
+Filename: libid3tag_0.15.1b-4_ramips_24kec.ipk
+Size: 24754
+MD5Sum: 18ba01016419bf0cfc962de5afd203b1
+SHA256sum: 3d5a05a65fda4535d31b89f27c00d37f0b060ed836ab481dd9086a235744ebe6
+Description:  libid3tag is a library for reading and (eventually) writing ID3 tags, both
+ ID3v1 and the various versions of ID3v2.
+
+Package: libjpeg
+Version: 9a-1
+Depends: libc
+Source: feeds/packages/libs/libjpeg
+License: IJG
+LicenseFiles: README
+Section: libs
+Maintainer: Jo-Philipp Wich <jow@openwrt.org>
+Architecture: ramips_24kec
+Installed-Size: 99843
+Filename: libjpeg_9a-1_ramips_24kec.ipk
+Size: 100384
+MD5Sum: 60b8c7544417f0eb399385268103ec28
+SHA256sum: 507c29969d41504a48b8f4008a540e131455a7ffbf329995eade955c77c6b7ad
+Description:  The Independent JPEG Group's JPEG runtime library
+
+Package: libminiupnpc
+Version: 1.9-1
+Depends: libc
+Source: feeds/packages/net/miniupnpc
+Section: libs
+Maintainer: Steven Barth <cyrus@openwrt.org>
+Architecture: ramips_24kec
+Installed-Size: 16151
+Filename: libminiupnpc_1.9-1_ramips_24kec.ipk
+Size: 16700
+MD5Sum: 16781420dd655c746ab77b05f8f10c21
+SHA256sum: 18232ee79afc9f47599cdd678ff37df11d92808204937a06b767bad96a6f1b8c
+Description:  Lightweight UPnP library
+
+Package: libneon
+Version: 0.30.0-1
+Depends: libc, libopenssl, libexpat
+Source: feeds/packages/libs/neon
+Section: libs
+Maintainer: Federico Di Marco <fededim@gmail.com>
+Architecture: ramips_24kec
+Installed-Size: 59291
+Filename: libneon_0.30.0-1_ramips_24kec.ipk
+Size: 60305
+MD5Sum: aa066cb452bf5bcb7a6d2aa012c77afb
+SHA256sum: 152ee4af246a2be644b53a2f34047ef7ec50871ae1eb7496137c6499869549bf
+Description:  neon is an HTTP and WebDAV client library, with a C interface. Features:
+ 
+ - High-level wrappers for common HTTP and WebDAV operations (GET, MOVE, DELETE, etc)
+ - Low-level interface to the HTTP request/response engine, allowing the use of arbitrary HTTP methods, headers, etc.
+ - Authentication support including Basic and Digest support, along with GSSAPI-based Negotiate on Unix, and
+ SSPI-based Negotiate/NTLM on Win32
+ - SSL/TLS support using OpenSSL or GnuTLS; exposing an abstraction layer for verifying server certificates, handling client
+ certificates, and examining certificate properties. Smartcard-based client certificates are also supported via a
+ PKCS11 wrapper interface.
+ - Abstract interface to parsing XML using libxml2 or expat, and wrappers for simplifying handling XML HTTP response bodies
+ - WebDAV metadata support; wrappers for PROPFIND and PROPPATCH to simplify property manipulation.
+
+Package: libogg
+Version: 1.3.2-2
+Depends: libc
+Source: feeds/packages/libs/libogg
+License: BSD-3-Clause
+LicenseFiles: COPYING
+Section: libs
+Maintainer: Ted Hess <thess@kitschensync.net>
+Architecture: ramips_24kec
+Installed-Size: 8972
+Filename: libogg_1.3.2-2_ramips_24kec.ipk
+Size: 9705
+MD5Sum: c547f57724a11d3980614b9f2dffb767
+SHA256sum: c838d67e362b2d5f4f141476fe123cf4ecf2216aa3e730baf2c2956111b927a1
+Description:  Ogg project codecs use the Ogg bitstream format to arrange the raw,
+ compressed bitstream into a more robust, useful form.  For example,
+ the Ogg bitstream makes seeking, time stamping and error recovery
+ possible, as well as mixing several sepearate, concurrent media
+ streams into a single physical bitstream.
+
+Package: libpng
+Version: 1.2.52-1
+Depends: libc, zlib
+Source: feeds/packages/libs/libpng
+License: Libpng GPL-2.0+ BSD-3-Clause
+Section: libs
+Maintainer: Jo-Philipp Wich <jow@openwrt.org>
+Architecture: ramips_24kec
+Installed-Size: 121603
+Filename: libpng_1.2.52-1_ramips_24kec.ipk
+Size: 122156
+MD5Sum: 5a4ed82838e6cce839ebc152502ca3d9
+SHA256sum: 3ccb430d398e7852a7f44462bc512e2e2fe3ba7d04e3121f17f4c0fd00de2bc8
+Description:  A PNG format files handling library
+
+Package: libsqlite3
+Version: 3080801-1
+Depends: libc, libpthread
+Source: feeds/packages/libs/sqlite3
+License: PUBLICDOMAIN
+Section: libs
+Maintainer: Etienne CHAMPETIER <champetier.etienne@gmail.com>
+Architecture: ramips_24kec
+Installed-Size: 368347
+Filename: libsqlite3_3080801-1_ramips_24kec.ipk
+Size: 368613
+MD5Sum: d66a3e2a4fe2eded588e82d50a18c39d
+SHA256sum: d769a1c53f56c93676f39c00d1e6811364b8f5ebaa1239c184209c10aeca79cb
+Description:  SQLite is a small C library that implements a self-contained, embeddable,
+ zero-configuration SQL database engine.
+ This package contains the SQLite (v3.x) shared library, used by other
+ programs.
+
+Package: libvorbis
+Version: 1.3.4-2
+Depends: libc, libogg
+Source: feeds/packages/libs/libvorbis
+License: BSD-3-Clause
+LicenseFiles: COPYING
+Section: libs
+Maintainer: Ted Hess <thess@kitschensync.net>
+Architecture: ramips_24kec
+Installed-Size: 199258
+Filename: libvorbis_1.3.4-2_ramips_24kec.ipk
+Size: 198973
+MD5Sum: 363612877f5a3798862baf5be9d31111
+SHA256sum: a0f9f9d5fe6e056a85e8f34d02cb8c6a516af7f839082b1c611354201820075b
+Description:  Vorbis is a general purpose audio and music encoding format
+ contemporary to MPEG-4's AAC and TwinVQ, the next generation beyond
+ MPEG audio layer 3. Unlike the MPEG sponsored formats (and other
+ proprietary formats such as RealAudio G2 and Windows' flavor of the
+ month), the Vorbis CODEC specification belongs to the public domain.
+ All the technical details are published and documented, and any
+ software entity may make full use of the format without license
+ fee, royalty or patent concerns.
+
+Package: libwrap
+Version: 7.6-1
+Depends: libc
+Source: feeds/packages/libs/tcp_wrappers
+License: BSD
+Section: libs
+Maintainer: Peter Wagner <tripolar@gmx.at>
+Architecture: ramips_24kec
+Installed-Size: 10791
+Filename: libwrap_7.6-1_ramips_24kec.ipk
+Size: 11371
+MD5Sum: ed74aaa61047ad874507f6771f162474
+SHA256sum: f796da57a16e7b22464e47df3524aeb4c6936f05d3f4e5ef2fde50159e697bb9
+Description:  Security wrapper library for TCP services
+
+Package: libxml2
+Version: 2.9.2-3
+Depends: libc, libpthread, zlib
+Source: feeds/packages/libs/libxml2
+License: MIT
+LicenseFiles: COPYING
+Section: libs
+Maintainer: Michael Heimpold <mhei@heimpold.de>
+Architecture: ramips_24kec
+Installed-Size: 498991
+Filename: libxml2_2.9.2-3_ramips_24kec.ipk
+Size: 497022
+MD5Sum: c0721bf413797810bd84bb55b6f797ca
+SHA256sum: 72864a5a6e410db63d565a8bf82d068b6437f4908d9f2683e8461a2f105f81de
+Description:  A library for manipulating XML and HTML resources.
+
+Package: luci-app-mwan3
+Version: 1.3-5
+Depends: libc, mwan3, luci-mod-admin-full, luci-app-firewall, luci-lib-nixio
+Source: feeds/packages/net/mwan3-luci
+License: GPLv2
+Section: LuCI
+Maintainer: Aedan Renner <chipdankly@gmail.com>
+Architecture: all
+Installed-Size: 13976
+Filename: luci-app-mwan3_1.3-5_all.ipk
+Size: 14694
+MD5Sum: 17fa3b7bd42530e076c448a898d62255
+SHA256sum: 588ed9a22a9a56e09799a510d9ee43228b8397ab28dc052eb191759bc585af65
+Description:  Hotplug script which makes configuration of multiple WAN interfaces simple and
+ manageable with loadbalancing/failover support for up to 250 physical or logical
+ WAN interfaces, connection tracking and an easy to manage traffic ruleset
+
+Package: minidlna
+Version: 1.1.4-2
+Depends: libc, libpthread, libexif, libjpeg, libsqlite3, libffmpeg, libid3tag, libflac, libvorbis, libuuid
+Source: feeds/packages/multimedia/minidlna
+License: GPL-2.0 BSD-3-Clause
+LicenseFiles: COPYING LICENCE.miniupnpd
+Section: multimedia
+Maintainer: Knyazkov Dmitry <medavedik@gmail.com>
+Architecture: ramips_24kec
+Installed-Size: 115331
+Filename: minidlna_1.1.4-2_ramips_24kec.ipk
+Size: 115347
+MD5Sum: 1e9fd1e4b1a4af5d3b193938b8d8ceb8
+SHA256sum: 4eb6dae531e362f428549c16146efb6c401b6da47a8baec8259547a69831d260
+Description:  MiniDLNA (aka ReadyDLNA) is server software with the aim of
+ being fully compliant with DLNA/UPnP-AV clients.
+
+Package: miniupnpc
+Version: 1.9-1
+Depends: libc, libminiupnpc
+Source: feeds/packages/net/miniupnpc
+Section: net
+Maintainer: Steven Barth <cyrus@openwrt.org>
+Architecture: ramips_24kec
+Installed-Size: 6496
+Filename: miniupnpc_1.9-1_ramips_24kec.ipk
+Size: 7051
+MD5Sum: 40ada9780387e65343250947ca2d7b4c
+SHA256sum: 1f709c0a7620132716c10edb032e14135767707a8c94daa740a83e2d12391e3f
+Description:  Lightweight UPnP client
+
+Package: mjpg-streamer
+Version: r182-4
+Depends: libc, libpthread, libjpeg
+Source: feeds/packages/multimedia/mjpg-streamer
+License: GPL-2.0
+LicenseFiles: LICENSE
+Section: multimedia
+Maintainer: Roger D <rogerdammit@gmail.com>
+Architecture: ramips_24kec
+Installed-Size: 32938
+Filename: mjpg-streamer_r182-4_ramips_24kec.ipk
+Size: 33601
+MD5Sum: 98baf6171d55426aca1d8ee2ef7e732a
+SHA256sum: a2661426b0fba2611fdbe67f535c860370fa15788e8b3022747ed2fd181ec5ed
+Description:  Streaming application for Linux-UVC compatible webcams
+
+Package: motion
+Version: 3.4.0-20141018-9479d910f2149b5558788bb86f97f26522794212-1
+Depends: libc, libjpeg, libpthread
+Source: feeds/packages/multimedia/motion
+License: GPLv2
+LicenseFiles: COPYING
+Section: multimedia
+Maintainer: Roger D <rogerdammit@gmail.com>
+Architecture: ramips_24kec
+Installed-Size: 92910
+Filename: motion_3.4.0-20141018-9479d910f2149b5558788bb86f97f26522794212-1_ramips_24kec.ipk
+Size: 93472
+MD5Sum: e9601e40e673a55d750663cad6464511
+SHA256sum: 79e45b3225eb2e0377e9853b9bdaa1c37c1035cc87d25c1dac20447b0db346dd
+Description:  webcam motion sensing and logging
+
+Package: mwan3
+Version: 1.5-10
+Depends: libc, ip, iptables, iptables-mod-conntrack-extra, iptables-mod-ipopt
+Source: feeds/packages/net/mwan3
+License: GPLv2
+Section: net
+Maintainer: Jeroen Louwes <jeroen.louwes@gmail.com>
+Architecture: all
+Installed-Size: 4875
+Filename: mwan3_1.5-10_all.ipk
+Size: 5604
+MD5Sum: 8323f6f3c9392ef2dc64a3f5123f0b08
+SHA256sum: c97a0b2435e828163eca704a499fe4fff4604a0b8a0295180076323417ee76f8
+Description:  Hotplug script which makes configuration of multiple WAN interfaces simple
+ and manageable. With loadbalancing/failover support for up to 250 wan
+ interfaces, connection tracking and an easy to manage traffic ruleset.
+
+Package: nfs-kernel-server-utils
+Version: 1.3.2-1
+Depends: libc, nfs-kernel-server
+Source: feeds/packages/net/nfs-kernel-server
+Section: net
+Maintainer: Peter Wagner <tripolar@gmx.at>
+Architecture: ramips_24kec
+Installed-Size: 12623
+Filename: nfs-kernel-server-utils_1.3.2-1_ramips_24kec.ipk
+Size: 13167
+MD5Sum: 0f4f7e376495d8e9663cb86cab6796f0
+SHA256sum: 853b37fa3a2ea3c92bd35e2525ea73a4e435cf461324f26495af5c3003f5203e
+Description:  NFS server utils
+
+Package: nfs-kernel-server
+Version: 1.3.2-1
+Depends: libc, libwrap, libblkid, libuuid, librpc, kmod-fs-nfsd, kmod-fs-nfs, portmap
+Source: feeds/packages/net/nfs-kernel-server
+Section: net
+Maintainer: Peter Wagner <tripolar@gmx.at>
+Architecture: ramips_24kec
+Installed-Size: 97548
+Filename: nfs-kernel-server_1.3.2-1_ramips_24kec.ipk
+Size: 97657
+MD5Sum: 2d20c3a454d93509c04c50c38d5b0629
+SHA256sum: e26ea24e43a8f5244d3f0246c16e7a9553fc7dcbe833faacd01c96e1a45ccb34
+Description:  Kernel NFS server support
+
+Package: ntfs-3g
+Version: 2014.2.15-1-fuseint
+Depends: libc, kmod-fuse, libpthread
+Source: feeds/packages/utils/ntfs-3g
+License: GPL-2.0 LGPL-2.0
+LicenseFiles: COPYING COPYING.LIB
+Section: utils
+Maintainer: Bud <wrt_buddhay@gmx.net>
+Architecture: ramips_24kec
+Installed-Size: 178014
+Filename: ntfs-3g_2014.2.15-1-fuseint_ramips_24kec.ipk
+Size: 178899
+MD5Sum: 6a9ccdf024be928ac1b6704d9b49a735
+SHA256sum: 62e1f1439efe3da13d76087912d036d7736dbc86086060ca437692e2577c55de
+Description:  Ntfs-3g is a NTFS driver, which can create, remove, rename,
+ move files, directories, hard links, and streams. It can read
+ and write files, including streams and sparse files. It can
+ handle special files like symbolic links, devices, and FIFOs.
+ Moreover it can also read transparently compressed files.
+ 
+ Contains:
+ - ntfs-3g
+ - ntfs-3g.probe
+ - mount.ntfs-3g (symlink to ntfs-3g)
+ 
+
+Package: ntpclient
+Version: 2010_365-1
+Depends: libc, librt
+Source: feeds/packages/net/ntpclient
+License: GPL-2.0
+Section: net
+Maintainer: Ted Hess <thess@kitschensync.net>
+Architecture: ramips_24kec
+Installed-Size: 12097
+Filename: ntpclient_2010_365-1_ramips_24kec.ipk
+Size: 12693
+MD5Sum: a4bf573b077444daf64907ce6045b7c7
+SHA256sum: 8834a74b5abf98a11dff9aa9e99d18c411a63d8a66b1ec84401895eca90c8c95
+Description:  NTP client for setting system time from NTP servers.
+
+Package: openconnect
+Version: 7.04-2
+Depends: libc, libxml2, kmod-tun, resolveip, vpnc-scripts, libgnutls
+Source: feeds/packages/net/openconnect
+Section: net
+Maintainer: Nikos Mavrogiannopoulos <n.mavrogiannopoulos@gmail.com>
+Architecture: ramips_24kec
+Installed-Size: 61284
+Filename: openconnect_7.04-2_ramips_24kec.ipk
+Size: 61655
+MD5Sum: 120f6089ec1720ea928ee4810af3e316
+SHA256sum: 5b850a1c6e81e2ee59ff067d79f3c00da047c6c5d51a4bf23adf6ce832439f91
+Description:  A VPN client compatible with Cisco's AnyConnect SSL VPN and ocserv.
+ 
+ OpenConnect is a client that follows the Cisco's AnyConnect SSL VPN protocol,
+ which is supported by IOS 12.4(9)T or later on Cisco SR500, 870, 880, 1800, 
+ 2800, 3800, 7200 Series and Cisco 7301 Routers, as well as the OpenConnect
+ VPN server.
+
+Package: p910nd
+Version: 0.97-4
+Depends: libc
+Source: feeds/packages/net/p910nd
+License: GPLv2
+LicenseFiles: COPYING
+Section: net
+Maintainer: Philipp Kerling <pkerling@casix.org>
+Architecture: ramips_24kec
+Installed-Size: 5656
+Filename: p910nd_0.97-4_ramips_24kec.ipk
+Size: 6466
+MD5Sum: 8b139b6cf82cfeaadf4f81b1e11ed1b0
+SHA256sum: 12eb3a5e5921889772a28006961f6a30cb8f826e3b7724590c5ed9fe3ee18103
+Description:  p910nd is a small daemon that copies any data received on
+ the port it is listening on to the corresponding printer
+ port. It is primarily intended for diskless Linux hosts
+ running as printer drivers but there is no reason why it
+ could not be used on diskful hosts. Port 9100 is copied
+ to /dev/lp0, 9101 to /dev/lp1 and 9102 to /dev/lp2. The
+ default is port 9100 to /dev/lp0.
+
+Package: portmap
+Version: 6.0-4
+Depends: libc, libwrap, librpc
+Source: feeds/packages/net/portmap
+License: BSD-4c
+LicenseFiles: portmap.man
+Section: net
+Maintainer: Peter Wagner <tripolar@gmx.at>
+Architecture: ramips_24kec
+Installed-Size: 6794
+Filename: portmap_6.0-4_ramips_24kec.ipk
+Size: 7469
+MD5Sum: 62a8a0521aea0d21fd4a460fbfdf5600
+SHA256sum: cbbecabdfd0eff11e6767e18fad569a44e0f4ae3d04cd7ab69bf3a0722046720
+Description:  Portmap is a server that converts RPC (Remote Procedure Call) program
+ numbers into DARPA protocol port numbers.
+
+Package: sshfs
+Version: 2.5-1
+Depends: libc, libfuse, fuse-utils, glib2, libpthread
+Source: feeds/packages/net/sshfs
+License: GPL-2.0
+Section: net
+Maintainer: Zoltan HERPAI <wigyori@uid0.hu>
+Architecture: ramips_24kec
+Installed-Size: 22763
+Filename: sshfs_2.5-1_ramips_24kec.ipk
+Size: 23228
+MD5Sum: 034f79c3cba636859cb3d07a50d43550
+SHA256sum: abe6c0db68489643b06dfccde0caa91036164a351ccd55f8cf7290476c1ba49e
+Description:  Mount remote system over sftp.
+
+Package: transmission-daemon
+Version: 2.84-1
+Depends: libc, libcurl, libopenssl, libpthread, libevent2, librt
+Source: feeds/packages/net/transmission
+Section: net
+Maintainer: Cezary Jackiewicz <cezary@eko.one.pl>
+Architecture: ramips_24kec
+Installed-Size: 189840
+Filename: transmission-daemon_2.84-1_ramips_24kec.ipk
+Size: 189841
+MD5Sum: 5f9f3259da57a4341b68fd5d713b9e3b
+SHA256sum: 72bf0d0abdaf7e541ed923fab2ac42a6f81ed0233eb986f348e207e55bc34ca2
+Description:  Transmission is a simple BitTorrent client.
+ It features a very simple, intuitive interface
+ on top on an efficient, cross-platform back-end.
+ This package contains the daemon itself.
+
+Package: transmission-remote
+Version: 2.84-1
+Depends: libc, libcurl, libopenssl, libpthread, libevent2, librt
+Source: feeds/packages/net/transmission
+Section: net
+Maintainer: Cezary Jackiewicz <cezary@eko.one.pl>
+Architecture: ramips_24kec
+Installed-Size: 196596
+Filename: transmission-remote_2.84-1_ramips_24kec.ipk
+Size: 196952
+MD5Sum: 6812becb801ae3c07edd2502fe0b953b
+SHA256sum: 06fb008ef9bfa698a722b270675b0fd6ba6cbe07525bd00cd4a1df61e88c751e
+Description:  CLI remote interface for transmission.
+
+Package: transmission-web
+Version: 2.84-1
+Depends: libc, transmission-daemon
+Source: feeds/packages/net/transmission
+Section: net
+Maintainer: Cezary Jackiewicz <cezary@eko.one.pl>
+Architecture: ramips_24kec
+Installed-Size: 206648
+Filename: transmission-web_2.84-1_ramips_24kec.ipk
+Size: 207381
+MD5Sum: 5271d8c2e673f5d833da4c56cbbada2f
+SHA256sum: 0442e423522224abdec5281fe103950ff85d8371c8d3518e6f0f703dcb2e24c3
+Description:  Webinterface resources for transmission.
+
+Package: udpxy
+Version: 2014-10-27
+Depends: libc
+Source: feeds/packages/net/udpxy
+License: GPL-3.0
+LicenseFiles: gpl.txt
+Section: net
+Maintainer: Álvaro Fernández Rojas <noltari@gmail.com>
+Architecture: ramips_24kec
+Installed-Size: 31214
+Filename: udpxy_2014-10-27_ramips_24kec.ipk
+Size: 31864
+MD5Sum: ba7ab954ca53220b2da9980b7350695b
+SHA256sum: 66f121d41b8963b8bf24506ba2fa5257997aa5e018f6aecc86a41bbcebf1b497
+Description:  udproxy makes it possible to convert UDP IPTV streams into HTTP
+ streams which can be viewed even over WLANs. HTTP streams do
+ not generate huge amounts of multicast traffic, so a sd stream
+ only takes about 300k. Interesting for peoply who have IPTV at
+ home and do not want to rent multiple decoders from their
+ provider but just use their own streaming client (for example
+ popcornhour/mediatomb/vlc).
+
+Package: vnstat
+Version: 1.12-1
+Depends: libc
+Source: feeds/packages/net/vnstat
+Section: net
+Maintainer: Jo-Philipp Wich <jow@openwrt.org>
+Architecture: ramips_24kec
+Installed-Size: 65486
+Filename: vnstat_1.12-1_ramips_24kec.ipk
+Size: 66231
+MD5Sum: f4a19f1197546aa34a0f52ca754670d9
+SHA256sum: 9722d374f2551325f07d3e907159d1213a2ad4a0e062c0f9936740418b738a20
+Description:  vnStat is a network traffic monitor for Linux that keeps a log of daily
+ network traffic for the selected interface(s). vnStat isn't a packet
+ sniffer. The traffic information is analyzed from the /proc -filesystem,
+ so vnStat can be used without root permissions.
+
+Package: vnstati
+Version: 1.12-1
+Depends: libc, vnstat, libgd
+Source: feeds/packages/net/vnstat
+Section: net
+Maintainer: Jo-Philipp Wich <jow@openwrt.org>
+Architecture: ramips_24kec
+Installed-Size: 32040
+Filename: vnstati_1.12-1_ramips_24kec.ipk
+Size: 32760
+MD5Sum: 9b3e9cc001bc010c8a4d7bb6ca9e7e8b
+SHA256sum: 6bda4e9d8f5d38c880ae3d623b4345f900bee9fd7c40da30be75557ea12ad8b2
+Description:  The purpose of vnstati is to provide image output support for statistics
+ collected using vnstat(1). However, the image file format is limited to
+ png. All basic outputs of vnStat are supported excluding live traffic
+ features. The image can be outputted either to a file or to standard
+ output.
+
+Package: vpnc-scripts
+Version: 20150116-1
+Depends: libc
+Source: feeds/packages/net/vpnc-scripts
+Section: net
+Maintainer: Nikos Mavrogiannopoulos <n.mavrogiannopoulos@gmail.com>
+Architecture: ramips_24kec
+Installed-Size: 2171
+Filename: vpnc-scripts_20150116-1_ramips_24kec.ipk
+Size: 2802
+MD5Sum: 6208f0350ca1d6de2c6e005eb88ebe7f
+SHA256sum: a3b682bd4da865129ba3201e86527004476b67b385793dadd37885c88eb67d80
+Description:  This package contains the vpnc-script which is used by vpnc
+ and OpenConnect to configure the tunnel interface.
+
+Package: wshaper
+Version: 1.1a-1
+Depends: libc, kmod-sched, tc
+Source: feeds/packages/net/wshaper
+Section: net
+Maintainer: Jo-Philipp Wich <jow@openwrt.org>
+Architecture: all
+Installed-Size: 2069
+Filename: wshaper_1.1a-1_all.ipk
+Size: 2793
+MD5Sum: 97bafb2a84db8f9ecf31fb9b17b38c40
+SHA256sum: 54af49671a542eaa6da648fa332605f53dd970380254c37422930ccad4b6c7aa
+Description:  A script to do traffing shaping with the HTB algorithm.
+ Wshaper attempts to:
+ * Maintain low latency for interfactive traffic at all times
+ * Allow 'surfing' at reasonable speeds while up or downloading
+ * Make sure uploads don't harm downloads, and the other way around
+
+Package: xl2tpd
+Version: 1.3.6-5619e1771048e74b729804e8602f409af0f3faea
+Depends: libc, ppp-mod-pppol2tp, ip, resolveip
+Source: feeds/packages/net/xl2tpd
+License: GPL-2.0
+LicenseFiles: LICENSE
+Section: net
+Maintainer: Daniel Golle <daniel@makrotopia.org>
+Architecture: ramips_24kec
+Installed-Size: 44515
+Filename: xl2tpd_1.3.6-5619e1771048e74b729804e8602f409af0f3faea_ramips_24kec.ipk
+Size: 45316
+MD5Sum: a45e1b68ea95f3c04078f864a519ca3f
+SHA256sum: b1879075a11cbd68bb4a10d43ee49c9c1aac6e1c10c4e3cbb3124dfd0bdd7272
+Description:  l2tpd is the open source implementation of the L2TP tunneling protocol (RFC2661).
+ It does implement both LAC and LNS role in a L2TP networking architecture. The
+ main goal of this protocol is to tunnel PPP frame trough an IP network.
+

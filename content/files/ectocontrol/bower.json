@@ -1,0 +1,23 @@
+{
+  "name": "front_end",
+  "version": "0.2.3",
+  "authors": [
+    "warmwave <warmwavemedia@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "vendor"
+  ],
+  "dependencies": {
+    "bootstrap": "latest",
+    "bootstrap-select": "latest",
+    "fontawesome": "latest",
+    "seiyria-bootstrap-slider": "latest",
+    "awesome-bootstrap-checkbox": "latest"
+  }
+}

@@ -1,0 +1,215 @@
+.c-r--gray {
+  color: #cccccc !important;
+}
+.c-r--white {
+  color: #ffffff !important;
+}
+.c-r--danger {
+  color: #f11e1e !important;
+}
+.c-r--success {
+  color: #1ab529 !important;
+}
+.f-s--13px {
+  font-size: 13px !important;
+}
+.fl-l {
+  float: left;
+}
+.fl-r {
+  float: right;
+}
+.fl-n {
+  float: none;
+}
+.ta-l {
+  text-align: left;
+}
+.ta-r {
+  text-align: right;
+}
+.ta-c {
+  text-align: center !important;
+}
+.p-l-13 {
+  padding-left: 13px;
+}
+.p-l-20 {
+  padding-left: 20px !important;
+}
+.p-b-5 {
+  padding-bottom: 5px;
+}
+.p-b-30 {
+  padding-bottom: 30px;
+}
+.m-l-10 {
+  margin-left: 10px !important;
+}
+.m-l-20 {
+  margin-left: 25px !important;
+}
+.m-r-10 {
+  margin-right: 10px;
+}
+.m-r-20 {
+  margin-right: 20px;
+}
+.m-t--5 {
+  margin-top: -5px !important;
+}
+.m-t-10 {
+  margin-top: 10px !important;
+}
+.m-t-15 {
+  margin-top: 15px !important;
+}
+.m-t-20 {
+  margin-top: 20px !important;
+}
+.m-t-50 {
+  margin-top: 50px !important;
+}
+.m-b-5 {
+  margin-bottom: 5px !important;
+}
+.m-b-20 {
+  margin-bottom: 20px;
+}
+.bs-0 {
+  box-shadow: none !important;
+}
+.bd-0 {
+  border: none !important;
+}
+.bg-0 {
+  background: none !important;
+}
+.disable {
+  display: none;
+}
+.reset {
+  margin: 0;
+  padding: 0;
+}
+/* Begin rewrite */
+.bootstrap-select .btn {
+  border-radius: 4px;
+  border: 1px solid #d1d1d1;
+  background-color: #ffffff;
+  background: url('/img/device-block__select.png') no-repeat 255px center;
+  width: 278px;
+  height: 40px;
+  box-shadow: none;
+  font-size: 13px !important;
+}
+.bootstrap-select .dropdown-menu {
+  width: 278px;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  border-top-width: 0px;
+  margin-top: -3px;
+  font-size: 13px !important;
+}
+.bootstrap-select .caret {
+  border: 0px;
+  width: 11px;
+  height: 6px;
+}
+.modal-dialog {
+  width: 338px;
+  height: 185px;
+}
+.modal-dialog .modal-header,
+.modal-dialog .modal-footer {
+  border: 0;
+}
+.modal-dialog .modal-body {
+  padding: 0 !important;
+}
+.modal-dialog .modal-content {
+  text-align: center !important;
+  box-shadow: none;
+  border-radius: 4px;
+  border: 1px #ffffff solid;
+  background-color: #ffffff;
+}
+.modal-dialog .modal-content span {
+  color: #1a1a1a;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: left;
+}
+.modal-dialog .modal-content .button {
+  width: 100px !important;
+  margin: 0;
+  line-height: 36px;
+  height: 40px;
+}
+.modal-dialog .modal-content i {
+  color: #ffae01;
+}
+.modal-dialog .modal-footer {
+  padding: 15px 53px;
+}
+.slider.slider-horizontal .slider-track {
+  height: 5px;
+}
+.slider.slider-horizontal {
+  width: 100%;
+}
+.slider.slider-horizontal .slider-handle {
+  border-radius: 25% !important;
+  background-color: #ffffff !important;
+  background-image: linear-gradient(to bottom, #ffffff 0, #ffffff 100%) !important;
+  margin-left: -5px !important;
+  margin-top: -7px;
+  width: 9px;
+  box-shadow: 0px 0px 1px;
+  height: 20px;
+}
+.slider.slider-horizontal .slider-tick {
+  background-image: none;
+  box-shadow: none;
+}
+#slider12b .slider-track-low,
+#slider12c .slider-track-low,
+#slider12a .slider-track-high,
+#slider12c .slider-track-high {
+  background: #f11e1e;
+}
+#slider12c .slider-selection,
+#slider9c .slider-selection {
+  background: #1ab529;
+}
+.legend--danger .slider.slider-disabled .slider-track,
+.legend--danger .slider.slider-disabled .slider-selection {
+  background-image: linear-gradient(to bottom, #f11e1e 0, #f11e1e 100%);
+}
+.legend--success .slider.slider-disabled .slider-track,
+.legend--success .slider.slider-disabled .slider-selection {
+  background-image: linear-gradient(to bottom, #1ab529 0, #1ab529 100%);
+}
+.slider.slider-disabled .slider-handle {
+  display: none;
+}
+.tooltip.top .tooltip-arrow {
+  border-width: 0;
+}
+.tooltip-inner {
+  background-color: #ffffff !important;
+  color: #1a1a1a;
+}
+.highslide-container .closebutton {
+  position: relative;
+  top: -12px;
+  left: 45px;
+  cursor: pointer;
+  color: #ffae01 !important;
+}
+.highslide-container .closebutton:hover {
+  color: #ffffff !important;
+  border: #ffae01;
+}
+/* End rewrite */

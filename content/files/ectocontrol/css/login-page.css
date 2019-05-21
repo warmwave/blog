@@ -1,0 +1,264 @@
+.c-r--gray {
+  color: #cccccc !important;
+}
+.c-r--white {
+  color: #ffffff !important;
+}
+.c-r--danger {
+  color: #f11e1e !important;
+}
+.c-r--success {
+  color: #1ab529 !important;
+}
+.f-s--13px {
+  font-size: 13px !important;
+}
+.fl-l {
+  float: left;
+}
+.fl-r {
+  float: right;
+}
+.fl-n {
+  float: none;
+}
+.ta-l {
+  text-align: left;
+}
+.ta-r {
+  text-align: right;
+}
+.ta-c {
+  text-align: center !important;
+}
+.p-l-13 {
+  padding-left: 13px;
+}
+.p-l-20 {
+  padding-left: 20px !important;
+}
+.p-b-5 {
+  padding-bottom: 5px;
+}
+.p-b-30 {
+  padding-bottom: 30px;
+}
+.m-l-10 {
+  margin-left: 10px !important;
+}
+.m-l-20 {
+  margin-left: 25px !important;
+}
+.m-r-10 {
+  margin-right: 10px;
+}
+.m-r-20 {
+  margin-right: 20px;
+}
+.m-t--5 {
+  margin-top: -5px !important;
+}
+.m-t-10 {
+  margin-top: 10px !important;
+}
+.m-t-15 {
+  margin-top: 15px !important;
+}
+.m-t-20 {
+  margin-top: 20px !important;
+}
+.m-t-50 {
+  margin-top: 50px !important;
+}
+.m-b-5 {
+  margin-bottom: 5px !important;
+}
+.m-b-20 {
+  margin-bottom: 20px;
+}
+.bs-0 {
+  box-shadow: none !important;
+}
+.bd-0 {
+  border: none !important;
+}
+.bg-0 {
+  background: none !important;
+}
+.disable {
+  display: none;
+}
+.reset {
+  margin: 0;
+  padding: 0;
+}
+.login-page {
+  background: url(../img/login--bg.jpg) 50% 50% no-repeat fixed;
+  background-size: cover;
+}
+.login-page .c-r--danger {
+  padding: 10px 0;
+  font-size: 13px;
+  line-height: 23px;
+}
+.login-page .head-block,
+.login-page .content-block {
+  color: #cccccc;
+  background-color: rgba(0, 0, 0, 0);
+}
+.login-page .head-block .schedule-block,
+.login-page .content-block .schedule-block {
+  line-height: 31px;
+  padding-top: 30px;
+}
+.login-page .head-block .schedule-block i,
+.login-page .content-block .schedule-block i {
+  color: #ffae01;
+  font-size: 20px;
+  padding: 0 10px;
+}
+.login-page .head-block .schedule-block .phone,
+.login-page .content-block .schedule-block .phone {
+  font-size: 18px;
+}
+.login-page .head-block .schedule-block .exit,
+.login-page .content-block .schedule-block .exit {
+  line-height: 24px;
+  padding: 0;
+  float: left;
+}
+.login-page .sidebar-block__brand {
+  padding-bottom: 0;
+}
+.login-page .nav {
+  padding: 10px 0 0 40px;
+}
+.login-page .nav .nav-menu a {
+  line-height: normal;
+  font-size: 13px;
+}
+.login-page .title {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 31.507px;
+  padding-bottom: 30px;
+}
+.login-page .title span {
+  color: #ffae01;
+}
+.login-page .login-form,
+.login-page .recovery-form,
+.login-page .registration-form {
+  border-radius: 4px;
+  background-color: #ffffff;
+  width: 350px;
+  height: 330px;
+  padding: 10px 20px;
+  margin-top: 20px;
+}
+.login-page .login-form label,
+.login-page .recovery-form label,
+.login-page .registration-form label {
+  color: #1a1a1a;
+  font-size: 13px;
+  line-height: 31.507px;
+}
+.login-page .login-form a,
+.login-page .recovery-form a,
+.login-page .registration-form a {
+  margin: 35px 0 13px 35px;
+  line-height: normal;
+  font-size: 13px;
+}
+.login-page .login-form a:hover,
+.login-page .recovery-form a:hover,
+.login-page .registration-form a:hover {
+  margin-bottom: 12px;
+}
+.login-page .login-form .button,
+.login-page .recovery-form .button,
+.login-page .registration-form .button {
+  float: left !important;
+  width: 120px;
+  margin: 25px 0 0 !important;
+}
+.login-page .login-form .button[type*="button"],
+.login-page .recovery-form .button[type*="button"],
+.login-page .registration-form .button[type*="button"] {
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+.login-page .login-form .button[type*="button"]:hover,
+.login-page .recovery-form .button[type*="button"]:hover,
+.login-page .registration-form .button[type*="button"]:hover {
+  background-color: #ffae01;
+  color: #ffffff;
+}
+.login-page .login-form .button i,
+.login-page .recovery-form .button i,
+.login-page .registration-form .button i {
+  float: none;
+  line-height: 25px;
+  font-size: 18px;
+}
+.login-page .preview-block {
+  padding-left: 55px;
+}
+.login-page .preview-block .lk {
+  margin-bottom: 20px;
+  padding-right: 0px;
+}
+.login-page .preview-block .description {
+  margin-top: 30px;
+  padding-left: 0;
+}
+.login-page .preview-block .description i {
+  margin-right: 10px;
+}
+.login-page .preview-block .description p {
+  color: white;
+  display: block;
+}
+.login-page .recovery-form-block {
+  display: none;
+}
+.login-page .recovery-form-block .recovery-block > div {
+  margin: 0 auto;
+  width: 350px;
+}
+.login-page .recovery-form-block .recovery-form {
+  height: 220px;
+}
+.login-page .recovery-form-block .recovery-form a {
+  margin-left: 0px;
+}
+.login-page .recovery-form-block .recovery-form .button {
+  float: none !important;
+  width: auto;
+}
+.login-page .registration-form-block {
+  display: none;
+}
+.login-page .registration-form-block .registration-block > div {
+  width: 600px;
+  margin: 0 auto;
+}
+.login-page .registration-form-block .registration-form {
+  width: 600px !important;
+  height: 500px;
+}
+.login-page .registration-form-block .registration-form .required {
+  color: #ffae01;
+}
+.login-page .registration-form-block .registration-form .barcode {
+  margin: 35px 0 0;
+  background-color: #f3eeeb;
+  padding: 0 0 17px;
+}
+.login-page .registration-form-block .registration-form .descriptions {
+  color: #545454;
+}
+.login-page .registration-form-block .registration-form .button {
+  width: 300px;
+}

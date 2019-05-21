@@ -1,0 +1,205 @@
+.c-r--gray {
+  color: #cccccc !important;
+}
+.c-r--white {
+  color: #ffffff !important;
+}
+.c-r--danger {
+  color: #f11e1e !important;
+}
+.c-r--success {
+  color: #1ab529 !important;
+}
+.f-s--13px {
+  font-size: 13px !important;
+}
+.fl-l {
+  float: left;
+}
+.fl-r {
+  float: right;
+}
+.fl-n {
+  float: none;
+}
+.ta-l {
+  text-align: left;
+}
+.ta-r {
+  text-align: right;
+}
+.ta-c {
+  text-align: center !important;
+}
+.p-l-13 {
+  padding-left: 13px;
+}
+.p-l-20 {
+  padding-left: 20px !important;
+}
+.p-b-5 {
+  padding-bottom: 5px;
+}
+.p-b-30 {
+  padding-bottom: 30px;
+}
+.m-l-10 {
+  margin-left: 10px !important;
+}
+.m-l-20 {
+  margin-left: 25px !important;
+}
+.m-r-10 {
+  margin-right: 10px;
+}
+.m-r-20 {
+  margin-right: 20px;
+}
+.m-t--5 {
+  margin-top: -5px !important;
+}
+.m-t-10 {
+  margin-top: 10px !important;
+}
+.m-t-15 {
+  margin-top: 15px !important;
+}
+.m-t-20 {
+  margin-top: 20px !important;
+}
+.m-t-50 {
+  margin-top: 50px !important;
+}
+.m-b-5 {
+  margin-bottom: 5px !important;
+}
+.m-b-20 {
+  margin-bottom: 20px;
+}
+.bs-0 {
+  box-shadow: none !important;
+}
+.bd-0 {
+  border: none !important;
+}
+.bg-0 {
+  background: none !important;
+}
+.disable {
+  display: none;
+}
+.reset {
+  margin: 0;
+  padding: 0;
+}
+.button {
+  padding: 0 7px;
+  margin-left: 10px;
+  border-radius: 4px;
+  border: 1px solid #ffae01;
+  color: #545454;
+  font-size: 13px;
+  cursor: pointer;
+  text-align: center !important;
+}
+.button i {
+  float: left;
+  font-size: 25px;
+  margin: 7px 0 0 6px;
+}
+.button:hover {
+  background-color: #ffae01;
+  color: #ffffff;
+}
+.button:hover i {
+  color: #ffffff !important;
+}
+.button--big {
+  float: right;
+  color: #191919;
+  line-height: 36px;
+  height: 40px;
+}
+.button[class*="--refresh"] {
+  width: 115px;
+}
+.button[class*="--banance"] {
+  width: 230px;
+}
+.button[class*="--security"] {
+  width: 155px;
+}
+.button[class*="--setting"] {
+  width: 175px;
+}
+.button[class*="-temperature"],
+.button[class*="--setting-boiler"] {
+  width: 125px;
+}
+.button[class*="--back"],
+.button[class*="--next"] {
+  width: 180px;
+}
+.button[class*="--back"] i,
+.button[class*="--next"] i {
+  color: #ffae01;
+}
+.button[class*="--reverse"] {
+  background-color: #ffae01;
+  color: #ffffff;
+}
+.button[class*="--reverse"] i {
+  color: #ffffff !important;
+}
+.button[class*="--reverse"]:hover {
+  background-color: #ffffff;
+  color: #191919;
+}
+.button[class*="--reverse"]:hover i {
+  color: #ffae01 !important;
+}
+.button--apply {
+  color: #1a1a1a !important;
+  float: left !important;
+  margin-left: 0px ;
+  font-weight: bold;
+}
+.button--add {
+  float: right;
+  width: 106px;
+  height: 26px;
+  line-height: 22px !important;
+  margin-top: 8px;
+  padding-left: 9px;
+}
+.button--add-phone,
+.button--add-email,
+.button--add-system,
+.button--add-mode {
+  float: left;
+  margin-left: 0;
+  width: 150px;
+}
+.button--add i {
+  float: right;
+  font-size: 10px;
+  padding-right: 5px;
+  color: #ffae01;
+}
+.button[class*="--edit-pwd"] {
+  float: left;
+  margin-left: 0;
+  width: 285px;
+}
+.button[class*="--edit-pwd"][class*="-small"] {
+  width: 150px;
+}
+.button--boiler {
+  float: left;
+  margin-left: 0;
+  width: 127px;
+}
+.button--boiler i {
+  float: none;
+  font-size: 20px;
+}

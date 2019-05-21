@@ -1,0 +1,15 @@
+{
+  "name": "FrontEndTemplate",
+  "version": "0.0.3",
+  "description": "Bower/Gulp-scaffold",
+  "main": "",
+  "author": "WarmWave",
+  "license": "BSD",
+  "dependencies": {
+    "gulp": "latest",
+    "gulp-bower": "latest",
+    "gulp-less": "latest",
+    "gulp-sass": "latest",
+    "gulp-minify-css": "latest"
+  }
+}
