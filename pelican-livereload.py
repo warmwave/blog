@@ -22,7 +22,7 @@ server.watch(p.settings['PATH'], compile)
 server.watch(p.settings['THEME'], compile)
 server.watch('./pelicanconf.py', compile)
 
-host_port = p.settings.get('SITEURL') or 'http://localhost:5500'
+host_port = p.settings.get('SITEURL') or 'http://localhost:8000'
 details = urlparse(host_port)
 host, port = details[1].split(':')
 
