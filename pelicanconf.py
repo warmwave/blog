@@ -130,11 +130,10 @@ MARKDOWN = {
     'output_format': 'html5',
 }
 
-DISQUS_SITENAME = 'warmwave.ru'
-DISQUS_NO_ID = True
+DISQUS_SITENAME = 'blog-warmwave-ru'
 
-DISQUS_SECRET_KEY = u'gsZU6LHPzEZXSViM0GhQ1xiGZnVdeTxiDpUBqwJI3opkkkjVtcNZcG6xheggrSwk'
-DISQUS_PUBLIC_KEY = u'S6SsIA4Uq86sqe3sIvcjvOqcGi3lM9sHPkz2tiK3Wy3mick3zIcw3T63OXjBnhpV'
+DISQUS_SECRET_KEY = 'gsZU6LHPzEZXSViM0GhQ1xiGZnVdeTxiDpUBqwJI3opkkkjVtcNZcG6xheggrSwk'
+DISQUS_PUBLIC_KEY = 'S6SsIA4Uq86sqe3sIvcjvOqcGi3lM9sHPkz2tiK3Wy3mick3zIcw3T63OXjBnhpV'
 
 # GOOGLE_ANALYTICS = 'UA-******your_code'
 # GOOGLE_ANALYTICS_DOMAIN = 'http://webquant.ru/'

@@ -1,7 +1,7 @@
 {% if DISQUS_SITENAME %}
 <div id="disqus_thread"></div>
 <script type="text/javascript">
-    var disqus_shortname = 'warmwave.ru';
+    var disqus_shortname = 'blog-warmwave-ru';
     var disqus_title = '{{ article.title }}';
 
     (function() {
@@ -11,37 +11,4 @@
     })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-{% endif %}
-
-{% if article.disqus_comments %}
-<div id="disqus_static_comments">
-    <h4>{{ article.disqus_comment_count }} comments</h4>
-    <ul class="post-list">
-        {% for comment in article.disqus_comments recursive %}
-        <li class="post">
-            <div class="post-content">
-                <div class="avatar hovercard">
-                    <img alt="Avatar" src="{{ comment.author.avatar.small.cache }}">
-                </div>
-                <div class="post-body">
-                    <header>
-                        <span class="publisher-anchor-color">{{ comment.author.name }}</span>
-                        <span class="time-ago" title="{{ comment.createdAt }}">{{ comment.createdAt }}</span>
-                    </header>
-                    <div class="post-message-container">
-                        <div class="post-message publisher-anchor-color ">
-                            {{ comment.message }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% if comment.children %}
-            <ul class="children">
-                {{ loop(comment.children) }}
-            </ul>
-            {% endif %}
-        </li>
-        {% endfor %}
-    </ul>
-</div>
 {% endif %}
