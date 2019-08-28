@@ -13,6 +13,7 @@ register = "*"
 disqus-python = "*"
 disqusapi = "*"
 disqus-python-client = "*"
+livereload = "*"
 
 [requires]
 python_version = "3.7"

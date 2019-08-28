@@ -8,8 +8,8 @@ Status: published
 
 *Пост носит формат памятки, памятки о OrangePi PC+ и еже с ним. Пост будет периодически дополняться... Если появляются вопросы готов ответить.*
 
-[Установка системы на SD](#install){.text-warning}  
-[Настраиваем часовой пояс и время](#date){.link}  
+[Установка системы на SD](#install)  
+[Настраиваем часовой пояс и время](#date)  
 [Domoticz, установка и первоначальная настройка](#domoticz)
 
 И так, вот у нас на руках OrangePi PC+, мы подключаем её и видим какой-то характерный китайский [бред]{style="text-decoration: line-through;"} андройд, наверно. Нужно поставить то, что, для начала, можно хотя бы прочитать...
@@ -35,8 +35,8 @@ sudo dd if=~/Downloads/Armbian_5.35_Orangepipcplus_Ubuntu_xenial_default_3.4.113
 Ждать придётся долго, но по завершению увидим что-то подобное:
 
 ```
-6553600+0 records in │
-6553600+0 records out │
+6553600+0 records in
+6553600+0 records out
 3355443200 bytes (3.4 GB) copied, 548.165 s, 6.1 MB/s
 ```
 
@@ -50,7 +50,6 @@ sudo dd if=~/Downloads/Armbian_5.35_Orangepipcplus_Ubuntu_xenial_default_3.4.113
 ```
 dpkg-reconfigure tzdata
 apt-get install ntp ntpdate
-date # проверить время
 ```
 
 Установка Domoticz {#domoticz}
