@@ -34,4 +34,6 @@ maxLeaseTime = 10
 domainNameServers = '8.8.8.8'
 domainName = 'workgroup'
 ```
-Сам скрипт - https://gitlab.com/warmwavemedia/dhcpmagic
+
+**Сам скрипт [тут][1]**
+[1]: https://gitlab.com/warmwavemedia/dhcpmagic "Ссылка на репу" 
