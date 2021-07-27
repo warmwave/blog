@@ -2,7 +2,7 @@ Title:  Python-скрипт для "предупреждения вторжен�
 Date: 2020-08-17 17:33
 Author: azq
 Category: Компы и сети
-Tags: Python, isc-dhcp-server
+Tags: Python, isc-dhcp-server, dncp
 Slug: zashhita_lokalnoj_seti_s_pomoshyu_dhcp
 Status: published
 
