@@ -23,12 +23,18 @@
 <div class="container">
     <div class="page-header text-center">
         <a href="/" title="Warmwave Blog" rel="home">
-            <img src="/uploads/favicon.png" alt="Warmwave Blog">
+            <img src="/images/favicon.png" alt="Warmwave Blog">
         </a>
         <div class="menu">
                 <span class="menu-item"><a class="menu-link" href="/category/kompy-i-seti">Компы и сети</a></span>
                 <span class="menu-item"><a class="menu-link" href="/category/shumy-i-zvuki">Шумы и звуки</a></span>
                 <span class="menu-item"><a class="menu-link" href="/category/tela-i-dushi">Тела и души</a></span>
+        </div>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/archives.html">Архив</a></span>
+        </div>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/donate.html">СКАЗАТЬ "СПАСИБО!"</a></span>
         </div>
     </div>
     <div class="row">
@@ -36,98 +42,11 @@
         
         
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
-	<a href="/oshibka-gpg-sleduyushhie-podpisi-nevernye-keyexpired.html">
-		<h2 itemprop="name headline">Ошибка GPG. Следующие подписи неверные: KEYEXPIRED</h2>
-	</a>
-	<i class="fa fa-clock-o"></i>
-	<time datetime="2017-11-06T02:49:00+03:00" itemprop="datePublished">Пн 06 ноября 2017</time>
-	&nbsp;—&nbsp;
-	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-		<i class="fa fa-user"></i>
-		<span itemprop="name">azq</span>
-	</span>
-	<div class="summary"><p>При обновлении пакетов заметил следущее:</p>
-<div class="highlight"><pre><span></span><code><span class="err">Получено 86,1 kБ за 5с (15,1 kБ/c)</span>
-<span class="err">Чтение списков пакетов… Готово</span>
-<span class="c">W: Ошибка GPG: http://debian-archive.trafficmanager.net jessie InRelease: Следующие подписи неверные: KEYEXPIRED 1507383481</span>
-</code></pre></div>
-
-
-<h2>Всё решается, всё просто.</h2>
-<div class="highlight"><pre><span></span><code><span class="err">➜ ~ apt-key list | grep expired</span>
-</code></pre></div>
-
-
-<p>или</p>
-<div class="highlight"><pre><span></span><code><span class="err">➜ ~ apt-key list | grep просрочен</span>
-<span class="err">pub 4096R/B98321F9 2010-08-07 …</span></code></pre></div></div>
-	<i class="fa fa-list"></i>
-	<span itemprop="articleSection">
-		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
-	</span>
-	<i class="fa fa-tags"></i>
- 
-	<span itemprop="keywords">
-		<a href="/tag/apt" rel="tag">#apt</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/apt-key" rel="tag">#apt-key</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/debian" rel="tag">#Debian</a>
-	</span>
-</div>
-<hr>
-        
-<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
-	<a href="/awstats-ispmanager4-centos6-i-oshibka-segmentirovaniya.html">
-		<h2 itemprop="name headline">Awstats, ISPmanager4, CentOS6 и ошибка сегментирования.</h2>
-	</a>
-	<i class="fa fa-clock-o"></i>
-	<time datetime="2017-08-14T19:22:00+03:00" itemprop="datePublished">Пн 14 августа 2017</time>
-	&nbsp;—&nbsp;
-	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-		<i class="fa fa-user"></i>
-		<span itemprop="name">azq</span>
-	</span>
-	<div class="summary"><p>Изначально сам Awstats ставился отсюда:</p>
-<div class="highlight"><pre><span></span><code><span class="c">https://sourceforge.net/projects/awstats/files/AWStats/7.6/</span>
-</code></pre></div>
-
-
-<p>Соответственно, версия - awstats-7.6-1. Далее был поправлен конфиг /etc/httpd/conf.d/awstats.conf, очищен кэш ISPmanager.<br>
-<strong>В итоге Awstats заработал.</strong></p>
-<p>Но две недели назад Awstats перестал обновлять статистику, хотя логи ротировались, и посещаемость у сайтов …</p></div>
-	<i class="fa fa-list"></i>
-	<span itemprop="articleSection">
-		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
-	</span>
-	<i class="fa fa-tags"></i>
- 
-	<span itemprop="keywords">
-		<a href="/tag/awstats" rel="tag">#Awstats</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/centos" rel="tag">#CentOS</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/ispmanager" rel="tag">#ISPmanager</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/ispmanager4" rel="tag">#ISPmanager4</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/ispmgr" rel="tag">#ISPmgr</a>
-	</span>
-</div>
-<hr>
-        
-<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
 	<a href="/pyenv-na-os-x.html">
 		<h2 itemprop="name headline">PyEnv на OS X - Менеджер версий для python</h2>
 	</a>
 	<i class="fa fa-clock-o"></i>
-	<time datetime="2016-11-30T02:19:00+03:00" itemprop="datePublished">Ср 30 ноября 2016</time>
+	<time datetime="2016-11-30T02:19:00+03:00" itemprop="datePublished">Wed 30 November 2016</time>
 	&nbsp;—&nbsp;
 	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
 		<i class="fa fa-user"></i>
@@ -166,7 +85,7 @@
 		<h2 itemprop="name headline">Python3 и virtualenv в Sierra. Установка и настройка</h2>
 	</a>
 	<i class="fa fa-clock-o"></i>
-	<time datetime="2016-10-31T16:12:00+03:00" itemprop="datePublished">Пн 31 октября 2016</time>
+	<time datetime="2016-10-31T16:12:00+03:00" itemprop="datePublished">Mon 31 October 2016</time>
 	&nbsp;—&nbsp;
 	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
 		<i class="fa fa-user"></i>
@@ -206,7 +125,7 @@
 		<h2 itemprop="name headline">Steam. Танцы с бубном и установка на Ubuntu.</h2>
 	</a>
 	<i class="fa fa-clock-o"></i>
-	<time datetime="2016-10-20T17:56:00+03:00" itemprop="datePublished">Чт 20 октября 2016</time>
+	<time datetime="2016-10-20T17:56:00+03:00" itemprop="datePublished">Thu 20 October 2016</time>
 	&nbsp;—&nbsp;
 	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
 		<i class="fa fa-user"></i>
@@ -237,167 +156,256 @@
 <hr>
         
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
-	<a href="/rannee-razvitie-eto-chto.html">
-		<h2 itemprop="name headline">Раннее развитие - это что?</h2>
+	<a href="/metasploit-framework-ustanovka-na-os-x.html">
+		<h2 itemprop="name headline">Metasploit Framework. Установка на OS X. Старая версия</h2>
 	</a>
 	<i class="fa fa-clock-o"></i>
-	<time datetime="2016-07-16T13:09:00+03:00" itemprop="datePublished">Сб 16 июля 2016</time>
+	<time datetime="2014-12-24T05:35:00+03:00" itemprop="datePublished">Wed 24 December 2014</time>
 	&nbsp;—&nbsp;
 	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
 		<i class="fa fa-user"></i>
-		<span itemprop="name">masya</span>
+		<span itemprop="name">azq</span>
 	</span>
-	<div class="summary"><p>Раннее развитие - это плохо или хорошо? Прежде чем судить об этом стоит разобраться - а что же это такое?<br>
-Тот, кто пытался найти ответ на этот вопрос уже наткнулся на различные школы, программы и методы. Можно водить малыша на занятия, а можно самостоятельно заняться плотным воспитанием чада.<br>
-Итак, раннее развитие - это …</p></div>
+	<div class="summary"><p>Сегодня устанавливаем Metasploit Framework.</p>
+<p>В этом нам поможет скрипт проекта<!--more--> - <a href="https://github.com/darkoperator/MSF-Installer.git">https://github.com/darkoperator/MSF-Installer.git</a></p>
+<div class="highlight"><pre><span></span><code><span class="err">git clone https://github.com/darkoperator/MSF-Installer.git</span>
+<span class="err">cd MSF-Installer/ </span>
+<span class="err">chmod +x msf_install.sh</span>
+<span class="err">./msf_install.sh -i</span>
+</code></pre></div>
+
+
+<p>У меня вылетело следующее:</p>
+<p><img alt="Metasploit Framework. Установка на OS X." src="images/v29JZBksz75jAG.png"></p>
+<p>решается просто:</p>
+<div class="highlight"><pre><span></span><code><span class="err">xcode-select --install</span>
+</code></pre></div>
+
+
+<p>после повторяем "./msf_install.sh -i"</p></div>
 	<i class="fa fa-list"></i>
 	<span itemprop="articleSection">
-		<a href="/category/tela-i-dushi" rel="category">Тела и души</a>
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
 	</span>
 	<i class="fa fa-tags"></i>
  
 	<span itemprop="keywords">
-		<a href="/tag/vospitanie" rel="tag">#воспитание</a>
+		<a href="/tag/mac-os-x" rel="tag">#Mac OS X</a>
 	</span>
 	<span itemprop="keywords">
-		<a href="/tag/deti" rel="tag">#дети</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/ranneerazvitie" rel="tag">#раннееразвитие</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/sovety" rel="tag">#советы</a>
+		<a href="/tag/metasploit-framework" rel="tag">#Metasploit Framework</a>
 	</span>
 </div>
 <hr>
         
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
-	<a href="/vospitanie-rebenka-ochen-tonkij-i-kropotlivyj-process.html">
-		<h2 itemprop="name headline">Воспитание ребенка - очень тонкий и кропотливый процесс.</h2>
+	<a href="/ispravlyaem-problemu-zapuska-apachemamp-pro-v-yosemite.html">
+		<h2 itemprop="name headline">Исправляем проблему запуска Apache(MAMP Pro) в Yosemite</h2>
 	</a>
 	<i class="fa fa-clock-o"></i>
-	<time datetime="2016-06-13T22:56:00+03:00" itemprop="datePublished">Пн 13 июня 2016</time>
+	<time datetime="2014-10-13T15:15:00+04:00" itemprop="datePublished">Mon 13 October 2014</time>
 	&nbsp;—&nbsp;
 	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
 		<i class="fa fa-user"></i>
-		<span itemprop="name">masya</span>
+		<span itemprop="name">azq</span>
 	</span>
-	<div class="summary"><p>[Воспитание ребенка - очень тонкий и кропотливый процесс, это настоящий труд, работа с хрупкой душой человека. За тысячи лет, которые люди прожили на Земле и собрали большой опыт в отношениях друг с другом, конечно же, найдутся рекомендации и в области позитивной педагогики.]{style="font-weight: 400;"}</p>
-<p>[Одни из таких дают буддистские монахи …</p></div>
+	<div class="summary"><p>Опять купертиновцы намудрили))). На этот раз - не запускается apache из набора MAMP Pro в Yosemite.<!--more--></p>
+<p>Идём в папку <strong>/Applications/MAMP/Library/bin</strong>. Там находим файлик <strong>envvars</strong> и переименовываем его, например в <strong>_envvars</strong></p></div>
 	<i class="fa fa-list"></i>
 	<span itemprop="articleSection">
-		<a href="/category/tela-i-dushi" rel="category">Тела и души</a>
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
 	</span>
 	<i class="fa fa-tags"></i>
  
 	<span itemprop="keywords">
-		<a href="/tag/vospitanie" rel="tag">#воспитание</a>
+		<a href="/tag/apache" rel="tag">#Apache</a>
 	</span>
 	<span itemprop="keywords">
-		<a href="/tag/deti" rel="tag">#дети</a>
+		<a href="/tag/mamp-pro" rel="tag">#MAMP Pro</a>
 	</span>
 	<span itemprop="keywords">
-		<a href="/tag/liudi" rel="tag">#люди</a>
+		<a href="/tag/yosemite" rel="tag">#Yosemite</a>
 	</span>
 </div>
 <hr>
         
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
-	<a href="/vosem-sobesednikov-naprotiv.html">
-		<h2 itemprop="name headline">Восемь собеседников напротив</h2>
+	<a href="/ne-rabotaet-m-audio-profire-610-v-yosemite.html">
+		<h2 itemprop="name headline">Не работает M-Audio ProFire 610 в Yosemite</h2>
 	</a>
 	<i class="fa fa-clock-o"></i>
-	<time datetime="2015-07-26T15:25:00+03:00" itemprop="datePublished">Вс 26 июля 2015</time>
+	<time datetime="2014-10-12T16:42:00+04:00" itemprop="datePublished">Sun 12 October 2014</time>
 	&nbsp;—&nbsp;
 	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
 		<i class="fa fa-user"></i>
-		<span itemprop="name">masya</span>
+		<span itemprop="name">azq</span>
 	</span>
-	<div class="summary"><p>На Земле живет очень много людей, чтобы что-то сделать, нужно уметь взаимодействовать друг с другом, находить общий язык. Успех общения зависит от многого: заинтересованность в беседе, компетентность в теме разговора, внимание к собеседнику, умение слушать, умение грамотно выражать свои мысли. Для многих общение - это автоматический процесс, мы говорим так как …</p></div>
+	<div class="summary"><p>Попробовал я тут поставить Yosemite. Это уже вторая попытка заюзать новую систему.<!--more--> Первая оказалась неудачной т.к. система была, на тот момент, реально сырой. Сейчас всё более-менее. Но всё-же обнаружил одну проблему. У меня не работала звуковая карта - M-Audio ProFire 610.</p>
+<p>Пробема, как всегда решилась просто:</p>
+<div class="highlight"><pre><span></span><code><span class="err">sudo nvram boot-args=&quot;kext-dev-mode …</span></code></pre></div></div>
 	<i class="fa fa-list"></i>
 	<span itemprop="articleSection">
-		<a href="/category/tela-i-dushi" rel="category">Тела и души</a>
+		<a href="/category/shumy-i-zvuki" rel="category">Шумы и звуки</a>
 	</span>
 	<i class="fa fa-tags"></i>
  
 	<span itemprop="keywords">
-		<a href="/tag/beseda" rel="tag">#беседа</a>
+		<a href="/tag/m-audio" rel="tag">#M-Audio</a>
 	</span>
 	<span itemprop="keywords">
-		<a href="/tag/interesno" rel="tag">#интересно</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/liudi" rel="tag">#люди</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/obshchenie" rel="tag">#общение</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/sovety" rel="tag">#советы</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/tipysobesednikov" rel="tag">#типысобеседников</a>
+		<a href="/tag/yosemite" rel="tag">#Yosemite</a>
 	</span>
 </div>
 <hr>
         
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
-	<a href="/bluzhdaya-po-labirintam-svoikh-vnutrennikh-oshhushhenijj.html">
-		<h2 itemprop="name headline">Блуждая по лабиринтам своих внутренних ощущений...</h2>
+	<a href="/redirekt-s-http-na-https-dlya-nginx.html">
+		<h2 itemprop="name headline">Редирект с http на https для nginx</h2>
 	</a>
 	<i class="fa fa-clock-o"></i>
-	<time datetime="2015-07-24T09:46:00+03:00" itemprop="datePublished">Пт 24 июля 2015</time>
+	<time datetime="2014-10-09T09:36:00+04:00" itemprop="datePublished">Thu 09 October 2014</time>
 	&nbsp;—&nbsp;
 	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
 		<i class="fa fa-user"></i>
-		<span itemprop="name">masya</span>
+		<span itemprop="name">azq</span>
 	</span>
-	<div class="summary"><p>Вы никогда раньше не задумывались над тем, как тонко мы чувствуем мир и как редко мы это замечаем? Нет, а жаль... что же толкает людей на подобные размышления, куда они приводят нас, а, может, к кому?</p>
-<p>Иногда мы сами не ожидаем своей реакции на что-либо, произошедшее вокруг, а если начинаем …</p></div>
+	<div class="summary"><p>Как-то встала задача - редирект с http на https. Задача решается просто, просто добавлением нескольких строк в директиву location / {}<!--more--></p>
+<div class="highlight"><pre><span></span><code><span class="err">if ( $scheme = &quot;http&quot; ) {</span>
+<span class="err"> rewrite ^/(.*)$ https://$host/$1 permanent;</span>
+<span class="err">}</span>
+</code></pre></div>
+
+
+<p>теперь при заходе на http://domain.com будет происходить редирект на https://domain.com</p></div>
 	<i class="fa fa-list"></i>
 	<span itemprop="articleSection">
-		<a href="/category/tela-i-dushi" rel="category">Тела и души</a>
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
 	</span>
 	<i class="fa fa-tags"></i>
  
 	<span itemprop="keywords">
-		<a href="/tag/zaglianutvsebia" rel="tag">#заглянутьвсебя</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/interesno" rel="tag">#интересно</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/myslivslukh" rel="tag">#мысливслух</a>
-	</span>
-	<span itemprop="keywords">
-		<a href="/tag/razmyshleniia" rel="tag">#размышления</a>
+		<a href="/tag/nginx" rel="tag">#nginx</a>
 	</span>
 </div>
 <hr>
         
 <div class="article" itemscope itemtype="http://schema.org/BlogPosting">
-	<a href="/vse-luchshee-detyam.html">
-		<h2 itemprop="name headline">Все лучшее детям!</h2>
+	<a href="/menyaem-root-parol-mysql-v-mac-os-x.html">
+		<h2 itemprop="name headline">Меняем root-пароль MySQL в MAC OS X</h2>
 	</a>
 	<i class="fa fa-clock-o"></i>
-	<time datetime="2015-07-14T16:46:00+03:00" itemprop="datePublished">Вт 14 июля 2015</time>
+	<time datetime="2014-08-22T19:10:00+04:00" itemprop="datePublished">Fri 22 August 2014</time>
 	&nbsp;—&nbsp;
 	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
 		<i class="fa fa-user"></i>
-		<span itemprop="name">masya</span>
+		<span itemprop="name">azq</span>
 	</span>
-	<div class="summary"><p>Когда растут дети, появляется желание дать им все и сразу. Мысль приходит подобная: "Хочу, чтобы вырос лучше, чем я." Воспитать хорошего человека может каждый, и это факт! Сейчас, во время доступности любой информации, можно научиться самостоятельно очень многим и разным по своей природе вещам. А можно ли таким образом стать …</p></div>
+	<div class="summary"><p>Устанавливал я как-то MySQL на OS X, и толи я запарил, толи одно из двух… но пароль который я вводил не подходил(((</p>
+<!--more-->
+
+<p>Решаем проблему:<br>
+Сначала останавливаем службу:</p>
+<div class="highlight"><pre><span></span><code><span class="err">sudo /Library/StartupItems/MySQLCOM/MySQLCOM stop</span>
+</code></pre></div>
+
+
+<p>Далее выполняем:</p>
+<div class="highlight"><pre><span></span><code><span class="err">/usr/local/mysql/bin/mysqld_safe --skip-grant-tables</span>
+</code></pre></div>
+
+
+<p>А для старых версий MySQL:</p>
+<div class="highlight"><pre><span></span><code><span class="err">/usr/local/mysql/bin …</span></code></pre></div></div>
 	<i class="fa fa-list"></i>
 	<span itemprop="articleSection">
-		<a href="/category/tela-i-dushi" rel="category">Тела и души</a>
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
 	</span>
 	<i class="fa fa-tags"></i>
  
 	<span itemprop="keywords">
-		<a href="/tag/vospitanie" rel="tag">#воспитание</a>
+		<a href="/tag/mac-os-x" rel="tag">#Mac OS X</a>
 	</span>
 	<span itemprop="keywords">
-		<a href="/tag/deti" rel="tag">#дети</a>
+		<a href="/tag/mysql" rel="tag">#MySQL</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/perevod" rel="tag">#перевод</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/sbrasyvaem-parol-mysql" rel="tag">#Сбрасываем пароль MySQL</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/udalyaem-homebrew.html">
+		<h2 itemprop="name headline">Удаляем Homebrew</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2014-08-22T14:33:00+04:00" itemprop="datePublished">Fri 22 August 2014</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p>Случилось так что нужно удалить Homebrew, окей. Решить задачу, как всегда, можно несколькими способами.</p>
+<!--more-->
+
+<p>Первый способ. Для этого нужно выполнить в консоли:</p>
+<div class="highlight"><pre><span></span><code><span class="err">cd `brew --prefix`</span>
+<span class="err">rm -rf Cellar</span>
+<span class="err">brew prune</span>
+<span class="err">rm `git ls-files`</span>
+<span class="err">rm -r Library/Homebrew Library/Aliases Library/Formula Library/Contributions</span>
+<span class="err">rm -rf .git</span>
+<span class="err">rm -rf ~/Library/Caches …</span></code></pre></div></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/homebrew" rel="tag">#homebrew</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/mac-os-x" rel="tag">#Mac OS X</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/udaliaem-homebrew" rel="tag">#Удаляем Homebrew</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/razbiraem-wd-cloud.html">
+		<h2 itemprop="name headline">Разбираем WD My Cloud</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2014-07-14T09:40:00+04:00" itemprop="datePublished">Mon 14 July 2014</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p>У нас две задачи - разобрать и не сломать пока разбираем. Буду делать это с уже пустой коробкой, т.к. не зачем лишний раз кантовать диск).<!--more--></p>
+<p>Делать это будем положив девайс на бок.</p>
+<p><img alt="Разбираем WD My Cloud. Step 1" src="images/wpid-20140713_194811.jpg"></p>
+<p>А в качестве инструмента подойдёт пластиковая карта. Таким образом в случае резкого движения мы не поцарапаем корпус или …</p></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/hardware" rel="tag">#Hardware</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/wd-my-cloud" rel="tag">#WD My Cloud</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/razborka" rel="tag">#Разборка</a>
 	</span>
 </div>
 <hr>
@@ -408,7 +416,6 @@
     <li class=""><a href="/index.html">1</a></li>
     <li class="active"><a href="/index2.html">2</a></li>
     <li class=""><a href="/index3.html">3</a></li>
-    <li class=""><a href="/index4.html">4</a></li>
 
     <li class="next"><a href="/index3.html">Next &rarr;</a></li>
 
@@ -420,7 +427,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 text-center center-block aw-bottom">
-            <p>© <a href="/">Warmwave Blog</a> 2015 - 2021 </p>
+            <p>© <a href="/">Warmwave Blog</a> 2015 - 2022 </p>
         </div>
     </div>
 </div>
