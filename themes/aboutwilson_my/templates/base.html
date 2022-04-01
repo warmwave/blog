@@ -24,19 +24,24 @@
 <div class="container">
     <div class="page-header text-center">
         <a href="/" title="{{ SITENAME }}" rel="home">
-            <img src="{{ SITEURL }}/uploads/favicon.png" alt="{{ SITENAME }}">
+            <img src="{{ SITEURL }}/images/favicon.png" alt="{{ SITENAME }}">
         </a>
         <div class="menu">
-            {# <a class="menu-link pull-left" href="/archives.html">ВСЁ</a> #}
             {% for title, link in MENUITEMS %}
                 <span class="menu-item"><a class="menu-link" href="{{ link }}">{{ title }}</a></span>
             {% endfor %}
-            {# <a class="menu-link pull-right" href="/donate.html">СКАЗАТЬ "СПАСИБО!"</a> #}
+        </div>
+        <div class="menu">
+            {% for title, link in MENUITEMS2 %}
+                <span class="menu-item"><a class="menu-link" href="{{ link }}">{{ title }}</a></span>
+            {% endfor %}
+        </div>
+        <div class="menu">
+            {% for title, link in MENUITEMS3 %}
+                <span class="menu-item"><a class="menu-link" href="{{ link }}">{{ title }}</a></span>
+            {% endfor %}
         </div>
     </div>
-{#     {% for title, link in MENUITEMS2 %}
-        <li><a href="{{ link }}" class="">{{ title }}</a></li>
-    {% endfor %} #}
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             {% block content %}{% endblock %}
