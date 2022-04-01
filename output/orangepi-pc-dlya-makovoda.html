@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>OrangePi PC Plus в OSX — Warmwave Blog</title>
+    <meta name="description"
+          content="Title: OrangePi PC Plus в OSX; Date: 2017-12-12; Author: azq">
+    <meta name="author" content="azq">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="/theme/html5.js"></script>
+    <![endif]-->
+    <link href="/theme/css/ipython.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+    <link href="/theme/css/local.css" rel="stylesheet">
+    <link href="/theme/css/pygments.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="page-header text-center">
+        <a href="/" title="Warmwave Blog" rel="home">
+            <img src="/uploads/favicon.png" alt="Warmwave Blog">
+        </a>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/category/kompy-i-seti">Компы и сети</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/shumy-i-zvuki">Шумы и звуки</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/tela-i-dushi">Тела и души</a></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="article-header">
+		<h1 itemprop="name headline" class="article-title">OrangePi PC Plus в OSX</h1>
+		<div>
+			<span itemprop="articleSection" class="pull-left">
+				<i class="fa fa-list"></i>
+				<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+			</span>
+
+			<span itemprop="author" itemscope itemtype="http://schema.org/Person" class="pull-left">
+				<div itemprop="name"><i class="fa fa-user"></i> azq</div>
+			</span>
+
+			<i class="fa fa-clock-o"></i>
+			<time datetime="2017-12-12T15:11:00+03:00" itemprop="datePublished">Вт 12 декабря 2017</time>
+		</div>
+ 
+		<div>
+			<i class="fa fa-tags"></i>
+			<span itemprop="keywords">
+				<a href="/tag/mac-os-x" rel="tag">#Mac OS X</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/orangepi" rel="tag">#OrangePi</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/osx" rel="tag">#OSX</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/sierra" rel="tag">#Sierra</a>
+			</span>
+		</div>
+	</div>
+	<div itemprop="articleBody" class="article-body"><p><em>Пост носит формат памятки, памятки о OrangePi PC+ и еже с ним. Пост будет периодически дополняться... Если появляются вопросы готов ответить.</em></p>
+<p><a href="#install">Установка системы на SD</a><br>
+<a href="#date">Настраиваем часовой пояс и время</a><br>
+<a href="#domoticz">Domoticz, установка и первоначальная настройка</a></p>
+<p>И так, вот у нас на руках OrangePi PC+, мы подключаем её и видим какой-то характерный китайский [бред]{style="text-decoration: line-through;"} андройд, наверно. Нужно поставить то, что, для начала, можно хотя бы прочитать...</p>
+<!--more-->
+
+<h2 id="install">Установка системы на SD</h2>
+<p>Для того чтобы загрузиться со своей системы, нужно в слот для MicroSD вставить карту с ОС, если такая есть, то железка в первую очередь будет стараться загрузиться с неё.</p>
+<ol>
+<li>Скачиваем подходящий образ <a href="http://www.orangepi.org/downloadresources/">тут</a> (http://www.orangepi.org/downloadresources/) и распаковываем(можно установить xz с помощью <a href="tag/homebrew">homebrew</a>).</li>
+<li>Устанавливаем систему, раскатав скачанный образ на SD-флешку:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="err">sudo dd if=~/Downloads/Armbian_5.35_Orangepipcplus_Ubuntu_xenial_default_3.4.113_desktop of=/dev/disk2</span>
+</code></pre></div>
+
+
+<p><em>/dev/disk2</em> - это наша флешка. На какое устройство раскатывать систему нужно смотреть в "<strong>Дисковой утилите</strong>" или через <strong>diskutil list</strong></p>
+<p><img alt="" src="uploads/Дисковая-утилита-2017-12-12-00-27-44.png"></p>
+<p>Ждать придётся долго, но по завершению увидим что-то подобное:</p>
+<div class="highlight"><pre><span></span><code><span class="err">6553600+0 records in</span>
+<span class="err">6553600+0 records out</span>
+<span class="err">3355443200 bytes (3.4 GB) copied, 548.165 s, 6.1 MB/s</span>
+</code></pre></div>
+
+
+<p>После можно грузиться с флешки. Просто вставляем её в апельсин и включаем питание.</p>
+<p>Подключив мышь, клаву и монитор можно получить доступ к десктопу, или воспользоваться ssh-доступом(user — <strong>root</strong>, pass — <strong>orangepi</strong> или <strong>1234</strong>). Что-бы узнать IP загляните в список DHCP клиентов на вашем роутере.</p>
+<h2 id="date">Настраиваем часовой пояс и время</h2>
+<div class="highlight"><pre><span></span><code><span class="err">dpkg-reconfigure tzdata</span>
+<span class="err">apt-get install ntp ntpdate</span>
+</code></pre></div>
+
+
+<h2 id="domoticz">Установка Domoticz</h2>
+<p>Устанавливается Domoticz одной командой:</p>
+<div class="highlight"><pre><span></span><code><span class="err">sudo curl -L install.domoticz.com | bash</span>
+</code></pre></div>
+
+
+<p><img alt="Установка Domoticz" src="uploads/image_out.gif"></p>
+<p>На все диалоги отвечаем нажатием на "Enter"</p></div>
+	<hr>
+        <ul>
+            <li><a href="/hackosx-chast-dva-osx-hackstools-pentesting.html">HackOSX: часть два. OSX, hackstools, пентестинг.</a></li>
+            <li><a href="/pyenv-na-os-x.html">PyEnv на OS X - Менеджер версий для python</a></li>
+            <li><a href="/python3-and-virtualenv-in-sierra.html">Python3 и virtualenv в Sierra. Установка и настройка</a></li>
+            <li><a href="/metasploit-framework-ustanovka-na-os-x.html">Metasploit Framework. Установка на OS X. Старая версия</a></li>
+            <li><a href="/menyaem-root-parol-mysql-v-mac-os-x.html">Меняем root-пароль MySQL в MAC OS X</a></li>
+        </ul>
+	<!--<h2>Comments</h2>-->
+	<!---->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'blog-warmwave-ru';
+    var disqus_title = 'OrangePi PC Plus в OSX';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+        </div>
+    </div>
+    <!-- <hr> -->
+</div> <!-- /container -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center center-block aw-bottom">
+            <p>© <a href="/">Warmwave Blog</a> 2015 - 2021 </p>
+        </div>
+    </div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("div.collapseheader").click(function () {
+            $header = $(this).children("span").first();
+            $codearea = $(this).children(".input_area");
+            $codearea.slideToggle(500, function () {
+                $header.text(function () {
+                    return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym"); ym(31235428, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/31235428" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+<script>
+	var tazeros_stats_config = {
+		site_id: 1561980341,
+		permission: "yes"
+	};
+ </script>
+ <script async src="https://stats.tazeros.com/v3.js"></script><!---->
+</body>
+</html>

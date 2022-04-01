@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Warmwave Blog</title>
+    <meta name="description"
+          content="Coding, scientific development, finance, data analysis, visualization, statistics, and machine learning">
+    <meta name="author" content="azq">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="/theme/html5.js"></script>
+    <![endif]-->
+    <link href="/theme/css/ipython.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+    <link href="/theme/css/local.css" rel="stylesheet">
+    <link href="/theme/css/pygments.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="page-header text-center">
+        <a href="/" title="Warmwave Blog" rel="home">
+            <img src="/uploads/favicon.png" alt="Warmwave Blog">
+        </a>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/category/kompy-i-seti">Компы и сети</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/shumy-i-zvuki">Шумы и звуки</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/tela-i-dushi">Тела и души</a></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+        
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/oshibka-gpg-sleduyushhie-podpisi-nevernye-keyexpired.html">
+		<h2 itemprop="name headline">Ошибка GPG. Следующие подписи неверные: KEYEXPIRED</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2017-11-06T02:49:00+03:00" itemprop="datePublished">Пн 06 ноября 2017</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p>При обновлении пакетов заметил следущее:</p>
+<div class="highlight"><pre><span></span><code><span class="err">Получено 86,1 kБ за 5с (15,1 kБ/c)</span>
+<span class="err">Чтение списков пакетов… Готово</span>
+<span class="c">W: Ошибка GPG: http://debian-archive.trafficmanager.net jessie InRelease: Следующие подписи неверные: KEYEXPIRED 1507383481</span>
+</code></pre></div>
+
+
+<h2>Всё решается, всё просто.</h2>
+<div class="highlight"><pre><span></span><code><span class="err">➜ ~ apt-key list | grep expired</span>
+</code></pre></div>
+
+
+<p>или</p>
+<div class="highlight"><pre><span></span><code><span class="err">➜ ~ apt-key list | grep просрочен</span>
+<span class="err">pub 4096R/B98321F9 2010-08-07 …</span></code></pre></div></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/apt" rel="tag">#apt</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/apt-key" rel="tag">#apt-key</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/debian" rel="tag">#Debian</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/awstats-ispmanager4-centos6-i-oshibka-segmentirovaniya.html">
+		<h2 itemprop="name headline">Awstats, ISPmanager4, CentOS6 и ошибка сегментирования.</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2017-08-14T19:22:00+03:00" itemprop="datePublished">Пн 14 августа 2017</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p>Изначально сам Awstats ставился отсюда:</p>
+<div class="highlight"><pre><span></span><code><span class="c">https://sourceforge.net/projects/awstats/files/AWStats/7.6/</span>
+</code></pre></div>
+
+
+<p>Соответственно, версия - awstats-7.6-1. Далее был поправлен конфиг /etc/httpd/conf.d/awstats.conf, очищен кэш ISPmanager.<br>
+<strong>В итоге Awstats заработал.</strong></p>
+<p>Но две недели назад Awstats перестал обновлять статистику, хотя логи ротировались, и посещаемость у сайтов …</p></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/awstats" rel="tag">#Awstats</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/centos" rel="tag">#CentOS</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/ispmanager" rel="tag">#ISPmanager</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/ispmanager4" rel="tag">#ISPmanager4</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/ispmgr" rel="tag">#ISPmgr</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/pyenv-na-os-x.html">
+		<h2 itemprop="name headline">PyEnv на OS X - Менеджер версий для python</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2016-11-30T02:19:00+03:00" itemprop="datePublished">Ср 30 ноября 2016</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p><strong>О том как установить PyEnv и всё что для него нужно в OS X. PyEnv - это такая магическая штука которая позволяет иметь в системе несколько версий Python и легко переключаться между ними. Иногда даже автоматически)))</strong></p>
+<h2>Установка.</h2>
+<p>С помощью уже привычного <a href="/tag/homebrew">Homebrew</a> устанавливаем необходимые пакеты.</p>
+<div class="highlight"><pre><span></span><code><span class="err">brew install pyenv pyenv-virtualenv pyenv-virtualenvwrapper pyenv-ccache …</span></code></pre></div></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/homebrew" rel="tag">#homebrew</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/mac-os-x" rel="tag">#Mac OS X</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/pyenv" rel="tag">#pyenv</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/python" rel="tag">#python</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/sierra" rel="tag">#Sierra</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/python3-and-virtualenv-in-sierra.html">
+		<h2 itemprop="name headline">Python3 и virtualenv в Sierra. Установка и настройка</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2016-10-31T16:12:00+03:00" itemprop="datePublished">Пн 31 октября 2016</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p>Это обновлённый материал о настройке Python3 и virtualenv по мотивам двух предыдущих: "<a href="http://blog.warmwave.ru/kompy-i-seti/nastrojjka-python-django-v-mac.html">Настройка Python и Django в Mac</a>" и "<a href="http://blog.warmwave.ru/kompy-i-seti/ustanovka-python-virtualenv-na-mac.html">Virtualenv на Mac OS X</a>". Всё описанное тут актуально для OS X Sierra. Если вам не понятен материал, задавайте вопросы в комментариях или же обратитесь к ссылкам выше.</p>
+<h2>Подготовка. Установка Homebrew …</h2></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/homebrew" rel="tag">#homebrew</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/mac-os-x" rel="tag">#Mac OS X</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/python" rel="tag">#python</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/sierra" rel="tag">#Sierra</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/virtualenv" rel="tag">#virtualenv</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/virtualenvwrapper" rel="tag">#virtualenvwrapper</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/steam-tancy-s-bubnom-i-ustanovka-na-ubuntu.html">
+		<h2 itemprop="name headline">Steam. Танцы с бубном и установка на Ubuntu.</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2016-10-20T17:56:00+03:00" itemprop="datePublished">Чт 20 октября 2016</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p>Всё началось с того, что мой друг, играющий в компьютерные игры, замучился с тормозами системы, вирусами и непонятно откуда взявшимися приложениями от mail.ru. Дружище как раз играл в Steam-игры. А к OC Windows у меня давно сложившееся негативное отношение...<!--more--></p>
+<p><strong>Итак, задача: установить Steam на Linux.</strong></p>
+<h2>Заход первый (совершенно неправильный …</h2></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/debian" rel="tag">#Debian</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/steam" rel="tag">#Steam</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/steamos" rel="tag">#SteamOS</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/ubuntu" rel="tag">#Ubuntu</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/rannee-razvitie-eto-chto.html">
+		<h2 itemprop="name headline">Раннее развитие - это что?</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2016-07-16T13:09:00+03:00" itemprop="datePublished">Сб 16 июля 2016</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">masya</span>
+	</span>
+	<div class="summary"><p>Раннее развитие - это плохо или хорошо? Прежде чем судить об этом стоит разобраться - а что же это такое?<br>
+Тот, кто пытался найти ответ на этот вопрос уже наткнулся на различные школы, программы и методы. Можно водить малыша на занятия, а можно самостоятельно заняться плотным воспитанием чада.<br>
+Итак, раннее развитие - это …</p></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/tela-i-dushi" rel="category">Тела и души</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/vospitanie" rel="tag">#воспитание</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/deti" rel="tag">#дети</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/ranneerazvitie" rel="tag">#раннееразвитие</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/sovety" rel="tag">#советы</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/vospitanie-rebenka-ochen-tonkij-i-kropotlivyj-process.html">
+		<h2 itemprop="name headline">Воспитание ребенка - очень тонкий и кропотливый процесс.</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2016-06-13T22:56:00+03:00" itemprop="datePublished">Пн 13 июня 2016</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">masya</span>
+	</span>
+	<div class="summary"><p>[Воспитание ребенка - очень тонкий и кропотливый процесс, это настоящий труд, работа с хрупкой душой человека. За тысячи лет, которые люди прожили на Земле и собрали большой опыт в отношениях друг с другом, конечно же, найдутся рекомендации и в области позитивной педагогики.]{style="font-weight: 400;"}</p>
+<p>[Одни из таких дают буддистские монахи …</p></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/tela-i-dushi" rel="category">Тела и души</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/vospitanie" rel="tag">#воспитание</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/deti" rel="tag">#дети</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/liudi" rel="tag">#люди</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/vosem-sobesednikov-naprotiv.html">
+		<h2 itemprop="name headline">Восемь собеседников напротив</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2015-07-26T15:25:00+03:00" itemprop="datePublished">Вс 26 июля 2015</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">masya</span>
+	</span>
+	<div class="summary"><p>На Земле живет очень много людей, чтобы что-то сделать, нужно уметь взаимодействовать друг с другом, находить общий язык. Успех общения зависит от многого: заинтересованность в беседе, компетентность в теме разговора, внимание к собеседнику, умение слушать, умение грамотно выражать свои мысли. Для многих общение - это автоматический процесс, мы говорим так как …</p></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/tela-i-dushi" rel="category">Тела и души</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/beseda" rel="tag">#беседа</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/interesno" rel="tag">#интересно</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/liudi" rel="tag">#люди</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/obshchenie" rel="tag">#общение</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/sovety" rel="tag">#советы</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/tipysobesednikov" rel="tag">#типысобеседников</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/bluzhdaya-po-labirintam-svoikh-vnutrennikh-oshhushhenijj.html">
+		<h2 itemprop="name headline">Блуждая по лабиринтам своих внутренних ощущений...</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2015-07-24T09:46:00+03:00" itemprop="datePublished">Пт 24 июля 2015</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">masya</span>
+	</span>
+	<div class="summary"><p>Вы никогда раньше не задумывались над тем, как тонко мы чувствуем мир и как редко мы это замечаем? Нет, а жаль... что же толкает людей на подобные размышления, куда они приводят нас, а, может, к кому?</p>
+<p>Иногда мы сами не ожидаем своей реакции на что-либо, произошедшее вокруг, а если начинаем …</p></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/tela-i-dushi" rel="category">Тела и души</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/zaglianutvsebia" rel="tag">#заглянутьвсебя</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/interesno" rel="tag">#интересно</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/myslivslukh" rel="tag">#мысливслух</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/razmyshleniia" rel="tag">#размышления</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/vse-luchshee-detyam.html">
+		<h2 itemprop="name headline">Все лучшее детям!</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2015-07-14T16:46:00+03:00" itemprop="datePublished">Вт 14 июля 2015</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">masya</span>
+	</span>
+	<div class="summary"><p>Когда растут дети, появляется желание дать им все и сразу. Мысль приходит подобная: "Хочу, чтобы вырос лучше, чем я." Воспитать хорошего человека может каждый, и это факт! Сейчас, во время доступности любой информации, можно научиться самостоятельно очень многим и разным по своей природе вещам. А можно ли таким образом стать …</p></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/tela-i-dushi" rel="category">Тела и души</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/vospitanie" rel="tag">#воспитание</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/deti" rel="tag">#дети</a>
+	</span>
+</div>
+<hr>
+ <div class="pagination text-center">
+<ul>
+    <li class="prev"><a href="/index.html">&larr; Previous</a></li>
+
+    <li class=""><a href="/index.html">1</a></li>
+    <li class="active"><a href="/index2.html">2</a></li>
+    <li class=""><a href="/index3.html">3</a></li>
+    <li class=""><a href="/index4.html">4</a></li>
+
+    <li class="next"><a href="/index3.html">Next &rarr;</a></li>
+
+</ul>
+</div>         </div>
+    </div>
+    <!-- <hr> -->
+</div> <!-- /container -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center center-block aw-bottom">
+            <p>© <a href="/">Warmwave Blog</a> 2015 - 2021 </p>
+        </div>
+    </div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("div.collapseheader").click(function () {
+            $header = $(this).children("span").first();
+            $codearea = $(this).children(".input_area");
+            $codearea.slideToggle(500, function () {
+                $header.text(function () {
+                    return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym"); ym(31235428, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/31235428" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+<script>
+	var tazeros_stats_config = {
+		site_id: 1561980341,
+		permission: "yes"
+	};
+ </script>
+ <script async src="https://stats.tazeros.com/v3.js"></script><!---->
+</body>
+</html>

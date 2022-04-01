@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Установка HelpDesk-системы на CentOS — Warmwave Blog</title>
+    <meta name="description"
+          content="Title: Установка HelpDesk-системы на CentOS; Date: 2016-11-29; Author: azq">
+    <meta name="author" content="azq">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="/theme/html5.js"></script>
+    <![endif]-->
+    <link href="/theme/css/ipython.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+    <link href="/theme/css/local.css" rel="stylesheet">
+    <link href="/theme/css/pygments.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="page-header text-center">
+        <a href="/" title="Warmwave Blog" rel="home">
+            <img src="/uploads/favicon.png" alt="Warmwave Blog">
+        </a>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/category/kompy-i-seti">Компы и сети</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/shumy-i-zvuki">Шумы и звуки</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/tela-i-dushi">Тела и души</a></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="article-header">
+		<h1 itemprop="name headline" class="article-title">Установка HelpDesk-системы на CentOS</h1>
+		<div>
+			<span itemprop="articleSection" class="pull-left">
+				<i class="fa fa-list"></i>
+				<a href="/category/bez-rubriki" rel="category">Без рубрики</a>
+			</span>
+
+			<span itemprop="author" itemscope itemtype="http://schema.org/Person" class="pull-left">
+				<div itemprop="name"><i class="fa fa-user"></i> azq</div>
+			</span>
+
+			<i class="fa fa-clock-o"></i>
+			<time datetime="2016-11-29T23:01:00+03:00" itemprop="datePublished">Вт 29 ноября 2016</time>
+		</div>
+ 
+		<div>
+			<i class="fa fa-tags"></i>
+			<span itemprop="keywords">
+				<a href="/tag/centos" rel="tag">#CentOS</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/helpdesk" rel="tag">#HelpDesk</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/mongodb" rel="tag">#MongoDB</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/nodejs" rel="tag">#Node.js</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/reactjs" rel="tag">#React.js</a>
+			</span>
+		</div>
+	</div>
+	<div itemprop="articleBody" class="article-body"><p><strong>В этой статье устанавливаем тикет-систему, которая работает на Node.js и MongoDB, фронтэнд - React.js</strong></p>
+<!--more-->
+
+<p>Всё началось с заказа на <a href="https://www.fl.ru/projects/?ref=26908">FL.ru</a>. Заказчик хотел иметь HelpDesk-систему (<a href="https://github.com/SibirixScrum/HelpDesk">https://github.com/SibirixScrum/HelpDesk</a>) и возможность получать и обрабатывать тикеты от своих клиентов. Так же у клиента оказался сервер на CentOS которым он управлял при помощи панели VestaCP, на нём и нужно было развернуть эту систему.</p>
+<p>Давайте условимся что домен на котором будет висеть система - domain.com. Он уже добавлен через панель управления и делегирован. Так же в системе уже стоит nodejs и mongo.</p>
+<p>Из плюсов системы могу отметить:</p>
+<ul>
+<li><strong>Красивый интерфейс</strong></li>
+<li><strong>Простота установки и администрирования</strong></li>
+<li><strong>Автоматическое создание тикета при получении email</strong></li>
+</ul>
+<p>``` {.lang:default .decode:true}
+server {
+    listen      89.108.76.255:80;
+    server_name partner.unisolar.ru www.partner.unisolar.ru partner-unisolar-ru.unisolar.ru;
+    error_log  /var/log/httpd/domains/partner.unisolar.ru.error.log error;</p>
+<div class="highlight"><pre><span></span><code><span class="n">location</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">proxy_pass</span><span class="w">      </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">89.108.76.255</span><span class="err">:</span><span class="mi">8080</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">location</span><span class="w"> </span><span class="o">~*</span><span class="w"> </span><span class="o">^</span><span class="p">.</span><span class="o">+</span><span class="err">\</span><span class="p">.(</span><span class="n">jpeg</span><span class="o">|</span><span class="n">jpg</span><span class="o">|</span><span class="n">png</span><span class="o">|</span><span class="n">gif</span><span class="o">|</span><span class="n">bmp</span><span class="o">|</span><span class="n">ico</span><span class="o">|</span><span class="n">svg</span><span class="o">|</span><span class="n">tif</span><span class="o">|</span><span class="n">tiff</span><span class="o">|</span><span class="n">css</span><span class="o">|</span><span class="n">js</span><span class="o">|</span><span class="n">htm</span><span class="o">|</span><span class="n">html</span><span class="o">|</span><span class="n">ttf</span><span class="o">|</span><span class="n">otf</span><span class="o">|</span><span class="n">webp</span><span class="o">|</span><span class="n">woff</span><span class="o">|</span><span class="n">txt</span><span class="o">|</span><span class="n">csv</span><span class="o">|</span><span class="n">rtf</span><span class="o">|</span><span class="n">doc</span><span class="o">|</span><span class="n">docx</span><span class="o">|</span><span class="n">xls</span><span class="o">|</span><span class="n">xlsx</span><span class="o">|</span><span class="n">ppt</span><span class="o">|</span><span class="n">pptx</span><span class="o">|</span><span class="n">odf</span><span class="o">|</span><span class="n">odp</span><span class="o">|</span><span class="n">ods</span><span class="o">|</span><span class="n">odt</span><span class="o">|</span><span class="n">pdf</span><span class="o">|</span><span class="n">psd</span><span class="o">|</span><span class="n">ai</span><span class="o">|</span><span class="n">eot</span><span class="o">|</span><span class="n">eps</span><span class="o">|</span><span class="n">ps</span><span class="o">|</span><span class="n">zip</span><span class="o">|</span><span class="n">tar</span><span class="o">|</span><span class="n">tgz</span><span class="o">|</span><span class="n">gz</span><span class="o">|</span><span class="n">rar</span><span class="o">|</span><span class="n">bz2</span><span class="o">|</span><span class="mi">7</span><span class="n">z</span><span class="o">|</span><span class="n">aac</span><span class="o">|</span><span class="n">m4a</span><span class="o">|</span><span class="n">mp3</span><span class="o">|</span><span class="n">mp4</span><span class="o">|</span><span class="n">ogg</span><span class="o">|</span><span class="n">wav</span><span class="o">|</span><span class="n">wma</span><span class="o">|</span><span class="mi">3</span><span class="n">gp</span><span class="o">|</span><span class="n">avi</span><span class="o">|</span><span class="n">flv</span><span class="o">|</span><span class="n">m4v</span><span class="o">|</span><span class="n">mkv</span><span class="o">|</span><span class="n">mov</span><span class="o">|</span><span class="p">)</span><span class="err">$</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">root</span><span class="w">           </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">admin</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">partner</span><span class="p">.</span><span class="n">unisolar</span><span class="p">.</span><span class="n">ru</span><span class="o">/</span><span class="n">public_html</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">access_log</span><span class="w">     </span><span class="o">/</span><span class="nf">var</span><span class="o">/</span><span class="nf">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">domains</span><span class="o">/</span><span class="n">partner</span><span class="p">.</span><span class="n">unisolar</span><span class="p">.</span><span class="n">ru</span><span class="p">.</span><span class="nf">log</span><span class="w"> </span><span class="n">combined</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">access_log</span><span class="w">     </span><span class="o">/</span><span class="nf">var</span><span class="o">/</span><span class="nf">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">domains</span><span class="o">/</span><span class="n">partner</span><span class="p">.</span><span class="n">unisolar</span><span class="p">.</span><span class="n">ru</span><span class="p">.</span><span class="n">bytes</span><span class="w"> </span><span class="n">bytes</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">expires</span><span class="w">        </span><span class="nf">max</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">try_files</span><span class="w">      </span><span class="err">$</span><span class="n">uri</span><span class="w"> </span><span class="nv">@fallback</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+
+<span class="n">location</span><span class="w"> </span><span class="o">/</span><span class="n">error</span><span class="o">/</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">alias</span><span class="w">   </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">admin</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">partner</span><span class="p">.</span><span class="n">unisolar</span><span class="p">.</span><span class="n">ru</span><span class="o">/</span><span class="n">document_errors</span><span class="o">/</span><span class="p">;</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+
+<span class="n">location</span><span class="w"> </span><span class="nv">@fallback</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">proxy_pass</span><span class="w">      </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="mf">89.108.76.255</span><span class="err">:</span><span class="mi">8080</span><span class="p">;</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+
+<span class="n">location</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="o">/</span><span class="err">\</span><span class="p">.</span><span class="n">ht</span><span class="w">    </span><span class="err">{</span><span class="k">return</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span><span class="err">}</span><span class="w"></span>
+<span class="n">location</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="o">/</span><span class="err">\</span><span class="p">.</span><span class="n">svn</span><span class="o">/</span><span class="w">  </span><span class="err">{</span><span class="k">return</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span><span class="err">}</span><span class="w"></span>
+<span class="n">location</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="o">/</span><span class="err">\</span><span class="p">.</span><span class="n">git</span><span class="o">/</span><span class="w">  </span><span class="err">{</span><span class="k">return</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span><span class="err">}</span><span class="w"></span>
+<span class="n">location</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="o">/</span><span class="err">\</span><span class="p">.</span><span class="n">hg</span><span class="o">/</span><span class="w">   </span><span class="err">{</span><span class="k">return</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span><span class="err">}</span><span class="w"></span>
+<span class="n">location</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="o">/</span><span class="err">\</span><span class="p">.</span><span class="n">bzr</span><span class="o">/</span><span class="w">  </span><span class="err">{</span><span class="k">return</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span><span class="err">}</span><span class="w"></span>
+
+<span class="k">include</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">admin</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">nginx</span><span class="p">.</span><span class="n">partner</span><span class="p">.</span><span class="n">unisolar</span><span class="p">.</span><span class="n">ru</span><span class="p">.</span><span class="n">conf</span><span class="o">*</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+
+
+<p>}</p>
+<hr>
+<p>server {
+    listen      89.108.76.255:80;
+    server_name partner.unisolar.ru www.partner.unisolar.ru partner-unisolar-ru.unisolar.ru;
+    error_log  /var/log/httpd/domains/partner.unisolar.ru.error.log error;</p>
+<div class="highlight"><pre><span></span><code><span class="n">location</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">proxy_pass</span><span class="w">      </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="nl">localhost</span><span class="p">:</span><span class="mi">3000</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">proxy_http_version</span><span class="w"> </span><span class="mf">1.1</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">proxy_set_header</span><span class="w"> </span><span class="n">Upgrade</span><span class="w"> </span><span class="err">$</span><span class="n">http_upgrade</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">proxy_set_header</span><span class="w"> </span><span class="k">Connection</span><span class="w"> </span><span class="s1">&#39;upgrade&#39;</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">proxy_set_header</span><span class="w"> </span><span class="k">Host</span><span class="w"> </span><span class="err">$</span><span class="k">host</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">proxy_cache_bypass</span><span class="w"> </span><span class="err">$</span><span class="n">http_upgrade</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">root</span><span class="w"> </span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">helpdesk</span><span class="o">/</span><span class="k">public</span><span class="o">/</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="n">location</span><span class="w"> </span><span class="o">~*</span><span class="w"> </span><span class="o">^</span><span class="p">.</span><span class="o">+</span><span class="err">\</span><span class="p">.(</span><span class="n">jpeg</span><span class="o">|</span><span class="n">jpg</span><span class="o">|</span><span class="n">png</span><span class="o">|</span><span class="n">gif</span><span class="o">|</span><span class="n">bmp</span><span class="o">|</span><span class="n">ico</span><span class="o">|</span><span class="n">svg</span><span class="o">|</span><span class="n">tif</span><span class="o">|</span><span class="n">tiff</span><span class="o">|</span><span class="n">css</span><span class="o">|</span><span class="n">js</span><span class="o">|</span><span class="n">htm</span><span class="o">|</span><span class="n">html</span><span class="o">|</span><span class="n">ttf</span><span class="o">|</span><span class="n">otf</span><span class="o">|</span><span class="n">webp</span><span class="o">|</span><span class="n">woff</span><span class="o">|</span><span class="n">txt</span><span class="o">|</span><span class="n">csv</span><span class="o">|</span><span class="n">rtf</span><span class="o">|</span><span class="n">doc</span><span class="o">|</span><span class="n">docx</span><span class="o">|</span><span class="n">xls</span><span class="o">|</span><span class="n">xlsx</span><span class="o">|</span><span class="n">ppt</span><span class="o">|</span><span class="n">pptx</span><span class="o">|</span><span class="n">odf</span><span class="o">|</span><span class="n">odp</span><span class="o">|</span><span class="n">ods</span><span class="o">|</span><span class="n">odt</span><span class="o">|</span><span class="n">pdf</span><span class="o">|</span><span class="n">psd</span><span class="o">|</span><span class="n">ai</span><span class="o">|</span><span class="n">eot</span><span class="o">|</span><span class="n">eps</span><span class="o">|</span><span class="n">ps</span><span class="o">|</span><span class="n">zip</span><span class="o">|</span><span class="n">tar</span><span class="o">|</span><span class="n">tgz</span><span class="o">|</span><span class="n">gz</span><span class="o">|</span><span class="n">rar</span><span class="o">|</span><span class="n">bz2</span><span class="o">|</span><span class="mi">7</span><span class="n">z</span><span class="o">|</span><span class="n">aac</span><span class="o">|</span><span class="n">m4a</span><span class="o">|</span><span class="n">mp3</span><span class="o">|</span><span class="n">mp4</span><span class="o">|</span><span class="n">ogg</span><span class="o">|</span><span class="n">wav</span><span class="o">|</span><span class="n">wma</span><span class="o">|</span><span class="mi">3</span><span class="n">gp</span><span class="o">|</span><span class="n">avi</span><span class="o">|</span><span class="n">flv</span><span class="o">|</span><span class="n">m4v</span><span class="o">|</span><span class="n">mkv</span><span class="o">|</span><span class="n">mov</span><span class="o">|</span><span class="p">)</span><span class="err">$</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">        </span><span class="n">root</span><span class="w">           </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">admin</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">partner</span><span class="p">.</span><span class="n">unisolar</span><span class="p">.</span><span class="n">ru</span><span class="o">/</span><span class="n">public_html</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">access_log</span><span class="w">     </span><span class="o">/</span><span class="nf">var</span><span class="o">/</span><span class="nf">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">domains</span><span class="o">/</span><span class="n">partner</span><span class="p">.</span><span class="n">unisolar</span><span class="p">.</span><span class="n">ru</span><span class="p">.</span><span class="nf">log</span><span class="w"> </span><span class="n">combined</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">access_log</span><span class="w">     </span><span class="o">/</span><span class="nf">var</span><span class="o">/</span><span class="nf">log</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">domains</span><span class="o">/</span><span class="n">partner</span><span class="p">.</span><span class="n">unisolar</span><span class="p">.</span><span class="n">ru</span><span class="p">.</span><span class="n">bytes</span><span class="w"> </span><span class="n">bytes</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">#expires</span><span class="w">        </span><span class="nf">max</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">try_files</span><span class="w">      </span><span class="err">$</span><span class="n">uri</span><span class="w"> </span><span class="nv">@fallback</span><span class="p">;</span><span class="w"></span>
+<span class="w">    </span><span class="err">}</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+
+<span class="n">location</span><span class="w"> </span><span class="o">/</span><span class="n">error</span><span class="o">/</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">    </span><span class="k">alias</span><span class="w">   </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">admin</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">partner</span><span class="p">.</span><span class="n">unisolar</span><span class="p">.</span><span class="n">ru</span><span class="o">/</span><span class="n">document_errors</span><span class="o">/</span><span class="p">;</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+
+<span class="n">location</span><span class="w"> </span><span class="nv">@fallback</span><span class="w"> </span><span class="err">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">proxy_pass</span><span class="w">      </span><span class="nl">http</span><span class="p">:</span><span class="o">//</span><span class="nl">localhost</span><span class="p">:</span><span class="mi">3000</span><span class="p">;</span><span class="w"></span>
+<span class="err">}</span><span class="w"></span>
+
+<span class="n">location</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="o">/</span><span class="err">\</span><span class="p">.</span><span class="n">ht</span><span class="w">    </span><span class="err">{</span><span class="k">return</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span><span class="err">}</span><span class="w"></span>
+<span class="n">location</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="o">/</span><span class="err">\</span><span class="p">.</span><span class="n">svn</span><span class="o">/</span><span class="w">  </span><span class="err">{</span><span class="k">return</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span><span class="err">}</span><span class="w"></span>
+<span class="n">location</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="o">/</span><span class="err">\</span><span class="p">.</span><span class="n">git</span><span class="o">/</span><span class="w">  </span><span class="err">{</span><span class="k">return</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span><span class="err">}</span><span class="w"></span>
+<span class="n">location</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="o">/</span><span class="err">\</span><span class="p">.</span><span class="n">hg</span><span class="o">/</span><span class="w">   </span><span class="err">{</span><span class="k">return</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span><span class="err">}</span><span class="w"></span>
+<span class="n">location</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="o">/</span><span class="err">\</span><span class="p">.</span><span class="n">bzr</span><span class="o">/</span><span class="w">  </span><span class="err">{</span><span class="k">return</span><span class="w"> </span><span class="mi">404</span><span class="p">;</span><span class="err">}</span><span class="w"></span>
+
+<span class="k">include</span><span class="w"> </span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="k">admin</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">nginx</span><span class="p">.</span><span class="n">partner</span><span class="p">.</span><span class="n">unisolar</span><span class="p">.</span><span class="n">ru</span><span class="p">.</span><span class="n">conf</span><span class="o">*</span><span class="p">;</span><span class="w"></span>
+</code></pre></div>
+
+
+<p>}
+```</p></div>
+	<hr>
+        <ul>
+            <li><a href="/awstats-ispmanager4-centos6-i-oshibka-segmentirovaniya.html">Awstats, ISPmanager4, CentOS6 и ошибка сегментирования.</a></li>
+        </ul>
+	<!--<h2>Comments</h2>-->
+	<!---->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'blog-warmwave-ru';
+    var disqus_title = 'Установка HelpDesk-системы на CentOS';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+        </div>
+    </div>
+    <!-- <hr> -->
+</div> <!-- /container -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center center-block aw-bottom">
+            <p>© <a href="/">Warmwave Blog</a> 2015 - 2021 </p>
+        </div>
+    </div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("div.collapseheader").click(function () {
+            $header = $(this).children("span").first();
+            $codearea = $(this).children(".input_area");
+            $codearea.slideToggle(500, function () {
+                $header.text(function () {
+                    return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym"); ym(31235428, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/31235428" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+<script>
+	var tazeros_stats_config = {
+		site_id: 1561980341,
+		permission: "yes"
+	};
+ </script>
+ <script async src="https://stats.tazeros.com/v3.js"></script><!---->
+</body>
+</html>

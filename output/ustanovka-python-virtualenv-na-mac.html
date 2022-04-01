@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Virtualenv на Mac OS X — Warmwave Blog</title>
+    <meta name="description"
+          content="Title: Virtualenv на Mac OS X; Date: 2013-07-20; Author: azq">
+    <meta name="author" content="azq">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="/theme/html5.js"></script>
+    <![endif]-->
+    <link href="/theme/css/ipython.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+    <link href="/theme/css/local.css" rel="stylesheet">
+    <link href="/theme/css/pygments.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="page-header text-center">
+        <a href="/" title="Warmwave Blog" rel="home">
+            <img src="/uploads/favicon.png" alt="Warmwave Blog">
+        </a>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/category/kompy-i-seti">Компы и сети</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/shumy-i-zvuki">Шумы и звуки</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/tela-i-dushi">Тела и души</a></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="article-header">
+		<h1 itemprop="name headline" class="article-title">Virtualenv на Mac OS X</h1>
+		<div>
+			<span itemprop="articleSection" class="pull-left">
+				<i class="fa fa-list"></i>
+				<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+			</span>
+
+			<span itemprop="author" itemscope itemtype="http://schema.org/Person" class="pull-left">
+				<div itemprop="name"><i class="fa fa-user"></i> azq</div>
+			</span>
+
+			<i class="fa fa-clock-o"></i>
+			<time datetime="2013-07-20T23:43:00+04:00" itemprop="datePublished">Сб 20 июля 2013</time>
+		</div>
+ 
+		<div>
+			<i class="fa fa-tags"></i>
+			<span itemprop="keywords">
+				<a href="/tag/mac-os-x" rel="tag">#Mac OS X</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/pip" rel="tag">#pip</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/python" rel="tag">#python</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/virtualenv" rel="tag">#virtualenv</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/perevod" rel="tag">#перевод</a>
+			</span>
+		</div>
+	</div>
+	<div itemprop="articleBody" class="article-body"><p>Virtualenv позволяет создать изолированное окружение для вашего проекта. Своеобразная песочница в которой можно как угодно гадить и не опосаться за установленные модули и/или проекты<br>
+<!--more--></p>
+<p>Существует множество способов установки Python и Virtualenv на Mac OS X 10.8 Mountain Lion. Здесь, в этой статье, описан один из них.</p>
+<h2>Первые шаги</h2>
+<p>Предполагается, что вы уже установили Xcode и Homebrew. За подробностями можно обратиться к статье "<a href="/kompy-i-seti/nastrojjka-mac-os-x.html" title="Настройка Mac OS X">Настройка Mac OS X</a>''.</p>
+<h2>Python</h2>
+<p>Мы будем устанавливать Python с помощью Homebrew. Зачем, спросите вы, ведь с Mac OS X он идёт по умолчанию. Вот несколько причин:</p>
+<ul>
+<li>Homebrew всегда имеет самые последние версии (в настоящее время 2.7.5). Версия в комплекте с OS X - 2.7.2.</li>
+<li>Apple зделала значительные изменения в своем комплекте Python, и потенциально содержит ошибки.</li>
+<li>"Домороценный" Python включает в себя последние версии инструментов управления пакетами: <a href="http://www.pip-installer.org/">pip</a> и <a href="http://pythonhosted.org/setuptools/">Setuptools</a></li>
+</ul>
+<p>В Lion версия OpenSSL (0.9.8r) от февраля 2011 года, так что мы скажим хомяку загрузить последнюю версию OpenSSL и компилировать Python с ним.</p>
+<p>Используйте следующую команду для установки Python через Homebrew:</p>
+<div class="highlight"><pre><span></span><code><span class="err">brew install python --with-brewed-openssl</span>
+</code></pre></div>
+
+
+<p>Вы уже изменяли <code>PATH</code>, как сказано в "<a href="/kompy-i-seti/nastrojjka-mac-os-x.html" title="Настройка Mac OS X">Настройка Mac OS X Mountain Lion 10.8</a>'', верно? Если нет, пожалуйста, сделайте это сейчас.</p>
+<p>Опционально можно установить Python 3.x рядом с Python 2.x:</p>
+<div class="highlight"><pre><span></span><code><span class="err">brew install python3 --with-brewed-openssl</span>
+</code></pre></div>
+
+
+<h2>Pip</h2>
+<p>Допустим, вы хотите установить пакет Python, такой как <a href="http://www.virtualenv.org/">virtualenv</a> - инструмент изоляции среды. Почти в каждой статье про Python для Mac OS X рассказывается о способе через <code>sudo easy_install virtualenv</code>. Вот почему я не делаю это так:</p>
+<ol>
+<li>Для этого нужны root права</li>
+<li>Всё барахло устанавливается в глобальную(системную) папку /Library</li>
+<li><a href="http://www.pip-installer.org/">pip</a> развивается болле активно нежели Setuptools’овский <code>easy_install</code></li>
+<li>Используя инструменты предоставленные Homebrew мы получаем более стабильное Python-окружение</li>
+</ol>
+<p>Как вы наверное уже догадались, мы будем использовать инструменты, полученные при установки пакетов Python. Если установка производится с помощью "доморощенного" pip, пакеты будут установлены в /usr/local/lib/python2.7/site-packages, а бинарники будут падать в /usr/local/bin.</p>
+<h2>Система контроля версий</h2>
+<p>Я уже давненько юзаю <a href="http://mercurial.selenic.com/">Mercurial</a>, а репозитории заливаю на <a href="https://bitbucket.org/j/dotfiles">Bitbucket</a> и <a href="https://github.com/justinmayer/dotfiles">GitHub</a>, давайте установим <a href="http://mercurial.selenic.com/">Mercurial</a> и <a href="http://hg-git.github.com/">hg-git</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="err">pip install Mercurial hg-git</span>
+</code></pre></div>
+
+
+<p>Как минимум, потребуется добавить несколько строк в .hgrc файл, чтобы использовать Mercurial:</p>
+<div class="highlight"><pre><span></span><code><span class="err">vim ~/.hgrc</span>
+</code></pre></div>
+
+
+<p>Измените значения на ваше имя и адрес электронной почты, соответственно:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[ui]</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">YOUR NAME &lt;address@example.com&gt;;</span>
+</code></pre></div>
+
+
+<p>Чтобы проверить Mercurial, выполните следующую команду:</p>
+<div class="highlight"><pre><span></span><code><span class="err">hg debuginstall</span>
+</code></pre></div>
+
+
+<p>Если последняя строка - “No problems detected”, значит Mercurial установлен и настроен должным образом..</p>
+<h2>Virtualenv</h2>
+<p>Пакеты Python установлены в \~/.local are indeed local to the user, но они также являются глобальными в том смысле, что они доступны во всех проектах данного пользователя. Это может быть удобнее в разы, но это также создает и проблемы. Для примера, иногда одним проектам нужна последняя версия Django, в то время как другому проекту нужна, например, версия 1.3 для совместимости с используемыми в проекте разшерениями. Чтобы решить эту проблему, и был разработан. В моей системе только <a href="http://www.virtualenv.org/">virtualenv</a>, virtualenvwrapper, и <a href="http://mercurial.selenic.com/">Mercurial</a> доступны для Python, а всё остальное ограничивается виртуальным окружением (т.е. virtualenv).</p>
+<p>Теперь все обьяснения позади, теперьустановим <a href="http://www.virtualenv.org/">virtualenv</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="err">pip install virtualenv</span>
+</code></pre></div>
+
+
+<p>Создим папки для хранения наших проектов и виртуальных сред, соответственно:</p>
+<div class="highlight"><pre><span></span><code><span class="err">mkdir -p ~/Projects ~/Virtualenvs</span>
+</code></pre></div>
+
+
+<p>откроем \~/.bashrc file…</p>
+<div class="highlight"><pre><span></span><code><span class="err">vim ~/.bashrc</span>
+</code></pre></div>
+
+
+<p>… и добавим несколько строк:</p>
+<div class="highlight"><pre><span></span><code><span class="err"># pip должен выполняться только если активирован virtualenv</span>
+<span class="err">export PIP_REQUIRE_VIRTUALENV=true</span>
+<span class="err"># кешируем пакеты чтобы избежать повторной загрузки</span>
+<span class="err">export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache</span>
+</code></pre></div>
+
+
+<p>Перезагружаем bash:</p>
+<div class="highlight"><pre><span></span><code><span class="err">source ~/.bash_profile</span>
+</code></pre></div>
+
+
+<p>Сейчас virtualenv установлен и готов к работе, которые будут храниться в <code>~/Virtualenvs</code>. Новое окружение создаётся следующим образом:</p>
+<div class="highlight"><pre><span></span><code><span class="err">cd ~/Virtualenvs</span>
+<span class="err">virtualenv test</span>
+</code></pre></div>
+
+
+<p>Если у нас стоят оба Python, 2.x и 3.x, можно создать виртуальное окружение с Python 3.x:</p>
+<div class="highlight"><pre><span></span><code><span class="err">virtualenv -p python3 test-py3</span>
+</code></pre></div>
+
+
+<p>… что облегчит переключение между Python 2.x и 3.x</p>
+<h2>Ограничение pip витруальным окружением</h2>
+<p>Что произойдёт, если мы <em>думаем</em>, что работаем в виртуальном окружении, но на самом деле она не активно, а мы устанавливаем что-нибудь с помощью Pip? Тогда в этом случае пакет установится в глобальный site-packages(/usr/local/lib/python2.7/site-packages), сведя на "нет" всю нашу изоляцию.</p>
+<p>К счастью pip имеет один малодокументированный параметр который рещит нашу проблему. На самом деле мы им уже воспользовались). Помните, выше мы писали - <code>export PIP_REQUIRE_VIRTUALENV=true</code>? Например, давайте посмотрим, что происходит, когда мы пытаемся установить пакет в отсутствии активированной виртуальной среды:</p>
+<div class="highlight"><pre><span></span><code>$ pip install markdown
+Could not find an activated virtualenv <span class="o">(</span>required<span class="o">)</span>.
+</code></pre></div>
+
+
+<p>Прекрасно! Но, возникает вопрос, как установить или обновить глобальный пакет? Просто добавляя следующие строки в .bashrc:</p>
+<div class="highlight"><pre><span></span><code><span class="n">gpip</span><span class="p">(){</span>
+   <span class="n">PIP_REQUIRE_VIRTUALENV</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="n">pip</span> <span class="s">&quot;$@&quot;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>Функция выше позволяет нам сделать это через:</p>
+<div class="highlight"><pre><span></span><code><span class="err">gpip install --upgrade --no-use-wheel </span>
+<span class="err">pip setuptools virtualenv</span>
+</code></pre></div>
+
+
+<h2>Создание нового окружения</h2>
+<p>Давайте создадим виртуальную среду для <a href="http://getpelican.com/">Pelican</a>, генератор статического сайта на основе Python, и установим его:</p>
+<div class="highlight"><pre><span></span><code><span class="err">cd ~/Virtualenvs</span>
+<span class="err">virtualenv pelican</span>
+</code></pre></div>
+
+
+<p>Активируем среду:</p>
+<div class="highlight"><pre><span></span><code><span class="err">cd pelican</span>
+<span class="err">. bin/activate</span>
+</code></pre></div>
+
+
+<p>Для установки <a href="http://getpelican.com/">Pelican</a> в окружение успользуем pip:</p>
+<div class="highlight"><pre><span></span><code><span class="err">pip install pelican markdown</span>
+</code></pre></div>
+
+
+<p>Для получения дополнительной информации о виртуальных средах читаем <a href="http://www.virtualenv.org/">virtualenv docs</a>.</p></div>
+	<hr>
+        <ul>
+            <li><a href="/nastrojjka-python-django-v-mac.html">Настройка Python и Django в Mac</a></li>
+            <li><a href="/python3-and-virtualenv-in-sierra.html">Python3 и virtualenv в Sierra. Установка и настройка</a></li>
+            <li><a href="/pyenv-na-os-x.html">PyEnv на OS X - Менеджер версий для python</a></li>
+            <li><a href="/menyaem-root-parol-mysql-v-mac-os-x.html">Меняем root-пароль MySQL в MAC OS X</a></li>
+            <li><a href="/nastrojjka-mac-os-x.html">Настройка Mac OS X (Xcode, Homebrew etc.)</a></li>
+        </ul>
+	<!--<h2>Comments</h2>-->
+	<!---->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'blog-warmwave-ru';
+    var disqus_title = 'Virtualenv на Mac OS X';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+        </div>
+    </div>
+    <!-- <hr> -->
+</div> <!-- /container -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center center-block aw-bottom">
+            <p>© <a href="/">Warmwave Blog</a> 2015 - 2021 </p>
+        </div>
+    </div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("div.collapseheader").click(function () {
+            $header = $(this).children("span").first();
+            $codearea = $(this).children(".input_area");
+            $codearea.slideToggle(500, function () {
+                $header.text(function () {
+                    return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym"); ym(31235428, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/31235428" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+<script>
+	var tazeros_stats_config = {
+		site_id: 1561980341,
+		permission: "yes"
+	};
+ </script>
+ <script async src="https://stats.tazeros.com/v3.js"></script><!---->
+</body>
+</html>
