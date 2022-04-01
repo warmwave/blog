@@ -16,7 +16,7 @@ PATH = 'content'
 OUTPUT_PATH = 'output'
 DELETE_OUTPUT_DIRECTORY = True
 DEFAULT_PAGINATION = 10
-RELATED_POSTS_MAX = 5
+RELATED_POSTS_MAX = 10
 
 TIMEZONE = 'Europe/Moscow'
 CURRENTYEAR = datetime.now().strftime('%Y')
@@ -31,15 +31,13 @@ TAG_URL = 'tag/{slug}'
 TAG_SAVE_AS = 'tag/{slug}/index.html'
 AUTHOR_SAVE_AS = ''
 
-STATIC_PATHS = ['files', 'style.css', 'robots.txt']
+STATIC_PATHS = ['files', 'images', 'style.css', 'robots.txt']
 
 EXTRA_PATH_METADATA = {
-    # 'themes/aboutwilson_my/static/': {'path': 'theme'},
     'style.css': {'path': 'style.css'},
-    'files': {'path': 'files'},
-    'robots.txt': {'path': 'robots.txt'}
-    # 'extra/CNAME': {'path': 'CNAME'},
-
+    'robots.txt': {'path': 'robots.txt'},
+    # 'files': {'path': 'files'},
+    # 'images': {'path': 'images'}
 }
 
 # Feed generation is usually not desired when developing
@@ -77,7 +75,7 @@ MENUITEMS = (
 )
 
 MENUITEMS2 = (
-    ('ВСЁ', '/archives.html'),
+    ('Архив', '/archives.html'),
 )
 
 MENUITEMS3 = (
@@ -92,7 +90,7 @@ MENUITEMS3 = (
 # LOAD_CONTENT_CACHE = False
 
 # Plugins
-PLUGIN_PATH = "plugins"
+PLUGIN_PATHS = ['plugins']
 # PLUGINS = ['sitemap', 'neighbors', 'summary', 'related_posts', 'optimize_images', 'disqus']
 # PLUGINS = ['sitemap', 'category_order', 'w3c_validate', 'optimize_images', '']
 # PLUGINS = ['neighbors', 'summary', 'related_posts', 'optimize_images', 'disqus_static', 'sitemap']
