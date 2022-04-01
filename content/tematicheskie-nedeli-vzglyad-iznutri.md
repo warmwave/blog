@@ -4,7 +4,7 @@ Author: masya
 Category: Тела и души
 Tags: воспитание, дети, мама в декрете, октябрь, осень, развитие, развитие детей, тематические недели
 Slug: tematicheskie-nedeli-vzglyad-iznutri
-Status: published
+Status: draft
 
 Некогда я заинтересовалась так называемыми “тематическими неделями”.
 

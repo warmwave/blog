@@ -19,7 +19,7 @@ chmod +x msf_install.sh
 
 У меня вылетело следующее:
 
-![Metasploit Framework. Установка на OS X.](uploads/v29JZBksz75jAG.png)
+![Metasploit Framework. Установка на OS X.](images/v29JZBksz75jAG.png)
 
 решается просто:
 

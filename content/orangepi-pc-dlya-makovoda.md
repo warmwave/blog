@@ -30,7 +30,7 @@ sudo dd if=~/Downloads/Armbian_5.35_Orangepipcplus_Ubuntu_xenial_default_3.4.113
 
 */dev/disk2* - это наша флешка. На какое устройство раскатывать систему нужно смотреть в "**Дисковой утилите**" или через **diskutil list**
 
-![](uploads/Дисковая-утилита-2017-12-12-00-27-44.png)
+![Дисковая-утилита](images/Дисковая-утилита-2017-12-12-00-27-44.png)
 
 Ждать придётся долго, но по завершению увидим что-то подобное:
 
@@ -61,6 +61,6 @@ apt-get install ntp ntpdate
 sudo curl -L install.domoticz.com | bash
 ```
 
-![Установка Domoticz](uploads/image_out.gif)
+![Установка Domoticz](images/image_out.gif)
 
 На все диалоги отвечаем нажатием на "Enter"
