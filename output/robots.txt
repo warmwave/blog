@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /index3.html
-Disallow: /index2.html
-Disallow: /tag
