@@ -75,7 +75,7 @@ MENUITEMS = (
 )
 
 MENUITEMS2 = (
-    ('Архив', '/archives.html'),
+    ('Весь архив', '/archives.html'),
 )
 
 MENUITEMS3 = (
