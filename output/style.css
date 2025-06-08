@@ -1,0 +1,35 @@
+body {
+    font-size: 15px;
+}
+/*.page-header {
+    border-bottom: 0;
+}*/
+.article-header span {
+	margin-right: 10px;
+}
+
+.site-description {
+    font-size: 14px;
+
+    letter-spacing: 0.05em;
+}
+
+
+
+.menu-link {
+    text-transform: uppercase;
+    color: #808080;
+    margin-right: 5px;
+}
+
+.pagination {
+    display: block;
+}
+
+.article a h2 {
+    color: #d9230f !important;
+}
+
+.highlight .err {
+    border: 0;
+}

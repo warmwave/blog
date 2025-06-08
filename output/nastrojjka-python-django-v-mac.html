@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Настройка Python и Django в Mac — Warmwave Blog</title>
+    <meta name="description"
+          content="Title: Настройка Python и Django в Mac; Date: 2013-07-20; Author: azq">
+    <meta name="author" content="azq">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="/theme/html5.js"></script>
+    <![endif]-->
+    <link href="/theme/css/ipython.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+    <link href="/theme/css/local.css" rel="stylesheet">
+    <link href="/theme/css/pygments.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="page-header text-center">
+        <a href="/" title="Warmwave Blog" rel="home">
+            <img src="/images/favicon.png" alt="Warmwave Blog">
+        </a>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/category/kompy-i-seti">Компы и сети</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/shumy-i-zvuki">Шумы и звуки</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/tela-i-dushi">Тела и души</a></span>
+        </div>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/archives.html">Весь архив</a></span>
+        </div>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/donate.html">СКАЗАТЬ "СПАСИБО!"</a></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="article-header">
+		<h1 itemprop="name headline" class="article-title">Настройка Python и Django в Mac</h1>
+		<div>
+			<span itemprop="articleSection" class="pull-left">
+				<i class="fa fa-list"></i>
+				<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+			</span>
+
+			<span itemprop="author" itemscope itemtype="http://schema.org/Person" class="pull-left">
+				<div itemprop="name"><i class="fa fa-user"></i> azq</div>
+			</span>
+
+			<i class="fa fa-clock-o"></i>
+			<time datetime="2013-07-20T23:44:00+04:00" itemprop="datePublished">Sat 20 July 2013</time>
+		</div>
+ 
+		<div>
+			<i class="fa fa-tags"></i>
+			<span itemprop="keywords">
+				<a href="/tag/django" rel="tag">#django</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/homebrew" rel="tag">#homebrew</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/mac-os-x" rel="tag">#Mac OS X</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/mercurial" rel="tag">#mercurial</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/python" rel="tag">#python</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/virtualenv" rel="tag">#virtualenv</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/virtualenvwrapper" rel="tag">#virtualenvwrapper</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/perevod" rel="tag">#перевод</a>
+			</span>
+		</div>
+	</div>
+	<div itemprop="articleBody" class="article-body"><p>Настраиваем связку Python/Django. Нам помогает Homebrew, virtualenv. А ещё virtualenvwrapper - очень прикольное разшерение для виртуального окружения.<!--more--></p>
+<h2>Подготовка</h2>
+<p>С выходом Lion больше нет папки “Sites” по умолчанию, раньше она располагалась в папке пользователя. Но это легко исправить...<br>
+Открываем терминал:</p>
+<div class="highlight"><pre><span></span><code>mkdir ~/Sites
+</code></pre></div>
+
+<p>Следущая "фишка", пришедшая в месте с Lion - это теперь скрытая папка \~/Library. Сделать её видимой мы можем с помощью следующей команды (при обновлении системы она вновь станет невидимой, поэтому команду нужно будет выполнить вновь):</p>
+<div class="highlight"><pre><span></span><code>chflags nohidden ~/Library/
+</code></pre></div>
+
+<p>По умолчанию Lion - это полностью 64-х битная система, весь гемор будет в том, что все компиляции должны быть 64 битными. Откроем \~/.bash_profile …</p>
+<div class="highlight"><pre><span></span><code>vim ~/.bash_profile
+</code></pre></div>
+
+<p>… и добавим:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Указываем архитектуру ядра</span>
+<span class="k">export</span><span class="w"> </span><span class="n">ARCHFLAGS</span><span class="o">=</span><span class="s2">&quot;-arch x86_64&quot;</span>
+</code></pre></div>
+
+<p>На этом наша подготовка закончена, пора делать дело.</p>
+<h2>Дальше</h2>
+<p>Раньше установка подобных программ предпологала наличие Xcodе. К счастью, теперь нет нужды это делать. Сейчас нужно, имея Apple ID, пойти в <a href="https://developer.apple.com/downloads">Developer Downloads</a> и скачать <em>Command Line Tools for Xcode</em>, а после чего установить.</p>
+<p>Если же Xcode уже установлен, то, зайдя в настройки Xcode -&gt; Downloads, установить Command Line Tools прямо через него.</p>
+<h2>Установка homebrew</h2>
+<p>Homebrew - это менеджер пакетов. Иногда тебе могут понадобится Linux-приложения - они без GUI, соответственно, работают через коммандную строку. Понятно, что в Mac App Store их нет и никогда не будет. Здесь приходит на помощь <a href="https://github.com/mxcl/homebrew/">Homebrew</a>. Есть и другие решения, например, <a href="http://www.macports.org/">MacPorts</a>, но это полный бред по сравнению с "хомяком". Занимаясь разработкой на OS X, он нужен по-любому. Так что, давайте запустим Terminal.app и установим его:</p>
+<div class="highlight"><pre><span></span><code>ruby -e &quot;$(curl -fsSL https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)&quot;
+</code></pre></div>
+
+<p>Теперь Homebrew установлен. Давайте обновимся:</p>
+<div class="highlight"><pre><span></span><code>brew update
+</code></pre></div>
+
+<p>Если при выполнении “brew update” он выдал ошибку, удебитесь в привальности выставленных прав на /usr/local и вновь обновите хомяка:</p>
+<div class="highlight"><pre><span></span><code>sudo chown $USER /usr/local
+brew update
+</code></pre></div>
+
+<p>Можно попробовать что-нибудь установить:</p>
+<div class="highlight"><pre><span></span><code>brew install mc wget
+</code></pre></div>
+
+<p>Только что мы установили mc - файловый менеджер и wget - файлокачалку.</p>
+<h2>Python site-packages</h2>
+<p>Допустим, вы хотите установить пакет Python, такой как <a href="http://www.virtualenv.org/">virtualenv</a> - инструмент изоляции среды. Почти в каждой статье про Python для Mac OS X рассказывается о способе через <code>sudo easy_install virtualenv</code>. Вот почему я не делаю это так:</p>
+<ol>
+<li>Для этого нужны root права</li>
+<li>Всё барахло устанавливается в глобальную(системную) папку /Library</li>
+<li>[“]{.dquo}Distribute” имеет меньше ошибок, чем easy_install по умолчанию</li>
+</ol>
+<p>Если я установлю какой-нибудь пакет(пакет Python) и в последствии решу удалить его, я хотел бы иметь возможность использовать Finder, и просто перетащить его в Корзину без каких-либо заморочек с правами. Плюс, держать пакеты Python, изолированными в учетной записи пользователя, просто имеет смысл для меня... Потому что не охота гадить в системе; удалил пользователя, завёл нового и всё чисто. Последнее, но не менее важное, форк питона <a href="http://pypi.python.org/pypi/distribute">Distribute</a> имеет меньше багов и является более стабильным.</p>
+<p>Традиционно, я всегда использовать опцию <code>--user</code> флаг для установки пакетов Python в \~/.local, это справедливо для Mac, Linux и других UNIX-подобных системах. Другой вариант, поменять флаг <code>--user</code> для более определенного обозначения места назначения <code>--prefix=~/.local</code>. Что бы вы ни выбрали, пожалуйста, имейте в виду, что данная инструкци предпологает последнее.</p>
+<p>Пора установить Distribute:</p>
+<div class="highlight"><pre><span></span><code><span class="nx">mkdir</span><span class="w"> </span><span class="o">-</span><span class="nx">p</span><span class="w"> </span><span class="o">~/</span><span class="p">.</span><span class="nx">local</span><span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">python2</span><span class="m m-Double">.7</span><span class="o">/</span><span class="nx">site</span><span class="o">-</span><span class="nx">packages</span>
+<span class="nx">wget</span><span class="w"> </span><span class="nx">http</span><span class="p">:</span><span class="c1">//pypi.python.org/packages/source/d/distribute/distribute-0.6.28.tar.gz</span>
+<span class="nx">tar</span><span class="w"> </span><span class="o">-</span><span class="nx">xzf</span><span class="w"> </span><span class="nx">distribute</span><span class="o">-</span><span class="m m-Double">0.6.28</span><span class="p">.</span><span class="nx">tar</span><span class="p">.</span><span class="nx">gz</span>
+<span class="nx">cd</span><span class="w"> </span><span class="nx">distribute</span><span class="o">-</span><span class="m m-Double">0.6.28</span>
+<span class="nx">python</span><span class="w"> </span><span class="nx">setup</span><span class="p">.</span><span class="nx">py</span><span class="w"> </span><span class="nx">install</span><span class="w"> </span><span class="o">--</span><span class="nx">prefix</span><span class="p">=</span><span class="o">~/</span><span class="p">.</span><span class="nx">local</span>
+</code></pre></div>
+
+<p>Теперь, после установки Python в  \~/.local, нам нужно указать несколько путей для глобальных переменных. Это делается в .bash_profile…</p>
+<div class="highlight"><pre><span></span><code>vim ~/.bash_profile
+</code></pre></div>
+
+<p>…и добавим в него несколько строк:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Добавляем глобальную переменную</span>
+<span class="k">if</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="o">~/.</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="w"> </span><span class="p">];</span><span class="w"> </span><span class="n">then</span>
+<span class="k">export</span><span class="w"> </span><span class="n">PATH</span><span class="o">=~/.</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="p">:</span><span class="o">$</span><span class="n">PATH</span>
+<span class="n">fi</span>
+
+<span class="c1"># Добавляем переменную - то где установлен Python</span>
+<span class="k">if</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="o">~/.</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">7</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="w"> </span><span class="p">];</span><span class="w"> </span><span class="n">then</span>
+<span class="k">export</span><span class="w"> </span><span class="n">PYTHONPATH</span><span class="o">=~/.</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">7</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="p">:</span><span class="o">$</span><span class="n">PYTHONPATH</span>
+<span class="n">fi</span>
+
+<span class="c1"># Подключаем .bashrc (ниже будет понятно)</span>
+<span class="k">if</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="o">~/.</span><span class="n">bashrc</span><span class="w"> </span><span class="p">];</span><span class="w"> </span><span class="n">then</span>
+<span class="n">source</span><span class="w"> </span><span class="o">~/.</span><span class="n">bashrc</span>
+<span class="n">fi</span>
+</code></pre></div>
+
+<p>Создаём .bashrc в  \~/ и перезагружаем окружение:</p>
+<div class="highlight"><pre><span></span><code>touch ~/.bashrc
+source ~/.bash_profile
+</code></pre></div>
+
+<p>"Нормальный" easy_install располагается в /usr/bin, нам же нужно переключится на локальный, тот что установлен в \~/.local</p>
+<div class="highlight"><pre><span></span><code>which easy_install
+</code></pre></div>
+
+<p>Тем самым мы активировали его из \~/.local/bin/.</p>
+<h2>virtualenv и virtualenvwrapper</h2>
+<p>Пакеты Python установлены в \~/.local are indeed local to the user, но они также являются глобальными в том смысле, что они доступны во всех проектах данного пользователя. Это может быть удобнее в разы, но это также создает и проблемы. Для примера, иногда одним проектам нужна последняя версия Django, в то время как другому проекту нужна, например, версия 1.3 для совместимости с используемыми в проекте разшерениями. Чтобы решить эту проблему, и был разработан. В моей системе только virtualenv, virtualenvwrapper, и Mercurial доступны для Python, а всё остальное ограничивается виртуальным окружением (т.е. virtualenv).</p>
+<p>Давайте установим virtualenv и virtualenvwrapper:</p>
+<div class="highlight"><pre><span></span><code>easy_install --prefix=~/.local virtualenv virtualenvwrapper
+</code></pre></div>
+
+<p>теперь откроем/создадим фаил \~/.bashrc …</p>
+<div class="highlight"><pre><span></span><code>vim ~/.bashrc
+</code></pre></div>
+
+<p>… и добавим несколько строк:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Включаем авто-завершение</span>
+<span class="k">if</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">bash_completion</span><span class="w"> </span><span class="p">];</span><span class="w"> </span><span class="n">then</span>
+<span class="w">  </span><span class="o">.</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">bash_completion</span>
+<span class="n">fi</span>
+
+<span class="c1"># Определяем местоположение virtualenvwrapper</span>
+<span class="k">if</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="n">f</span><span class="w"> </span><span class="o">~/.</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">virtualenvwrapper</span><span class="o">.</span><span class="n">sh</span><span class="w"> </span><span class="p">];</span><span class="w"> </span><span class="n">then</span>
+<span class="k">export</span><span class="w"> </span><span class="n">VENVWRAP</span><span class="o">=~/.</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">virtualenvwrapper</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">fi</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="o">!</span><span class="w"> </span><span class="o">-</span><span class="n">z</span><span class="w"> </span><span class="o">$</span><span class="n">VENVWRAP</span><span class="w"> </span><span class="p">];</span><span class="w"> </span><span class="n">then</span>
+<span class="w">    </span><span class="c1"># virtualenvwrapper -------------------------------------------</span>
+<span class="w">    </span><span class="c1"># убедимся что папка существует</span>
+<span class="w">    </span><span class="p">[</span><span class="w"> </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="o">$</span><span class="n">HOME</span><span class="o">/</span><span class="n">sites</span><span class="o">/</span><span class="n">env</span><span class="w"> </span><span class="p">]</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">mkdir</span><span class="w"> </span><span class="o">-</span><span class="n">p</span><span class="w"> </span><span class="o">$</span><span class="n">HOME</span><span class="o">/</span><span class="n">sites</span><span class="o">/</span><span class="n">env</span>
+<span class="w">    </span><span class="k">export</span><span class="w"> </span><span class="n">WORKON_HOME</span><span class="o">=$</span><span class="n">HOME</span><span class="o">/</span><span class="n">sites</span><span class="o">/</span><span class="n">env</span>
+<span class="w">    </span><span class="n">source</span><span class="w"> </span><span class="o">$</span><span class="n">VENVWRAP</span>
+
+<span class="w">    </span><span class="c1"># virtualenv --------------------------------------------------</span>
+<span class="w">    </span><span class="k">export</span><span class="w"> </span><span class="n">VIRTUALENV_USE_DISTRIBUTE</span><span class="o">=</span><span class="bp">true</span>
+
+<span class="w">    </span><span class="c1"># pip ---------------------------------------------------------</span>
+<span class="w">    </span><span class="k">export</span><span class="w"> </span><span class="n">PIP_VIRTUALENV_BASE</span><span class="o">=$</span><span class="n">WORKON_HOME</span>
+<span class="w">    </span><span class="k">export</span><span class="w"> </span><span class="n">PIP_REQUIRE_VIRTUALENV</span><span class="o">=</span><span class="bp">true</span>
+<span class="w">    </span><span class="k">export</span><span class="w"> </span><span class="n">PIP_RESPECT_VIRTUALENV</span><span class="o">=</span><span class="bp">true</span>
+<span class="w">    </span><span class="k">export</span><span class="w"> </span><span class="n">PIP_DOWNLOAD_CACHE</span><span class="o">=$</span><span class="n">HOME</span><span class="o">/.</span><span class="n">pip</span><span class="o">/</span><span class="n">cache</span>
+<span class="n">fi</span>
+</code></pre></div>
+
+<p>Давайте перезагрузим bash окружение, опять:</p>
+<div class="highlight"><pre><span></span><code>source ~/.bash_profile
+</code></pre></div>
+
+<p>Так же добавим две настройки для virtualenv в postactivate скрипт, который определяет, что происходит после активации виртуальной среды:</p>
+<div class="highlight"><pre><span></span><code>vim ~/sites/env/postactivate
+</code></pre></div>
+
+<p>Добавьте следующие строки, принимая к сведению комментарии, чтобы понять, что происходит:</p>
+<div class="highlight"><pre><span></span><code>proj_name=<span class="cp">${</span><span class="n">VIRTUAL_ENV</span><span class="c1">##*/</span><span class="cp">}</span>
+
+#<span class="w"> </span>Добавляем<span class="w"> </span>для<span class="w"> </span>активного<span class="w"> </span>проекта<span class="w"> </span>PYTHONPATH
+if<span class="w"> </span>[<span class="w"> </span>-d<span class="w"> </span>~/sites/env/<span class="nv">$proj_name</span>/lib/python2.7/site-packages<span class="w"> </span>];<span class="w"> </span>then
+add2virtualenv<span class="w"> </span>~/sites/env/<span class="nv">$proj_name</span>/lib/python2.7/site-packages
+fi
+
+#<span class="w"> </span>делаем<span class="w"> </span>&quot;cd&quot;<span class="w"> </span>в<span class="w"> </span>виртуальное<span class="w"> </span>окружение
+if<span class="w"> </span>[<span class="w"> </span>-d<span class="w"> </span>~/sites/env/<span class="nv">$proj_name</span>/project<span class="w"> </span>];<span class="w"> </span>then
+cd<span class="w"> </span>~/sites/env/<span class="nv">$proj_name</span>/project
+else
+cd<span class="w"> </span>~/sites/env/<span class="nv">$proj_name</span>
+fi
+</code></pre></div>
+
+<p>Теперь virtualenv и virtualenvwrapper установлены и готовы для создания новых виртуальных сред, которые будут храниться примерно в \~/sites/env/.</p>
+<h2>Контроль версий</h2>
+<p>Lion из коробки уже с <a href="http://git-scm.com/">git</a>, это является приятным дополнением, можно использовать его. Но мы будем юзать <a href="http://mercurial.selenic.com/">Mercurial</a>:</p>
+<div class="highlight"><pre><span></span><code>easy_install --prefix=~/.local Mercurial
+</code></pre></div>
+
+<p>Как минимум, потребуется добавить несколько строк в .hgrc файл, чтобы использовать Mercurial:</p>
+<div class="highlight"><pre><span></span><code>vim ~/.hgrc
+</code></pre></div>
+
+<p>Измените значения на ваше имя и адрес электронной почты, соответственно:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[ui]</span>
+<span class="na">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">YOUR NAME &lt;address@example.com&gt;</span>
+</code></pre></div>
+
+<p>Чтобы проверить Mercurial, выполните следующую команду:</p>
+<div class="highlight"><pre><span></span><code>hg debuginstall
+</code></pre></div>
+
+<p>Если последняя строка - “No problems detected”, значит Mercurial установлен и настроен должным образом.</p>
+<h2>Создание виртуальных окружений</h2>
+<p>Давайте создадим виртуальное окружение “test”:</p>
+<div class="highlight"><pre><span></span><code>mkvirtualenv test
+</code></pre></div>
+
+<p>Команда должна создать новую виртуальную среду и автоматически переключить наш текущий рабочей каталог на только что созданный каталог test виртуальной среды.</p>
+<p>В будущем, когда вы захотите работать на проектом, содержащимся в виртуальной среде, используйте команду “workon”, за которой следует имя виртуальной среды. В данном случае:</p>
+<div class="highlight"><pre><span></span><code>workon test
+</code></pre></div>
+
+<p>После активации виртуального окружения окажемся непосредственно в \~/sites/env/test. Если что, с помощью команды “cdvirtualenv” можно перенестись в каталог активной виртуальной среды.</p>
+<h2>Первый Django-проект</h2>
+<p>Предполагая, что наш текущий каталог \~/sites/env/test есть наша новая виртуальная среда, давайте создадим папку с названием “project”, который будет содержать все наши, может быть, "версированные" файлы:</p>
+<div class="highlight"><pre><span></span><code>mkdir project
+</code></pre></div>
+
+<p>Самый простой способ установить Django…</p>
+<div class="highlight"><pre><span></span><code>pip install Django
+</code></pre></div>
+
+<p>… но мы не ищем лёгких путей. Cоздадим для нашего проекта зависимости, потрадиции они находятся в requirements.txt:</p>
+<div class="highlight"><pre><span></span><code>vim project/requirements.txt
+</code></pre></div>
+
+<p>Сейчас нам нужна только одна зависимость - Django. Поэтому содержание нашего файл должно быть просто: Our requirements at this point are very simple — just Django. So the contents of our  file should just be:</p>
+<div class="highlight"><pre><span></span><code>Django
+</code></pre></div>
+
+<p>Прелесть такого способа в том, что когда нужно установить 10/20 зависимостей, мы просто замучаемся вбивать: pip install...pip install...pip install... просто пишем их в requirements.txt и устанавливаем всё разом:</p>
+<div class="highlight"><pre><span></span><code>pip install -r project/requirements.txt
+</code></pre></div>
+
+<p>Мы будем использовать Django-команду “startproject” для создания нового сайта в нашей папке “project”:</p>
+<div class="highlight"><pre><span></span><code>django-admin.py startproject mysite project/
+</code></pre></div>
+
+<p>Теперь мы можем запустить наш Django-проект…</p>
+<div class="highlight"><pre><span></span><code>cd project
+python manage.py runserver
+</code></pre></div>
+
+<p>… и увидеть результат <a href="http://localhost:8000/">в браузере</a>.</p>
+<h2>Первый commit</h2>
+<p>Теперь, когда имеем Django-проект, самое время чтобы сделать свой первый коммит, используя предпочтительный для вас вариант системы контроль версий. В Mercurial это делается так:</p>
+<div class="highlight"><pre><span></span><code>hg init project
+cd project
+hg add
+hg commit -m &quot;Initial commit&quot;
+</code></pre></div>
+
+<h2>Фуух!</h2>
+<p>Поздравляю! Создание нового рабочего пространства занимает немного времени, но того стоит. Эти инструменты мы юзаем каждый день, поэтому имеет смысл сделать их максимально эффективными.</p>
+<p>Тем не менее то, что сделано хорошо, всегда можно сделать лучше. Оставляйте предложения!</p></div>
+	<hr>
+        <ul>
+            <li><a href="/python3-and-virtualenv-in-sierra.html">Python3 и virtualenv в Sierra. Установка и настройка</a></li>
+            <li><a href="/ustanovka-python-virtualenv-na-mac.html">Virtualenv на Mac OS X</a></li>
+            <li><a href="/pyenv-na-os-x.html">PyEnv на OS X - Менеджер версий для python</a></li>
+            <li><a href="/nastrojjka-mac-os-x.html">Настройка Mac OS X (Xcode, Homebrew etc.)</a></li>
+            <li><a href="/hackosx-chast-dva-osx-hackstools-pentesting.html">HackOSX: часть два. OSX, hackstools, пентестинг.</a></li>
+            <li><a href="/resheno-the-python-ssl-extension-was-not-compiled-missing-the-openssl-lib.html">[Решено] - Ошибки при установке версий python через pyenv.</a></li>
+            <li><a href="/udalyaem-homebrew.html">Удаляем Homebrew</a></li>
+            <li><a href="/menyaem-root-parol-mysql-v-mac-os-x.html">Меняем root-пароль MySQL в MAC OS X</a></li>
+            <li><a href="/osx-dlya-pentestinga.html">OSX для пентестинга</a></li>
+            <li><a href="/orangepi-pc-dlya-makovoda.html">OrangePi PC Plus в OSX</a></li>
+        </ul>
+	<!--<h2>Comments</h2>-->
+	<!---->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'blog-warmwave-ru';
+    var disqus_title = 'Настройка Python и Django в Mac';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+        </div>
+    </div>
+    <!-- <hr> -->
+</div> <!-- /container -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center center-block aw-bottom">
+            <p>© <a href="/">Warmwave Blog</a> 2015 - 2024 </p>
+        </div>
+    </div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("div.collapseheader").click(function () {
+            $header = $(this).children("span").first();
+            $codearea = $(this).children(".input_area");
+            $codearea.slideToggle(500, function () {
+                $header.text(function () {
+                    return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym"); ym(31235428, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/31235428" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+<script>
+	var tazeros_stats_config = {
+		site_id: 1561980341,
+		permission: "yes"
+	};
+ </script>
+ <script async src="https://stats.tazeros.com/v3.js"></script><!---->
+</body>
+</html>

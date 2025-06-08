@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Warmwave Blog</title>
+    <meta name="description"
+          content="Coding, scientific development, finance, data analysis, visualization, statistics, and machine learning">
+    <meta name="author" content="azq">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="/theme/html5.js"></script>
+    <![endif]-->
+    <link href="/theme/css/ipython.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+    <link href="/theme/css/local.css" rel="stylesheet">
+    <link href="/theme/css/pygments.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="page-header text-center">
+        <a href="/" title="Warmwave Blog" rel="home">
+            <img src="/images/favicon.png" alt="Warmwave Blog">
+        </a>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/category/kompy-i-seti">Компы и сети</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/shumy-i-zvuki">Шумы и звуки</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/tela-i-dushi">Тела и души</a></span>
+        </div>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/archives.html">Весь архив</a></span>
+        </div>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/donate.html">СКАЗАТЬ "СПАСИБО!"</a></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+        
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/zashhita_lokalnoj_seti_s_pomoshyu_dhcp.html">
+		<h2 itemprop="name headline">Python-скрипт для "предупреждения вторжения" в локальную сеть по средствам DHCP-сервера.</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2020-08-17T17:33:00+03:00" itemprop="datePublished">Mon 17 August 2020</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p>Первый запуск и/или дальнейшее добавление "легальных" клиентов из уже выданных IP:</p>
+<p><code>python3 dhcpMagic.py --m</code></p>
+<p>парамметр --m отображает конф.диалог</p>
+<p>Для постоянного наблюдения за клиентами/нарушителями добавляем в cron:</p>
+<p><code>python3 dhcpMagic.py</code></p>
+<p>либо</p>
+<p><code>python3 dhcpMagic.py -AE (если в config.py AUTOEDIT = False)</code></p>
+<p>При необходимости правим config.py:</p>
+<div class="highlight"><pre><span></span><code>DEBUG …</code></pre></div></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/python" rel="tag">#Python</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/isc-dhcp-server" rel="tag">#isc-dhcp-server</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/dncp" rel="tag">#dncp</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/hackosx-chast-dva-osx-hackstools-pentesting.html">
+		<h2 itemprop="name headline">HackOSX: часть два. OSX, hackstools, пентестинг.</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2018-11-15T16:47:00+03:00" itemprop="datePublished">Thu 15 November 2018</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p>Эта заметка является развитием/продолжением этой <a href="/osx-dlya-pentestinga.html">идеи</a>.</p>
+<p>Ничего сверх-естественного. Представленный скрипт всего лишь переработка <a href="/osx-dlya-pentestinga.html">этого</a> ansible-плейбука в bash-синтаксис. <!--more-->Так же, дополнительно, устанавливается virtualbox и virtualbox-extension-pack. Пользуемся:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1">#</span>
+<span class="c1"># HackOSX.sh v.0.0.2</span>
+
+<span class="c1"># Nmap</span>
+<span class="c1"># Zmap</span>
+<span class="c1"># Sqlmap</span>
+<span class="c1"># Tcpdump</span>
+<span class="c1"># Ettercap</span>
+<span class="c1"># Netcat</span>
+<span class="c1"># Sslscan</span>
+<span class="c1"># Reaver</span>
+<span class="c1"># Aircrack-ng</span>
+<span class="c1"># Wpscan</span>
+<span class="c1"># nikto</span>
+<span class="c1"># theharvester</span>
+<span class="c1"># armitage</span>
+<span class="c1"># Wireshark</span>
+<span class="c1"># Burp-suite</span>
+<span class="c1"># Maltego …</span></code></pre></div></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/hackosx" rel="tag">#HackOSX</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/hackstools" rel="tag">#hackstools</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/homebrew" rel="tag">#homebrew</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/mac-os-x" rel="tag">#Mac OS X</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/metasploit-framework" rel="tag">#Metasploit Framework</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/osx" rel="tag">#OSX</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/pentesting" rel="tag">#пентестинг</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/osx-dlya-pentestinga.html">
+		<h2 itemprop="name headline">OSX для пентестинга</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2018-06-21T09:42:00+03:00" itemprop="datePublished">Thu 21 June 2018</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p><strong><em>Это старая статья. Новая статья <a href="/hackosx-chast-dva-osx-hackstools-pentesting.html">тут</a></em></strong></p>
+<p>Захотелось мне найти для OSX решение подобное kalitoolin. Скрипт для ~~автоматической установки~~ автоматического превращения unix-дистрибутива в Kali Linux.</p>
+<p>Для OSX подобных решений найти не получилось. Решил написать сам.<!--more--></p>
+<p>Поставленная задача реализована в виде ansible-плейбука. Запустив плейбук будут установлены следующее пакеты:</p>
+<ul>
+<li>Nmap</li>
+<li>Zmap</li>
+<li>Sqlmap</li>
+<li>Tcpdump …</li></ul></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/ansible" rel="tag">#ansible</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/hackosx" rel="tag">#HackOSX</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/hackstools" rel="tag">#hackstools</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/homebrew" rel="tag">#homebrew</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/metasploit-framework" rel="tag">#Metasploit Framework</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/osx" rel="tag">#OSX</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/pentesting" rel="tag">#пентестинг</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/parser-fl-ru-nachalo.html">
+		<h2 itemprop="name headline">Парсер FL.ru, ver.0.0.1, Python — начало.</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2018-06-07T13:52:00+03:00" itemprop="datePublished">Thu 07 June 2018</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p>Наконец-то я "докатился" до того, что начал переписывать парсер фриланс-биржи FL.ru. До этого он был на php, что доставляло мне некоторые неудобства в использовании и поддержки. Теперь он на Python.</p>
+<!--more-->
+
+<p>Что умеет парсер:</p>
+<ul>
+<li><strong>Новые проекты отправляются на email(наверное самая важная функция</strong>)</li>
+<li><strong>Отображает ключевые слова проекта и кол-во вхождений …</strong></li></ul></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/python" rel="tag">#python</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/parser" rel="tag">#парсер</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/openwrt-na-zyxel-keenetic.html">
+		<h2 itemprop="name headline">Установка OpenWRT на Zyxel Keenetic</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2018-03-27T12:43:00+03:00" itemprop="datePublished">Tue 27 March 2018</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p><strong>Тут описано как на роутеры Zyxel серии Keenetic установить прошивку OpenWRT.</strong></p>
+<p><em>Записка появилась на свет по нескольким причинам:</em><br>
+<em>- Наличие негативного отношения к 4pda, тк так ничего не найдёшь. А если найдёшь, то перед этим ноги поламаешь в поисках</em><br>
+<em>- Отсутствие в Интернетах информации, изложенной чётко и по делу.</em></p>
+<p><em>Далее всё чётко …</em></p></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/keenetic" rel="tag">#Keenetic</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/openwrt" rel="tag">#OpenWRT</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/zyxel" rel="tag">#Zyxel</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/orangepi-pc-dlya-makovoda.html">
+		<h2 itemprop="name headline">OrangePi PC Plus в OSX</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2017-12-12T15:11:00+03:00" itemprop="datePublished">Tue 12 December 2017</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p><em>Пост носит формат памятки, памятки о OrangePi PC+ и еже с ним. Пост будет периодически дополняться... Если появляются вопросы готов ответить.</em></p>
+<p><a href="#install">Установка системы на SD</a><br>
+<a href="#date">Настраиваем часовой пояс и время</a><br>
+<a href="#domoticz">Domoticz, установка и первоначальная настройка</a></p>
+<p>И так, вот у нас на руках OrangePi PC+, мы подключаем её и видим какой-то …</p></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/mac-os-x" rel="tag">#Mac OS X</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/orangepi" rel="tag">#OrangePi</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/osx" rel="tag">#OSX</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/sierra" rel="tag">#Sierra</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/resheno-the-python-ssl-extension-was-not-compiled-missing-the-openssl-lib.html">
+		<h2 itemprop="name headline">[Решено] - Ошибки при установке версий python через pyenv.</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2017-11-26T18:40:00+03:00" itemprop="datePublished">Sun 26 November 2017</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p>При установке ещё одной версии Python вылезла ошибка: <strong>The Python ssl extension was not compiled. Missing the OpenSSL lib?</strong></p>
+<p>Гугление привело к решению:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">brew</span><span class="w"> </span><span class="nv">uninstall</span><span class="w"> </span><span class="nv">openssl</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nv">brew</span><span class="w"> </span><span class="nv">install</span><span class="w"> </span><span class="nv">openssl</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nv">CFLAGS</span><span class="o">=</span><span class="s2">&quot;-I$(brew --prefix openssl)/include&quot;</span><span class="w"> </span><span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L$(brew --prefix openssl)/lib&quot;</span>
+</code></pre></div>
+
+<p>но в результате brew предложил удалить все зависимые пакеты …</p></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/high-sierra" rel="tag">#High Sierra</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/homebrew" rel="tag">#homebrew</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/pyenv" rel="tag">#pyenv</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/python" rel="tag">#python</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/sierra" rel="tag">#Sierra</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/m-audio-profire-610-i-macos-sierra-i-highsierra.html">
+		<h2 itemprop="name headline">M-Audio Profire 610 в Sierra и HighSierra</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2017-11-12T01:45:00+03:00" itemprop="datePublished">Sun 12 November 2017</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p>Проблема с двайверами для <strong>M-Audio Profire 610</strong> в новых яблочных ОС замечена уже <a href="/kompy-i-seti/ne-rabotaet-m-audio-profire-610-v-yosemite.html">не первый раз</a>.</p>
+<p>Все файлы из этой статьи можно скачать <a href="/files/ProFire610_DriverSierra.zip"><strong>здесь</strong></a>.</p>
+<p><strong>Данная техника проверена на macOS Sierra и OSX High Sierra. Перезегрузка в Recovery Mode, ровно как отключение SIP не требуются.</strong></p>
+<p>Перед тем как выполнять действия описанные …</p></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/shumy-i-zvuki" rel="category">Шумы и звуки</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/highsierra" rel="tag">#HighSierra</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/kext-utility" rel="tag">#Kext Utility</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/m-audio" rel="tag">#M-Audio</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/profire" rel="tag">#Profire</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/sierra" rel="tag">#Sierra</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/oshibka-gpg-sleduyushhie-podpisi-nevernye-keyexpired.html">
+		<h2 itemprop="name headline">Ошибка GPG. Следующие подписи неверные: KEYEXPIRED</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2017-11-06T02:49:00+03:00" itemprop="datePublished">Mon 06 November 2017</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p>При обновлении пакетов заметил следущее:</p>
+<div class="highlight"><pre><span></span><code>Получено 86,1 kБ за 5с (15,1 kБ/c)
+Чтение списков пакетов… Готово
+W: Ошибка GPG: http://debian-archive.trafficmanager.net jessie InRelease: Следующие подписи неверные: KEYEXPIRED 1507383481
+</code></pre></div>
+
+<h2>Всё решается, всё просто.</h2>
+<div class="highlight"><pre><span></span><code>➜ ~ apt-key list | grep expired
+</code></pre></div>
+
+<p>или</p>
+<div class="highlight"><pre><span></span><code>➜ ~ apt-key list | grep просрочен
+pub 4096R/B98321F9 2010-08-07 …</code></pre></div></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/apt" rel="tag">#apt</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/apt-key" rel="tag">#apt-key</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/debian" rel="tag">#Debian</a>
+	</span>
+</div>
+<hr>
+        
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<a href="/awstats-ispmanager4-centos6-i-oshibka-segmentirovaniya.html">
+		<h2 itemprop="name headline">Awstats, ISPmanager4, CentOS6 и ошибка сегментирования.</h2>
+	</a>
+	<i class="fa fa-clock-o"></i>
+	<time datetime="2017-08-14T19:22:00+03:00" itemprop="datePublished">Mon 14 August 2017</time>
+	&nbsp;—&nbsp;
+	<span itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+		<i class="fa fa-user"></i>
+		<span itemprop="name">azq</span>
+	</span>
+	<div class="summary"><p>Изначально сам Awstats ставился отсюда:</p>
+<div class="highlight"><pre><span></span><code>https://sourceforge.net/projects/awstats/files/AWStats/7.6/
+</code></pre></div>
+
+<p>Соответственно, версия - awstats-7.6-1. Далее был поправлен конфиг /etc/httpd/conf.d/awstats.conf, очищен кэш ISPmanager.<br>
+<strong>В итоге Awstats заработал.</strong></p>
+<p>Но две недели назад Awstats перестал обновлять статистику, хотя логи ротировались, и посещаемость у сайтов …</p></div>
+	<i class="fa fa-list"></i>
+	<span itemprop="articleSection">
+		<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+	</span>
+	<i class="fa fa-tags"></i>
+ 
+	<span itemprop="keywords">
+		<a href="/tag/awstats" rel="tag">#Awstats</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/centos" rel="tag">#CentOS</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/ispmanager" rel="tag">#ISPmanager</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/ispmanager4" rel="tag">#ISPmanager4</a>
+	</span>
+	<span itemprop="keywords">
+		<a href="/tag/ispmgr" rel="tag">#ISPmgr</a>
+	</span>
+</div>
+<hr>
+ <div class="pagination text-center">
+<ul>
+    <li class="prev disabled"><a href="#">&larr; Previous</a></li>
+
+    <li class="active"><a href="/index.html">1</a></li>
+    <li class=""><a href="/index2.html">2</a></li>
+    <li class=""><a href="/index3.html">3</a></li>
+
+    <li class="next"><a href="/index2.html">Next &rarr;</a></li>
+
+</ul>
+</div>         </div>
+    </div>
+    <!-- <hr> -->
+</div> <!-- /container -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center center-block aw-bottom">
+            <p>© <a href="/">Warmwave Blog</a> 2015 - 2024 </p>
+        </div>
+    </div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("div.collapseheader").click(function () {
+            $header = $(this).children("span").first();
+            $codearea = $(this).children(".input_area");
+            $codearea.slideToggle(500, function () {
+                $header.text(function () {
+                    return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym"); ym(31235428, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/31235428" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+<script>
+	var tazeros_stats_config = {
+		site_id: 1561980341,
+		permission: "yes"
+	};
+ </script>
+ <script async src="https://stats.tazeros.com/v3.js"></script><!---->
+</body>
+</html>

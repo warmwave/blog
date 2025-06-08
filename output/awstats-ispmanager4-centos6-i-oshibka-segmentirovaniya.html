@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Awstats, ISPmanager4, CentOS6 и ошибка сегментирования. — Warmwave Blog</title>
+    <meta name="description"
+          content="Title: Awstats, ISPmanager4, CentOS6 и ошибка сегментирования.; Date: 2017-08-14; Author: azq">
+    <meta name="author" content="azq">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="/theme/html5.js"></script>
+    <![endif]-->
+    <link href="/theme/css/ipython.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+    <link href="/theme/css/local.css" rel="stylesheet">
+    <link href="/theme/css/pygments.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="page-header text-center">
+        <a href="/" title="Warmwave Blog" rel="home">
+            <img src="/images/favicon.png" alt="Warmwave Blog">
+        </a>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/category/kompy-i-seti">Компы и сети</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/shumy-i-zvuki">Шумы и звуки</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/tela-i-dushi">Тела и души</a></span>
+        </div>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/archives.html">Весь архив</a></span>
+        </div>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/donate.html">СКАЗАТЬ "СПАСИБО!"</a></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="article-header">
+		<h1 itemprop="name headline" class="article-title">Awstats, ISPmanager4, CentOS6 и ошибка сегментирования.</h1>
+		<div>
+			<span itemprop="articleSection" class="pull-left">
+				<i class="fa fa-list"></i>
+				<a href="/category/kompy-i-seti" rel="category">Компы и сети</a>
+			</span>
+
+			<span itemprop="author" itemscope itemtype="http://schema.org/Person" class="pull-left">
+				<div itemprop="name"><i class="fa fa-user"></i> azq</div>
+			</span>
+
+			<i class="fa fa-clock-o"></i>
+			<time datetime="2017-08-14T19:22:00+03:00" itemprop="datePublished">Mon 14 August 2017</time>
+		</div>
+ 
+		<div>
+			<i class="fa fa-tags"></i>
+			<span itemprop="keywords">
+				<a href="/tag/awstats" rel="tag">#Awstats</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/centos" rel="tag">#CentOS</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/ispmanager" rel="tag">#ISPmanager</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/ispmanager4" rel="tag">#ISPmanager4</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="/tag/ispmgr" rel="tag">#ISPmgr</a>
+			</span>
+		</div>
+	</div>
+	<div itemprop="articleBody" class="article-body"><p>Изначально сам Awstats ставился отсюда:</p>
+<div class="highlight"><pre><span></span><code>https://sourceforge.net/projects/awstats/files/AWStats/7.6/
+</code></pre></div>
+
+<p>Соответственно, версия - awstats-7.6-1. Далее был поправлен конфиг /etc/httpd/conf.d/awstats.conf, очищен кэш ISPmanager.<br>
+<strong>В итоге Awstats заработал.</strong></p>
+<p>Но две недели назад Awstats перестал обновлять статистику, хотя логи ротировались, и посещаемость у сайтов была.<br>
+На сервере 3 новостных сайта. Cтатистика нужна очень, причём именно серверная, ибо гугло-яндексы давно и безбожно врут.</p>
+<h2>При попытке обновить статистику вручную выдаётся ошибка "Segmentation fault".</h2>
+<p>В messages-логах появляются подобные записи:</p>
+<div class="highlight"><pre><span></span><code>&quot;awstats.pl: segfault at 0 ip 0000003face07b65 sp 00007ffd9c7a0b90 error 4 in libGeoIP.so.1.6.5[3face00000+34
+Not saving repeating crash in &#39;/usr/bin/perl&#39;&quot;
+</code></pre></div>
+
+<p>Статистика обновлялась в ручную:</p>
+<div class="highlight"><pre><span></span><code>/usr/local/awstats/wwwroot/cgi-bin/awstats.pl -config=domain.com -update
+</code></pre></div>
+
+<p>либо так, как делает это ISPmanager:</p>
+<div class="highlight"><pre><span></span><code><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">ispmgr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">awstats2</span><span class="o">.</span><span class="n">sh</span><span class="w"> </span><span class="n">domain</span><span class="o">.</span><span class="n">com</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">domain</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">domain</span><span class="o">.</span><span class="n">com</span><span class="o">.</span><span class="n">access</span><span class="o">.</span><span class="n">log</span><span class="w"> </span><span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">domain</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">domain</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">webstat</span>
+</code></pre></div>
+
+<h2>Но в чём потом возникла проблема? В модуле libGeoIP.so?</h2>
+<p>Дело было вот в чём.<br>
+В конфигах awstats для каждого домена были такие директивы:</p>
+<div class="highlight"><pre><span></span><code>LoadPlugin=&quot;geoip GEOIP_STANDARD /usr/share/GeoIP/GeoIP.dat&quot;
+LoadPlugin=&quot;geoip_city_maxmind GEOIP_STANDARD /usr/share/GeoIP/GeoLiteCity.dat&quot;
+LoadPlugin=&quot;geoip_org_maxmind GEOIP_STANDARD /usr/share/GeoIP/GeoIPASNum.dat&quot;
+</code></pre></div>
+
+<p>А эти dat-файлы скачиваются скриптом, установленным еженедельно в cron/<br>
+В скрипте такие строки:</p>
+<div class="highlight"><pre><span></span><code><span class="n">wget</span><span class="w"> </span><span class="o">-</span><span class="n">q</span><span class="w"> </span><span class="o">-</span><span class="n">O</span><span class="o">-</span><span class="w"> </span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">geolite</span><span class="o">.</span><span class="n">maxmind</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">geoip</span><span class="o">/</span><span class="n">database</span><span class="o">/</span><span class="n">GeoLiteCountry</span><span class="o">/</span><span class="n">GeoIP</span><span class="o">.</span><span class="n">dat</span><span class="o">.</span><span class="n">gz</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">gunzip</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">GeoIP</span><span class="o">/</span><span class="n">GeoIP</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">wget</span><span class="w"> </span><span class="o">-</span><span class="n">q</span><span class="w"> </span><span class="o">-</span><span class="n">O</span><span class="o">-</span><span class="w"> </span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">maxmind</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">geoip</span><span class="o">/</span><span class="n">database</span><span class="o">/</span><span class="n">GeoLiteCity</span><span class="o">.</span><span class="n">dat</span><span class="o">.</span><span class="n">gz</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">gunzip</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">GeoIP</span><span class="o">/</span><span class="n">GeoLiteCity</span><span class="o">.</span><span class="n">dat</span>
+<span class="n">wget</span><span class="w"> </span><span class="o">-</span><span class="n">q</span><span class="w"> </span><span class="o">-</span><span class="n">O</span><span class="o">-</span><span class="w"> </span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">maxmind</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">geoip</span><span class="o">/</span><span class="n">database</span><span class="o">/</span><span class="n">asnum</span><span class="o">/</span><span class="n">GeoIPASNum</span><span class="o">.</span><span class="n">dat</span><span class="o">.</span><span class="n">gz</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">gunzip</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">GeoIP</span><span class="o">/</span><span class="n">GeoIPASNum</span><span class="o">.</span><span class="n">dat</span>
+</code></pre></div>
+
+<p>Но проблема оказалась в том, что файлы в директории /usr/share/GeoIP/ оказались нулевого размера, потому что с maxmind.com ничего невозможно скачать.<br>
+Я пробовал скачаить с maxmind вручную:</p>
+<div class="highlight"><pre><span></span><code><span class="n">wget</span><span class="w"> </span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">maxmind</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">geoip</span><span class="o">/</span><span class="n">database</span><span class="o">/</span><span class="n">asnum</span><span class="o">/</span><span class="n">GeoIPASNum</span><span class="o">.</span><span class="n">dat</span><span class="o">.</span><span class="n">gz</span>
+</code></pre></div>
+
+<p><strong>Результат: failed: Connection timed out.</strong><br>
+Соответственно, возникали ошибки при попытке использования этих файлов при построении отчётов.</p>
+<p>Причём, с сервера в Германии всё прекрасно скачивается с maxmind.com, а здесь такое ощущение, что либо этот IP у maxmind.com в бане, либо вообще вся подсеть.<br>
+Скачав dat-файлы и подсунув в /usr/share/GeoIP/ проблема решалась.</p>
+<h2>Но тогда вопрос: Как настроить автоматическое регулярное скачивание, что-бы Awstats работал?</h2>
+<p>Как вариант прокси для скачивания по крону, wget умеет прокси:</p>
+<p>Скачать файл через proxy:</p>
+<div class="highlight"><pre><span></span><code>http_proxy=&quot;http://33.22.44.44:8080&quot; wget http://www.google.com/favicon.ico
+</code></pre></div>
+
+<p>Для HTTPS</p>
+<div class="highlight"><pre><span></span><code>https_proxy=&quot;http://33.22.44.44:8080&quot; wget https://www.google.com/favicon.ico
+</code></pre></div>
+
+<p>Proxy с авторизацией</p>
+<div class="highlight"><pre><span></span><code>http_proxy=&quot;http://33.22.44.44:8080&quot; wget --proxy-user=user --proxy-password=password http://www.google.com/favicon.ico
+</code></pre></div>
+
+<p>Параметры --proxy-user и --proxy-password, чтобы не указывать постоянно, можно прописать в файл ~/.wgetrc</p>
+<div class="highlight"><pre><span></span><code>proxy-user = username
+proxy-password = password
+user-agent = Mozilla/5.0 (X11; Linux i686; rv:7.0.1) Gecko/20100101 Firefox/7.0.1
+</code></pre></div></div>
+	<hr>
+	<!--<h2>Comments</h2>-->
+	<!---->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'blog-warmwave-ru';
+    var disqus_title = 'Awstats, ISPmanager4, CentOS6 и ошибка сегментирования.';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+        </div>
+    </div>
+    <!-- <hr> -->
+</div> <!-- /container -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center center-block aw-bottom">
+            <p>© <a href="/">Warmwave Blog</a> 2015 - 2024 </p>
+        </div>
+    </div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("div.collapseheader").click(function () {
+            $header = $(this).children("span").first();
+            $codearea = $(this).children(".input_area");
+            $codearea.slideToggle(500, function () {
+                $header.text(function () {
+                    return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym"); ym(31235428, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/31235428" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+<script>
+	var tazeros_stats_config = {
+		site_id: 1561980341,
+		permission: "yes"
+	};
+ </script>
+ <script async src="https://stats.tazeros.com/v3.js"></script><!---->
+</body>
+</html>
