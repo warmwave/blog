@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*- #
+
 from __future__ import unicode_literals
 from datetime import datetime
+import os
 
 AUTHOR = 'azq'
 SITENAME = 'Warmwave Blog'
@@ -13,7 +14,7 @@ FAVICON = '/theme/images/favicon.png'
 THEME = 'themes/aboutwilson_my/'
 
 PATH = 'content'
-OUTPUT_PATH = 'output'
+OUTPUT_PATH = 'docs'
 DELETE_OUTPUT_DIRECTORY = True
 DEFAULT_PAGINATION = 10
 RELATED_POSTS_MAX = 10
@@ -31,13 +32,14 @@ TAG_URL = 'tag/{slug}'
 TAG_SAVE_AS = 'tag/{slug}/index.html'
 AUTHOR_SAVE_AS = ''
 
-STATIC_PATHS = ['files', 'images', 'style.css', 'robots.txt']
+STATIC_PATHS = ['files', 'images', 'style.css', 'robots.txt', 'extra/CNAME']
 
 EXTRA_PATH_METADATA = {
     'style.css': {'path': 'style.css'},
     'robots.txt': {'path': 'robots.txt'},
     # 'files': {'path': 'files'},
     # 'images': {'path': 'images'}
+    'extra/CNAME': {'path': 'CNAME'},
 }
 
 # Feed generation is usually not desired when developing
@@ -126,9 +128,7 @@ MARKDOWN = {
 }
 
 DISQUS_SITENAME = 'blog-warmwave-ru'
-
-DISQUS_SECRET_KEY = 'gsZU6LHPzEZXSViM0GhQ1xiGZnVdeTxiDpUBqwJI3opkkkjVtcNZcG6xheggrSwk'
-DISQUS_PUBLIC_KEY = 'S6SsIA4Uq86sqe3sIvcjvOqcGi3lM9sHPkz2tiK3Wy3mick3zIcw3T63OXjBnhpV'
-
-# GOOGLE_ANALYTICS = 'UA-******your_code'
-# GOOGLE_ANALYTICS_DOMAIN = 'http://webquant.ru/'
+DISQUS_SECRET_KEY = os.environ.get('DISQUS_SECRET_KEY')
+DISQUS_PUBLIC_KEY = os.environ.get('DISQUS_PUBLIC_KEY')
+# DISQUS_SECRET_KEY = 'gsZU6LHPzEZXSViM0GhQ1xiGZnVdeTxiDpUBqwJI3opkkkjVtcNZcG6xheggrSwk'
+# DISQUS_PUBLIC_KEY = 'S6SsIA4Uq86sqe3sIvcjvOqcGi3lM9sHPkz2tiK3Wy3mick3zIcw3T63OXjBnhpV'

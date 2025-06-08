@@ -1,17 +1,17 @@
 PY?=python3
-PELICAN?=pelican
+PELICAN?=$(PY) -m pelican
 PELICANOPTS=
 
 BASEDIR=$(CURDIR)
 INPUTDIR=$(BASEDIR)/content
-OUTPUTDIR=$(BASEDIR)/output
+OUTPUTDIR=$(BASEDIR)/docs
 CONFFILE=$(BASEDIR)/pelicanconf.py
 PUBLISHCONF=$(BASEDIR)/publishconf.py
 
 S3_BUCKET=wwblog
 
 
-DEBUG ?= 0
+DEBUG ?= 1
 ifeq ($(DEBUG), 1)
 	PELICANOPTS += -D
 endif
@@ -79,3 +79,7 @@ s3_upload: publish
 
 
 .PHONY: html help clean regenerate serve serve-global devserver stopserver publish s3_upload
+
+github: publish
+	ghp-import -n -b gh-pages $(OUTPUTDIR)
+	git push origin gh-pages

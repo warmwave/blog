@@ -1,1 +1,3 @@
-output
+.env
+.vscode/mcp.json
+.vscode/sftp.json
