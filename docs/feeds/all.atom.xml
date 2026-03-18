@@ -1,0 +1,1217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Warmwave Blog</title><link href="https://warmwave.ru/" rel="alternate"></link><link href="https://warmwave.ru/feeds/all.atom.xml" rel="self"></link><id>https://warmwave.ru/</id><updated>2020-08-17T17:33:00+03:00</updated><subtitle>Компы и сети, тела и души, шумы и звуки</subtitle><entry><title>Python-скрипт для "предупреждения вторжения" в локальную сеть по средствам DHCP-сервера.</title><link href="https://warmwave.ru/zashhita_lokalnoj_seti_s_pomoshyu_dhcp.html" rel="alternate"></link><published>2020-08-17T17:33:00+03:00</published><updated>2020-08-17T17:33:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2020-08-17:/zashhita_lokalnoj_seti_s_pomoshyu_dhcp.html</id><summary type="html">&lt;p&gt;Первый запуск и/или дальнейшее добавление "легальных" клиентов из уже выданных IP:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;python3 dhcpMagic.py --m&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;парамметр --m отображает конф.диалог&lt;/p&gt;
+&lt;p&gt;Для постоянного наблюдения за клиентами/нарушителями добавляем в cron:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;python3 dhcpMagic.py&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;либо&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;python3 dhcpMagic.py -AE (если в config.py AUTOEDIT = False)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;При необходимости правим config.py:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;DEBUG …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Первый запуск и/или дальнейшее добавление "легальных" клиентов из уже выданных IP:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;python3 dhcpMagic.py --m&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;парамметр --m отображает конф.диалог&lt;/p&gt;
+&lt;p&gt;Для постоянного наблюдения за клиентами/нарушителями добавляем в cron:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;python3 dhcpMagic.py&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;либо&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;python3 dhcpMagic.py -AE (если в config.py AUTOEDIT = False)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;При необходимости правим config.py:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;DEBUG = False # False - пишет логи в файл, True - отображает конф.диалог (аналог --m при запуске)
+AUTOEDIT = True # Следить за нарушителями (аналог -AE при запуске)
+interface = &amp;#39;enp0s8&amp;#39; # Интерфейс на котором висит DHCP-сервер
+dhcpConfFile = &amp;#39;/etc/dhcp/dhcpd.conf&amp;#39;
+
+fourthActet = &amp;#39;40-90&amp;#39;
+netmask = &amp;#39;255.255.255.0&amp;#39;
+defaultLeaseTime = 10
+maxLeaseTime = 10
+domainNameServers = &amp;#39;8.8.8.8&amp;#39;
+domainName = &amp;#39;workgroup&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Сам скрипт &lt;a href="https://gitlab.com/warmwavemedia/dhcpmagic" title="Ссылка на репу"&gt;тут&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;</content><category term="Компы и сети"></category><category term="Python"></category><category term="isc-dhcp-server"></category><category term="dncp"></category></entry><entry><title>HackOSX: часть два. OSX, hackstools, пентестинг.</title><link href="https://warmwave.ru/hackosx-chast-dva-osx-hackstools-pentesting.html" rel="alternate"></link><published>2018-11-15T16:47:00+03:00</published><updated>2018-11-15T16:47:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2018-11-15:/hackosx-chast-dva-osx-hackstools-pentesting.html</id><summary type="html">&lt;p&gt;Эта заметка является развитием/продолжением этой &lt;a href="/osx-dlya-pentestinga.html"&gt;идеи&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Ничего сверх-естественного. Представленный скрипт всего лишь переработка &lt;a href="/osx-dlya-pentestinga.html"&gt;этого&lt;/a&gt; ansible-плейбука в bash-синтаксис. &lt;!--more--&gt;Так же, дополнительно, устанавливается virtualbox и virtualbox-extension-pack. Пользуемся:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# HackOSX.sh v.0.0.2&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Nmap&lt;/span&gt;
+&lt;span class="c1"&gt;# Zmap&lt;/span&gt;
+&lt;span class="c1"&gt;# Sqlmap&lt;/span&gt;
+&lt;span class="c1"&gt;# Tcpdump&lt;/span&gt;
+&lt;span class="c1"&gt;# Ettercap&lt;/span&gt;
+&lt;span class="c1"&gt;# Netcat&lt;/span&gt;
+&lt;span class="c1"&gt;# Sslscan&lt;/span&gt;
+&lt;span class="c1"&gt;# Reaver&lt;/span&gt;
+&lt;span class="c1"&gt;# Aircrack-ng&lt;/span&gt;
+&lt;span class="c1"&gt;# Wpscan&lt;/span&gt;
+&lt;span class="c1"&gt;# nikto&lt;/span&gt;
+&lt;span class="c1"&gt;# theharvester&lt;/span&gt;
+&lt;span class="c1"&gt;# armitage&lt;/span&gt;
+&lt;span class="c1"&gt;# Wireshark&lt;/span&gt;
+&lt;span class="c1"&gt;# Burp-suite&lt;/span&gt;
+&lt;span class="c1"&gt;# Maltego …&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Эта заметка является развитием/продолжением этой &lt;a href="/osx-dlya-pentestinga.html"&gt;идеи&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Ничего сверх-естественного. Представленный скрипт всего лишь переработка &lt;a href="/osx-dlya-pentestinga.html"&gt;этого&lt;/a&gt; ansible-плейбука в bash-синтаксис. &lt;!--more--&gt;Так же, дополнительно, устанавливается virtualbox и virtualbox-extension-pack. Пользуемся:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+&lt;span class="c1"&gt;# HackOSX.sh v.0.0.2&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Nmap&lt;/span&gt;
+&lt;span class="c1"&gt;# Zmap&lt;/span&gt;
+&lt;span class="c1"&gt;# Sqlmap&lt;/span&gt;
+&lt;span class="c1"&gt;# Tcpdump&lt;/span&gt;
+&lt;span class="c1"&gt;# Ettercap&lt;/span&gt;
+&lt;span class="c1"&gt;# Netcat&lt;/span&gt;
+&lt;span class="c1"&gt;# Sslscan&lt;/span&gt;
+&lt;span class="c1"&gt;# Reaver&lt;/span&gt;
+&lt;span class="c1"&gt;# Aircrack-ng&lt;/span&gt;
+&lt;span class="c1"&gt;# Wpscan&lt;/span&gt;
+&lt;span class="c1"&gt;# nikto&lt;/span&gt;
+&lt;span class="c1"&gt;# theharvester&lt;/span&gt;
+&lt;span class="c1"&gt;# armitage&lt;/span&gt;
+&lt;span class="c1"&gt;# Wireshark&lt;/span&gt;
+&lt;span class="c1"&gt;# Burp-suite&lt;/span&gt;
+&lt;span class="c1"&gt;# Maltego&lt;/span&gt;
+&lt;span class="c1"&gt;# Metasploit Framework&lt;/span&gt;
+&lt;span class="c1"&gt;# Social-Engineer Toolkit (SET)&lt;/span&gt;
+&lt;span class="c1"&gt;# Passhunt&lt;/span&gt;
+
+&lt;span class="c1"&gt;# virtualbox&lt;/span&gt;
+&lt;span class="c1"&gt;# virtualbox-extension-pack&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;[[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-e&lt;span class="w"&gt; &lt;/span&gt;/usr/local/bin/brew&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;]]&lt;/span&gt;
+&lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Homebrew Already Installed&amp;#39;&lt;/span&gt;
+&lt;span class="k"&gt;else&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;/usr/bin/ruby&lt;span class="w"&gt; &lt;/span&gt;-e&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;curl&lt;span class="w"&gt; &lt;/span&gt;-fsSL&lt;span class="w"&gt; &lt;/span&gt;https://raw.githubusercontent.com/Homebrew/install/master/install&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Install OSX packages&amp;#39;&lt;/span&gt;
+brew&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;nmap&lt;span class="w"&gt; &lt;/span&gt;zmap&lt;span class="w"&gt; &lt;/span&gt;sqlmap&lt;span class="w"&gt; &lt;/span&gt;tcpdump&lt;span class="w"&gt; &lt;/span&gt;ettercap&lt;span class="w"&gt; &lt;/span&gt;netcat&lt;span class="w"&gt; &lt;/span&gt;sslscan&lt;span class="w"&gt; &lt;/span&gt;reaver&lt;span class="w"&gt; &lt;/span&gt;aircrack-ng&lt;span class="w"&gt; &lt;/span&gt;wpscan&lt;span class="w"&gt; &lt;/span&gt;nikto&lt;span class="w"&gt; &lt;/span&gt;theharvester
+brew&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;cask&lt;span class="w"&gt; &lt;/span&gt;homebrew/cask-versions/java8&lt;span class="w"&gt; &lt;/span&gt;wireshark&lt;span class="w"&gt; &lt;/span&gt;burp-suite&lt;span class="w"&gt; &lt;/span&gt;maltego&lt;span class="w"&gt; &lt;/span&gt;armitage&lt;span class="w"&gt; &lt;/span&gt;virtualbox&lt;span class="w"&gt; &lt;/span&gt;virtualbox-extension-pack
+
+
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Install Metasploit Framework&amp;#39;&lt;/span&gt;
+curl&lt;span class="w"&gt; &lt;/span&gt;https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb&lt;span class="w"&gt; &lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;~/msfinstall
+chmod&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;755&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/msfinstall
+~/msfinstall
+rm&lt;span class="w"&gt; &lt;/span&gt;-rf&lt;span class="w"&gt; &lt;/span&gt;~/msfinstall
+
+rm&lt;span class="w"&gt; &lt;/span&gt;-rf&lt;span class="w"&gt; &lt;/span&gt;~/social-engineer-toolkit
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Install Social-Engineer Toolkit (SET)&amp;#39;&lt;/span&gt;
+pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;pexpect&lt;span class="w"&gt; &lt;/span&gt;pycrypto&lt;span class="w"&gt; &lt;/span&gt;pyopenssl&lt;span class="w"&gt; &lt;/span&gt;pefile
+git&lt;span class="w"&gt; &lt;/span&gt;clone&lt;span class="w"&gt; &lt;/span&gt;https://github.com/trustedsec/social-engineer-toolkit/&lt;span class="w"&gt; &lt;/span&gt;~/social-engineer-toolkit
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/social-engineer-toolkit
+sudo&lt;span class="w"&gt; &lt;/span&gt;python&lt;span class="w"&gt; &lt;/span&gt;setup.py&lt;span class="w"&gt; &lt;/span&gt;install
+
+rm&lt;span class="w"&gt; &lt;/span&gt;-rf&lt;span class="w"&gt; &lt;/span&gt;~/Passhunt
+&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Install Passhunt (searching of default credentials for network devices)&amp;#39;&lt;/span&gt;
+git&lt;span class="w"&gt; &lt;/span&gt;clone&lt;span class="w"&gt; &lt;/span&gt;https://github.com/Viralmaniar/Passhunt.git&lt;span class="w"&gt; &lt;/span&gt;~/Passhunt
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;~/Passhunt
+pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;-r&lt;span class="w"&gt; &lt;/span&gt;requirements.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Компы и сети"></category><category term="HackOSX"></category><category term="hackstools"></category><category term="homebrew"></category><category term="Mac OS X"></category><category term="Metasploit Framework"></category><category term="OSX"></category><category term="пентестинг"></category></entry><entry><title>OSX для пентестинга</title><link href="https://warmwave.ru/osx-dlya-pentestinga.html" rel="alternate"></link><published>2018-06-21T09:42:00+03:00</published><updated>2018-06-21T09:42:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2018-06-21:/osx-dlya-pentestinga.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;&lt;em&gt;Это старая статья. Новая статья &lt;a href="/hackosx-chast-dva-osx-hackstools-pentesting.html"&gt;тут&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Захотелось мне найти для OSX решение подобное kalitoolin. Скрипт для ~~автоматической установки~~ автоматического превращения unix-дистрибутива в Kali Linux.&lt;/p&gt;
+&lt;p&gt;Для OSX подобных решений найти не получилось. Решил написать сам.&lt;!--more--&gt;&lt;/p&gt;
+&lt;p&gt;Поставленная задача реализована в виде ansible-плейбука. Запустив плейбук будут установлены следующее пакеты:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nmap&lt;/li&gt;
+&lt;li&gt;Zmap&lt;/li&gt;
+&lt;li&gt;Sqlmap&lt;/li&gt;
+&lt;li&gt;Tcpdump …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;&lt;strong&gt;&lt;em&gt;Это старая статья. Новая статья &lt;a href="/hackosx-chast-dva-osx-hackstools-pentesting.html"&gt;тут&lt;/a&gt;&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Захотелось мне найти для OSX решение подобное kalitoolin. Скрипт для ~~автоматической установки~~ автоматического превращения unix-дистрибутива в Kali Linux.&lt;/p&gt;
+&lt;p&gt;Для OSX подобных решений найти не получилось. Решил написать сам.&lt;!--more--&gt;&lt;/p&gt;
+&lt;p&gt;Поставленная задача реализована в виде ansible-плейбука. Запустив плейбук будут установлены следующее пакеты:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nmap&lt;/li&gt;
+&lt;li&gt;Zmap&lt;/li&gt;
+&lt;li&gt;Sqlmap&lt;/li&gt;
+&lt;li&gt;Tcpdump&lt;/li&gt;
+&lt;li&gt;Ettercap&lt;/li&gt;
+&lt;li&gt;Netcat&lt;/li&gt;
+&lt;li&gt;Sslscan&lt;/li&gt;
+&lt;li&gt;Reaver&lt;/li&gt;
+&lt;li&gt;Aircrack-ng&lt;/li&gt;
+&lt;li&gt;Wpscan&lt;/li&gt;
+&lt;li&gt;Wireshark&lt;/li&gt;
+&lt;li&gt;Burp-suite&lt;/li&gt;
+&lt;li&gt;Maltego&lt;/li&gt;
+&lt;li&gt;Metasploit Framework&lt;/li&gt;
+&lt;li&gt;Social-Engineer Toolkit (SET)&lt;/li&gt;
+&lt;li&gt;Passhunt&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;---&lt;/span&gt;
+&lt;span class="c1"&gt;# HackOSX.yml&lt;/span&gt;
+&lt;span class="c1"&gt;#&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Nmap&lt;/span&gt;
+&lt;span class="c1"&gt;# Zmap&lt;/span&gt;
+&lt;span class="c1"&gt;# Sqlmap&lt;/span&gt;
+&lt;span class="c1"&gt;# Tcpdump&lt;/span&gt;
+&lt;span class="c1"&gt;# Ettercap&lt;/span&gt;
+&lt;span class="c1"&gt;# Netcat&lt;/span&gt;
+&lt;span class="c1"&gt;# Sslscan&lt;/span&gt;
+&lt;span class="c1"&gt;# Reaver&lt;/span&gt;
+&lt;span class="c1"&gt;# Aircrack-ng&lt;/span&gt;
+&lt;span class="c1"&gt;# Wpscan&lt;/span&gt;
+&lt;span class="c1"&gt;# Wireshark&lt;/span&gt;
+&lt;span class="c1"&gt;# Burp-suite&lt;/span&gt;
+&lt;span class="c1"&gt;# Maltego&lt;/span&gt;
+&lt;span class="c1"&gt;# Metasploit Framework - https://github.com/rapid7/metasploit-framework/wiki/Nightly-Installers&lt;/span&gt;
+&lt;span class="c1"&gt;# Social-Engineer Toolkit (SET) - https://github.com/trustedsec/social-engineer-toolkit/&lt;/span&gt;
+&lt;span class="c1"&gt;# Passhunt - https://github.com/Viralmaniar/Passhunt&lt;/span&gt;
+
+&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;localhost&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;gather_facts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="bp"&gt;false&lt;/span&gt;
+
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;tasks&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# - name: Ensure configured taps are tapped.&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;#   homebrew_tap: &amp;quot;tap=homebrew/core state=present&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;#     - homebrew/core&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;#     - caskroom/cask&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;OSX&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;packages&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;homebrew&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;update_homebrew&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;yes&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;upgrade_all&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;yes&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;{{&lt;/span&gt;&lt;span class="n"&gt;item&lt;/span&gt;&lt;span class="p"&gt;}}&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;with_items&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;nmap&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;zmap&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sqlmap&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;tcpdump&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ettercap&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;netcat&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;sslscan&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;reaver&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;aircrack&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;ng&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;wpscan&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;wireshark&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;homebrew&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Wireshark&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;via&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;homebrew&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;brew&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;cask&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;wireshark&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;burp&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;suite&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;maltego&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Metasploit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Framework&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;curl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;raw&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;githubusercontent&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;rapid7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;metasploit&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;omnibus&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;master&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;templates&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;metasploit&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;framework&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;wrappers&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;msfupdate&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;erb&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="n"&gt;msfinstall&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;chmod&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;755&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="n"&gt;msfinstall&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="n"&gt;msfinstall&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;rm&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rf&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="n"&gt;msfinstall&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;metasploit&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Social&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Engineer&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Toolkit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SET&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pexpect&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pycrypto&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pyopenssl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pefile&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;clone&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;trustedsec&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;social&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;engineer&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;toolkit&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="n"&gt;social&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;engineer&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;toolkit&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="n"&gt;social&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;engineer&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;toolkit&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;setup&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;py&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;Passhunt&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;searching&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;of&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;credentials&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;for&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;network&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;devices&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;clone&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Viralmaniar&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Passhunt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="n"&gt;Passhunt&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="n"&gt;Passhunt&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;requirements&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;txt&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="n"&gt;tags&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;passhunt&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Компы и сети"></category><category term="ansible"></category><category term="HackOSX"></category><category term="hackstools"></category><category term="homebrew"></category><category term="Metasploit Framework"></category><category term="OSX"></category><category term="пентестинг"></category></entry><entry><title>Парсер FL.ru, ver.0.0.1, Python — начало.</title><link href="https://warmwave.ru/parser-fl-ru-nachalo.html" rel="alternate"></link><published>2018-06-07T13:52:00+03:00</published><updated>2018-06-07T13:52:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2018-06-07:/parser-fl-ru-nachalo.html</id><summary type="html">&lt;p&gt;Наконец-то я "докатился" до того, что начал переписывать парсер фриланс-биржи FL.ru. До этого он был на php, что доставляло мне некоторые неудобства в использовании и поддержки. Теперь он на Python.&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;Что умеет парсер:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Новые проекты отправляются на email(наверное самая важная функция&lt;/strong&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Отображает ключевые слова проекта и кол-во вхождений …&lt;/strong&gt;&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;p&gt;Наконец-то я "докатился" до того, что начал переписывать парсер фриланс-биржи FL.ru. До этого он был на php, что доставляло мне некоторые неудобства в использовании и поддержки. Теперь он на Python.&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;Что умеет парсер:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Новые проекты отправляются на email(наверное самая важная функция&lt;/strong&gt;)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Отображает ключевые слова проекта и кол-во вхождений по ним&lt;/strong&gt; - это иногда полезно, чтобы понять какие ключи добавить, а какие убрать.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Разумеется, отображает заголовок и текст проекта&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Кроме этого отображает - Дата/время публикации проекта, ID проекта, ссылка на проект, "стаж" заказчика&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="Вывод парсера" src="images/parsers_2018-06-07_13-16-46.png"&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Понятное дело, что &lt;strong&gt;ищет проекты по ключевым словам&lt;/strong&gt; - поиск выполняется по регулярному выражению, т.о. нет нужды писать в ключах, например, склонения и/или спряжение, также поиск стал регистроНезависимым.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="Поиск по регулярным выражениям" src="images/parsers_2018-06-07_12-34-45.png"&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Поиск проектов по заданному кол-ву страниц&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;&lt;img alt="Поиск проектов по заданному кол-ву страниц" class="aligncenter size-full wp-image-3465" height="100" src="images/parsers_2018-06-07_12-41-06.png" width="638"&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Проекты, в которых ВЫПОЛНЯЛСЯ поиск - игнорируются&lt;/strong&gt; - парсер "запоминает" просмотренные проекты, снижая нагрузку на сайт и, тем самым, &lt;strong&gt;меньше обращая на себя внимание&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="Проекты в которых ВЫПОЛНЯЛСЯ поиск - игнорируются." class="aligncenter size-full wp-image-3467" height="160" src="images/parsers_2018-06-07_12-48-37.png" width="595"&gt;&lt;/p&gt;
+&lt;p&gt;Так как парсер написан на python, его можно запустить на любой системе.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;В планах реализовать: отправку в Telegram, сделать десктопный(Tkinter или PyQT) и web-варианты запуска. Ну и, конечно же, автоОтветы.&lt;/strong&gt;&lt;/p&gt;</content><category term="Компы и сети"></category><category term="python"></category><category term="парсер"></category></entry><entry><title>Установка OpenWRT на Zyxel Keenetic</title><link href="https://warmwave.ru/openwrt-na-zyxel-keenetic.html" rel="alternate"></link><published>2018-03-27T12:43:00+03:00</published><updated>2018-03-27T12:43:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2018-03-27:/openwrt-na-zyxel-keenetic.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;Тут описано как на роутеры Zyxel серии Keenetic установить прошивку OpenWRT.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Записка появилась на свет по нескольким причинам:&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;- Наличие негативного отношения к 4pda, тк так ничего не найдёшь. А если найдёшь, то перед этим ноги поламаешь в поисках&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;- Отсутствие в Интернетах информации, изложенной чётко и по делу.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Далее всё чётко …&lt;/em&gt;&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;strong&gt;Тут описано как на роутеры Zyxel серии Keenetic установить прошивку OpenWRT.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Записка появилась на свет по нескольким причинам:&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;- Наличие негативного отношения к 4pda, тк так ничего не найдёшь. А если найдёшь, то перед этим ноги поламаешь в поисках&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;- Отсутствие в Интернетах информации, изложенной чётко и по делу.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Далее всё чётко и по делу...&lt;/em&gt;&lt;!--more--&gt;&lt;/p&gt;
+&lt;p&gt;Скачиваем нужную прошивку &lt;a href="/files/openwrt/"&gt;&lt;strong&gt;тут&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Находим файл со своей моделью роутера, &lt;strong&gt;она должна заканчиватсья на ...squashfs-sysupgrade.bin&lt;/strong&gt;. Для меня это openwrt-ramips-rt305x-keenetic_giga-squashfs-sysupgrade.bin&lt;/p&gt;
+&lt;h2&gt;Спопоб первый:&lt;/h2&gt;
+&lt;p&gt;Далее, в зависимости от вашей прошивки...&lt;br&gt;
+- в разделе "Система" выбрать пункт "Микропрограмма" или "Файл микропрограммы", указать файл с прошивкой и нажать "Обновить".&lt;br&gt;
+...либо...&lt;br&gt;
+- в разделе "Система"(Шестерёнка внизу) находим вкладку "Файлы". Там находим ещё одну шестерёнку с надписью firmware. Далее "Заменить файл" и после выбора прошивки, которую скачали ранее, "Заменить".&lt;/p&gt;
+&lt;h2&gt;Способ второй:&lt;/h2&gt;
+&lt;p&gt;- Фаил прошивки переименовываем в rt305x_firmware.bin&lt;br&gt;
+- Скачиваем любой tftp-сервер и запускаем его, предварительно указав папку с rt305x_firmware.bin&lt;br&gt;
+- Соединяем компьютер и любой из LAN-портов Keenetic.&lt;br&gt;
+- В сетевом адаптере компьютера конфигурим вручную: IP-адрес 192.168.99.8, маска подсети 255.255.255.0.&lt;br&gt;
+- Держим RESET в нажатом состоянии и включаем питание роутера.&lt;br&gt;
+- Секунд через 5 после включения отпускаем RESET. Keenetic получит с сервера файл прошивки и распакует его.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;- ЖДЁМ ОКОНЧАНИЯ РАСПАКОВКИ И ПЕРЕЗАГРУЗКУ(Примерно 3-5 минут).&lt;/strong&gt;&lt;br&gt;
+&lt;strong&gt;- После этого вам станет доступна wifi-сеть OpenWRT.&lt;/strong&gt; &lt;strong&gt;Всё.&lt;/strong&gt;&lt;/p&gt;</content><category term="Компы и сети"></category><category term="Keenetic"></category><category term="OpenWRT"></category><category term="Zyxel"></category></entry><entry><title>OrangePi PC Plus в OSX</title><link href="https://warmwave.ru/orangepi-pc-dlya-makovoda.html" rel="alternate"></link><published>2017-12-12T15:11:00+03:00</published><updated>2017-12-12T15:11:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2017-12-12:/orangepi-pc-dlya-makovoda.html</id><summary type="html">&lt;p&gt;&lt;em&gt;Пост носит формат памятки, памятки о OrangePi PC+ и еже с ним. Пост будет периодически дополняться... Если появляются вопросы готов ответить.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="#install"&gt;Установка системы на SD&lt;/a&gt;&lt;br&gt;
+&lt;a href="#date"&gt;Настраиваем часовой пояс и время&lt;/a&gt;&lt;br&gt;
+&lt;a href="#domoticz"&gt;Domoticz, установка и первоначальная настройка&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;И так, вот у нас на руках OrangePi PC+, мы подключаем её и видим какой-то …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;em&gt;Пост носит формат памятки, памятки о OrangePi PC+ и еже с ним. Пост будет периодически дополняться... Если появляются вопросы готов ответить.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="#install"&gt;Установка системы на SD&lt;/a&gt;&lt;br&gt;
+&lt;a href="#date"&gt;Настраиваем часовой пояс и время&lt;/a&gt;&lt;br&gt;
+&lt;a href="#domoticz"&gt;Domoticz, установка и первоначальная настройка&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;И так, вот у нас на руках OrangePi PC+, мы подключаем её и видим какой-то характерный китайский [бред]{style="text-decoration: line-through;"} андройд, наверно. Нужно поставить то, что, для начала, можно хотя бы прочитать...&lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;h2 id="install"&gt;Установка системы на SD&lt;/h2&gt;
+&lt;p&gt;Для того чтобы загрузиться со своей системы, нужно в слот для MicroSD вставить карту с ОС, если такая есть, то железка в первую очередь будет стараться загрузиться с неё.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Скачиваем подходящий образ &lt;a href="http://www.orangepi.org/downloadresources/"&gt;тут&lt;/a&gt; (http://www.orangepi.org/downloadresources/) и распаковываем(можно установить xz с помощью &lt;a href="tag/homebrew"&gt;homebrew&lt;/a&gt;).&lt;/li&gt;
+&lt;li&gt;Устанавливаем систему, раскатав скачанный образ на SD-флешку:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;sudo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;dd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="o"&gt;=~/&lt;/span&gt;&lt;span class="n"&gt;Downloads&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;Armbian_5&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;35&lt;/span&gt;&lt;span class="n"&gt;_Orangepipcplus_Ubuntu_xenial_default_3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mf"&gt;4.113&lt;/span&gt;&lt;span class="n"&gt;_desktop&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;of&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;disk2&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;em&gt;/dev/disk2&lt;/em&gt; - это наша флешка. На какое устройство раскатывать систему нужно смотреть в "&lt;strong&gt;Дисковой утилите&lt;/strong&gt;" или через &lt;strong&gt;diskutil list&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Дисковая-утилита" src="images/Дисковая-утилита-2017-12-12-00-27-44.png"&gt;&lt;/p&gt;
+&lt;p&gt;Ждать придётся долго, но по завершению увидим что-то подобное:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="mf"&gt;6553600&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;records&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt;
+&lt;span class="mf"&gt;6553600&lt;/span&gt;&lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="mf"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;records&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;
+&lt;span class="mf"&gt;3355443200&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;bytes&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;3.4&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;GB&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;copied&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;548.165&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;6.1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;MB&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;После можно грузиться с флешки. Просто вставляем её в апельсин и включаем питание.&lt;/p&gt;
+&lt;p&gt;Подключив мышь, клаву и монитор можно получить доступ к десктопу, или воспользоваться ssh-доступом(user — &lt;strong&gt;root&lt;/strong&gt;, pass — &lt;strong&gt;orangepi&lt;/strong&gt; или &lt;strong&gt;1234&lt;/strong&gt;). Что-бы узнать IP загляните в список DHCP клиентов на вашем роутере.&lt;/p&gt;
+&lt;h2 id="date"&gt;Настраиваем часовой пояс и время&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;dpkg-reconfigure tzdata
+apt-get install ntp ntpdate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="domoticz"&gt;Установка Domoticz&lt;/h2&gt;
+&lt;p&gt;Устанавливается Domoticz одной командой:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo curl -L install.domoticz.com | bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img alt="Установка Domoticz" src="images/image_out.gif"&gt;&lt;/p&gt;
+&lt;p&gt;На все диалоги отвечаем нажатием на "Enter"&lt;/p&gt;</content><category term="Компы и сети"></category><category term="Mac OS X"></category><category term="OrangePi"></category><category term="OSX"></category><category term="Sierra"></category></entry><entry><title>[Решено] - Ошибки при установке версий python через pyenv.</title><link href="https://warmwave.ru/resheno-the-python-ssl-extension-was-not-compiled-missing-the-openssl-lib.html" rel="alternate"></link><published>2017-11-26T18:40:00+03:00</published><updated>2017-11-26T18:40:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2017-11-26:/resheno-the-python-ssl-extension-was-not-compiled-missing-the-openssl-lib.html</id><summary type="html">&lt;p&gt;При установке ещё одной версии Python вылезла ошибка: &lt;strong&gt;The Python ssl extension was not compiled. Missing the OpenSSL lib?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Гугление привело к решению:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;brew&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;uninstall&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;openssl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;brew&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;openssl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;CFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-I$(brew --prefix openssl)/include&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;LDFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-L$(brew --prefix openssl)/lib&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;но в результате brew предложил удалить все зависимые пакеты …&lt;/p&gt;</summary><content type="html">&lt;p&gt;При установке ещё одной версии Python вылезла ошибка: &lt;strong&gt;The Python ssl extension was not compiled. Missing the OpenSSL lib?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Гугление привело к решению:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;brew&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;uninstall&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;openssl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;brew&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;openssl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;CFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-I$(brew --prefix openssl)/include&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;LDFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-L$(brew --prefix openssl)/lib&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;но в результате brew предложил удалить все зависимые пакеты, что не есть хорошо. В такой ситуации нужна опция &lt;em&gt;-ignore-dependencies.&lt;/em&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;brew&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;uninstall&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="nv"&gt;ignore&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;dependencies&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;openssl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;brew&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;openssl&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;CFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-I$(brew --prefix openssl)/include&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;LDFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-L$(brew --prefix openssl)/lib&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Но это не решило проблему. Гуглим дальше...&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nv"&gt;CFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-I$(brew --prefix openssl)/include&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;
+&lt;span class="nv"&gt;LDFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-L$(brew --prefix openssl)/lib&amp;quot;&lt;/span&gt;&lt;span class="w"&gt;   &lt;/span&gt;
+&lt;span class="nv"&gt;pyenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;v&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;.&lt;span class="mi"&gt;7&lt;/span&gt;.&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="nv"&gt;a1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Терминал выплюнул что-то похожее на предыдущие попытки, но&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;~&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pyenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;versions&lt;/span&gt;&lt;span class="w"&gt;                                                                                                                                                        &lt;/span&gt;
+&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;by&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pyenv&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mf"&gt;3.5&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mf"&gt;3.7&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="n"&gt;a1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Другие варианты ошибок&lt;/h2&gt;
+&lt;p&gt;Так же вполне возможно, особенно если система свежая, понадобится установить Xcode:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;xcode-select --install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Компы и сети"></category><category term="High Sierra"></category><category term="homebrew"></category><category term="pyenv"></category><category term="python"></category><category term="Sierra"></category></entry><entry><title>M-Audio Profire 610 в Sierra и HighSierra</title><link href="https://warmwave.ru/m-audio-profire-610-i-macos-sierra-i-highsierra.html" rel="alternate"></link><published>2017-11-12T01:45:00+03:00</published><updated>2017-11-12T01:45:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2017-11-12:/m-audio-profire-610-i-macos-sierra-i-highsierra.html</id><summary type="html">&lt;p&gt;Проблема с двайверами для &lt;strong&gt;M-Audio Profire 610&lt;/strong&gt; в новых яблочных ОС замечена уже &lt;a href="/kompy-i-seti/ne-rabotaet-m-audio-profire-610-v-yosemite.html"&gt;не первый раз&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Все файлы из этой статьи можно скачать &lt;a href="/files/ProFire610_DriverSierra.zip"&gt;&lt;strong&gt;здесь&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Данная техника проверена на macOS Sierra и OSX High Sierra. Перезегрузка в Recovery Mode, ровно как отключение SIP не требуются.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Перед тем как выполнять действия описанные …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Проблема с двайверами для &lt;strong&gt;M-Audio Profire 610&lt;/strong&gt; в новых яблочных ОС замечена уже &lt;a href="/kompy-i-seti/ne-rabotaet-m-audio-profire-610-v-yosemite.html"&gt;не первый раз&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Все файлы из этой статьи можно скачать &lt;a href="/files/ProFire610_DriverSierra.zip"&gt;&lt;strong&gt;здесь&lt;/strong&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Данная техника проверена на macOS Sierra и OSX High Sierra. Перезегрузка в Recovery Mode, ровно как отключение SIP не требуются.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Перед тем как выполнять действия описанные ниже, нужно установить последние доступные драйвера. Скачать их можно с &lt;a href="http://m-audio.com/support/drivers"&gt;сайта производителя&lt;/a&gt;. Устанавливаем драйвера и не перезагружаемся (мастер установки попросит перезагрузить систему).&lt;/p&gt;
+&lt;p&gt;**Звуковая карта должна быть отключена. **&lt;/p&gt;
+&lt;h2&gt;И так, ПОГНАЛИ.&lt;/h2&gt;
+&lt;p&gt;1 - Открываем терминал:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo rm -rf /System/Library/Extensions/M-AudioFireWireDICE.kext
+sudo rm -rf /Library/Extensions/M-AudioFireWireDICE.kext
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;2 - Файл &lt;a href="/files/ProFire610_DriverSierra.zip"&gt;M-AudioFireWireDICE.kext&lt;/a&gt; копируем в &lt;strong&gt;/Library/Extensions&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;3 - Запускаем &lt;a href="http://cvad-mac.narod.ru/files/Kext_Utility.app.v2.6.6.zip"&gt;Kext Utility&lt;/a&gt;, вводим пароль и фиксим права.&lt;/p&gt;
+&lt;p&gt;Далее перезагружаем систему (можно с помощью окна мастера установки) и радуемся!!!&lt;/p&gt;</content><category term="Шумы и звуки"></category><category term="HighSierra"></category><category term="Kext Utility"></category><category term="M-Audio"></category><category term="Profire"></category><category term="Sierra"></category></entry><entry><title>Ошибка GPG. Следующие подписи неверные: KEYEXPIRED</title><link href="https://warmwave.ru/oshibka-gpg-sleduyushhie-podpisi-nevernye-keyexpired.html" rel="alternate"></link><published>2017-11-06T02:49:00+03:00</published><updated>2017-11-06T02:49:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2017-11-06:/oshibka-gpg-sleduyushhie-podpisi-nevernye-keyexpired.html</id><summary type="html">&lt;p&gt;При обновлении пакетов заметил следущее:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Получено 86,1 kБ за 5с (15,1 kБ/c)
+Чтение списков пакетов… Готово
+W: Ошибка GPG: http://debian-archive.trafficmanager.net jessie InRelease: Следующие подписи неверные: KEYEXPIRED 1507383481
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Всё решается, всё просто.&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;➜ ~ apt-key list | grep expired
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;или&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;➜ ~ apt-key list | grep просрочен
+pub 4096R/B98321F9 2010-08-07 …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;При обновлении пакетов заметил следущее:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Получено 86,1 kБ за 5с (15,1 kБ/c)
+Чтение списков пакетов… Готово
+W: Ошибка GPG: http://debian-archive.trafficmanager.net jessie InRelease: Следующие подписи неверные: KEYEXPIRED 1507383481
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Всё решается, всё просто.&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;➜ ~ apt-key list | grep expired
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;или&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;➜ ~ apt-key list | grep просрочен
+pub 4096R/B98321F9 2010-08-07 [просрочен с: 2017-08-05]
+pub 2048R/A86CAD7F 2015-10-08 [просрочен с: 2017-10-07]
+➜ ~ apt-key del B98321F9
+OK
+➜ ~ apt-key del A86CAD7F
+OK
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Компы и сети"></category><category term="apt"></category><category term="apt-key"></category><category term="Debian"></category></entry><entry><title>Awstats, ISPmanager4, CentOS6 и ошибка сегментирования.</title><link href="https://warmwave.ru/awstats-ispmanager4-centos6-i-oshibka-segmentirovaniya.html" rel="alternate"></link><published>2017-08-14T19:22:00+03:00</published><updated>2017-08-14T19:22:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2017-08-14:/awstats-ispmanager4-centos6-i-oshibka-segmentirovaniya.html</id><summary type="html">&lt;p&gt;Изначально сам Awstats ставился отсюда:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;https://sourceforge.net/projects/awstats/files/AWStats/7.6/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Соответственно, версия - awstats-7.6-1. Далее был поправлен конфиг /etc/httpd/conf.d/awstats.conf, очищен кэш ISPmanager.&lt;br&gt;
+&lt;strong&gt;В итоге Awstats заработал.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Но две недели назад Awstats перестал обновлять статистику, хотя логи ротировались, и посещаемость у сайтов …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Изначально сам Awstats ставился отсюда:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;https://sourceforge.net/projects/awstats/files/AWStats/7.6/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Соответственно, версия - awstats-7.6-1. Далее был поправлен конфиг /etc/httpd/conf.d/awstats.conf, очищен кэш ISPmanager.&lt;br&gt;
+&lt;strong&gt;В итоге Awstats заработал.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Но две недели назад Awstats перестал обновлять статистику, хотя логи ротировались, и посещаемость у сайтов была.&lt;br&gt;
+На сервере 3 новостных сайта. Cтатистика нужна очень, причём именно серверная, ибо гугло-яндексы давно и безбожно врут.&lt;/p&gt;
+&lt;h2&gt;При попытке обновить статистику вручную выдаётся ошибка "Segmentation fault".&lt;/h2&gt;
+&lt;p&gt;В messages-логах появляются подобные записи:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&amp;quot;awstats.pl: segfault at 0 ip 0000003face07b65 sp 00007ffd9c7a0b90 error 4 in libGeoIP.so.1.6.5[3face00000+34
+Not saving repeating crash in &amp;#39;/usr/bin/perl&amp;#39;&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Статистика обновлялась в ручную:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/usr/local/awstats/wwwroot/cgi-bin/awstats.pl -config=domain.com -update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;либо так, как делает это ISPmanager:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;ispmgr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;awstats2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;logs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;access&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;log&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;domain&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;webstat&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Но в чём потом возникла проблема? В модуле libGeoIP.so?&lt;/h2&gt;
+&lt;p&gt;Дело было вот в чём.&lt;br&gt;
+В конфигах awstats для каждого домена были такие директивы:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;LoadPlugin=&amp;quot;geoip GEOIP_STANDARD /usr/share/GeoIP/GeoIP.dat&amp;quot;
+LoadPlugin=&amp;quot;geoip_city_maxmind GEOIP_STANDARD /usr/share/GeoIP/GeoLiteCity.dat&amp;quot;
+LoadPlugin=&amp;quot;geoip_org_maxmind GEOIP_STANDARD /usr/share/GeoIP/GeoIPASNum.dat&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;А эти dat-файлы скачиваются скриптом, установленным еженедельно в cron/&lt;br&gt;
+В скрипте такие строки:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;wget&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;geolite&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;maxmind&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;download&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;geoip&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;GeoLiteCountry&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;GeoIP&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;gunzip&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;share&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;GeoIP&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;GeoIP&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dat&lt;/span&gt;
+&lt;span class="n"&gt;wget&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;maxmind&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;download&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;geoip&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;GeoLiteCity&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;gunzip&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;share&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;GeoIP&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;GeoLiteCity&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dat&lt;/span&gt;
+&lt;span class="n"&gt;wget&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;O&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;maxmind&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;download&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;geoip&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;asnum&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;GeoIPASNum&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;gunzip&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;share&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;GeoIP&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;GeoIPASNum&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dat&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Но проблема оказалась в том, что файлы в директории /usr/share/GeoIP/ оказались нулевого размера, потому что с maxmind.com ничего невозможно скачать.&lt;br&gt;
+Я пробовал скачаить с maxmind вручную:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;wget&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;www&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;maxmind&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;download&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;geoip&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;database&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;asnum&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;GeoIPASNum&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dat&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;gz&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Результат: failed: Connection timed out.&lt;/strong&gt;&lt;br&gt;
+Соответственно, возникали ошибки при попытке использования этих файлов при построении отчётов.&lt;/p&gt;
+&lt;p&gt;Причём, с сервера в Германии всё прекрасно скачивается с maxmind.com, а здесь такое ощущение, что либо этот IP у maxmind.com в бане, либо вообще вся подсеть.&lt;br&gt;
+Скачав dat-файлы и подсунув в /usr/share/GeoIP/ проблема решалась.&lt;/p&gt;
+&lt;h2&gt;Но тогда вопрос: Как настроить автоматическое регулярное скачивание, что-бы Awstats работал?&lt;/h2&gt;
+&lt;p&gt;Как вариант прокси для скачивания по крону, wget умеет прокси:&lt;/p&gt;
+&lt;p&gt;Скачать файл через proxy:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;http_proxy=&amp;quot;http://33.22.44.44:8080&amp;quot; wget http://www.google.com/favicon.ico
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Для HTTPS&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;https_proxy=&amp;quot;http://33.22.44.44:8080&amp;quot; wget https://www.google.com/favicon.ico
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Proxy с авторизацией&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;http_proxy=&amp;quot;http://33.22.44.44:8080&amp;quot; wget --proxy-user=user --proxy-password=password http://www.google.com/favicon.ico
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Параметры --proxy-user и --proxy-password, чтобы не указывать постоянно, можно прописать в файл ~/.wgetrc&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;proxy-user = username
+proxy-password = password
+user-agent = Mozilla/5.0 (X11; Linux i686; rv:7.0.1) Gecko/20100101 Firefox/7.0.1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Компы и сети"></category><category term="Awstats"></category><category term="CentOS"></category><category term="ISPmanager"></category><category term="ISPmanager4"></category><category term="ISPmgr"></category></entry><entry><title>PyEnv на OS X - Менеджер версий для python</title><link href="https://warmwave.ru/pyenv-na-os-x.html" rel="alternate"></link><published>2016-11-30T02:19:00+03:00</published><updated>2016-11-30T02:19:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2016-11-30:/pyenv-na-os-x.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;О том как установить PyEnv и всё что для него нужно в OS X. PyEnv - это такая магическая штука которая позволяет иметь в системе несколько версий Python и легко переключаться между ними. Иногда даже автоматически)))&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Установка.&lt;/h2&gt;
+&lt;p&gt;С помощью уже привычного &lt;a href="/tag/homebrew"&gt;Homebrew&lt;/a&gt; устанавливаем необходимые пакеты.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install pyenv pyenv-virtualenv pyenv-virtualenvwrapper pyenv-ccache …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;&lt;strong&gt;О том как установить PyEnv и всё что для него нужно в OS X. PyEnv - это такая магическая штука которая позволяет иметь в системе несколько версий Python и легко переключаться между ними. Иногда даже автоматически)))&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Установка.&lt;/h2&gt;
+&lt;p&gt;С помощью уже привычного &lt;a href="/tag/homebrew"&gt;Homebrew&lt;/a&gt; устанавливаем необходимые пакеты.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install pyenv pyenv-virtualenv pyenv-virtualenvwrapper pyenv-ccache pyenv-which-ext
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Для того что-бы не таскать из сети одни и те же модули, их лучше всего кешировать - &lt;strong&gt;pyenv-ccache&lt;/strong&gt;. А про &lt;a href="/tag/virtualenv"&gt;virtualenv&lt;/a&gt; и &lt;a href="/tag/virtualenvwrapper"&gt;virtualenvwrapper&lt;/a&gt; на страницах этого блога я уже писал.&lt;/p&gt;
+&lt;h2&gt;Добавляем переменные.&lt;/h2&gt;
+&lt;p&gt;Теперь открываем ~/.bashrc или ~/.profile и добавляем:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;по просьбе горячё любимого Хомяка))):&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Устанавливать окружения в папку домашнего каталога(~/.pyenv)&lt;/span&gt;
+&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PYENV_ROOT&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pyenv&lt;/span&gt;
+&lt;span class="c1"&gt;# Или&lt;/span&gt;
+&lt;span class="c1"&gt;# Устанавливать окружения в папку с pyenv(Куда его установил Homebrew), а не ~/.pyenv&lt;/span&gt;
+&lt;span class="c1"&gt;# export PYENV_ROOT=&amp;quot;$HOME/.pyenv&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;$PYENV_ROOT/bin:$PATH&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Для автоматической активации виртуального окружения и автозавершения добавим:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;which&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;pyenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;null&lt;/span&gt;&lt;span class="c1"&gt;; then eval &amp;quot;$(pyenv init -)&amp;quot;; fi &lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;which&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;pyenv&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;virtualenv&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nv"&gt;init&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;dev&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nv"&gt;null&lt;/span&gt;&lt;span class="c1"&gt;; then eval &amp;quot;$(pyenv virtualenv-init -)&amp;quot;; fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Пользуемся.&lt;/h2&gt;
+&lt;p&gt;Теперь о том как этим пользоваться:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;pyenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;commands&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# Смотрим список команд&lt;/span&gt;
+&lt;span class="n"&gt;pyenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# Узнаём активную версию Питона&lt;/span&gt;
+&lt;span class="mf"&gt;3.5&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;by&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pyenv&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;pyenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;versions&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# Узнаём список установленных версий и окружений&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;system&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mf"&gt;2.7&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# Версия&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="mf"&gt;2.7&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;envs&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;GB&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# Виртуальное окружение для версии 2.7.10&lt;/span&gt;
+&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;3.5&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;by&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;var&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pyenv&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;version&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="n"&gt;GB&lt;/span&gt;
+&lt;span class="n"&gt;pyenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;3.5&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# Устанавливаем Python 3.5.2&lt;/span&gt;
+&lt;span class="n"&gt;pyenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;virtualenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;2.7&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;NewName&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# Создаём виртуальное окружение для Питона версии 2.7.10&lt;/span&gt;
+&lt;span class="n"&gt;pyenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;global&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mf"&gt;3.5&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# Активировать глобально&lt;/span&gt;
+&lt;span class="n"&gt;pyenv&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;NewName&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# Активируем окружение NewName&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;**Обращаю ваше внимание на очень удобную особенность: после выполнения команды **&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pyenv local NewName
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;создаётся файл .python-version, и теперь "благодаря" ему,  когда вы в следующий раз перейдёте в эту же директорию, то виртуальное окружение NewName активируется автоматически.&lt;/p&gt;</content><category term="Компы и сети"></category><category term="homebrew"></category><category term="Mac OS X"></category><category term="pyenv"></category><category term="python"></category><category term="Sierra"></category></entry><entry><title>Python3 и virtualenv в Sierra. Установка и настройка</title><link href="https://warmwave.ru/python3-and-virtualenv-in-sierra.html" rel="alternate"></link><published>2016-10-31T16:12:00+03:00</published><updated>2016-10-31T16:12:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2016-10-31:/python3-and-virtualenv-in-sierra.html</id><summary type="html">&lt;p&gt;Это обновлённый материал о настройке Python3 и virtualenv по мотивам двух предыдущих: "&lt;a href="http://blog.warmwave.ru/kompy-i-seti/nastrojjka-python-django-v-mac.html"&gt;Настройка Python и Django в Mac&lt;/a&gt;" и "&lt;a href="http://blog.warmwave.ru/kompy-i-seti/ustanovka-python-virtualenv-na-mac.html"&gt;Virtualenv на Mac OS X&lt;/a&gt;". Всё описанное тут актуально для OS X Sierra. Если вам не понятен материал, задавайте вопросы в комментариях или же обратитесь к ссылкам выше.&lt;/p&gt;
+&lt;h2&gt;Подготовка. Установка Homebrew …&lt;/h2&gt;</summary><content type="html">&lt;p&gt;Это обновлённый материал о настройке Python3 и virtualenv по мотивам двух предыдущих: "&lt;a href="http://blog.warmwave.ru/kompy-i-seti/nastrojjka-python-django-v-mac.html"&gt;Настройка Python и Django в Mac&lt;/a&gt;" и "&lt;a href="http://blog.warmwave.ru/kompy-i-seti/ustanovka-python-virtualenv-na-mac.html"&gt;Virtualenv на Mac OS X&lt;/a&gt;". Всё описанное тут актуально для OS X Sierra. Если вам не понятен материал, задавайте вопросы в комментариях или же обратитесь к ссылкам выше.&lt;/p&gt;
+&lt;h2&gt;Подготовка. Установка Homebrew и Python3&lt;/h2&gt;
+&lt;p&gt;Первое, что нужно сделать - установить Homebrew:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Итак, далее... Устанавливаем &lt;strong&gt;python&lt;/strong&gt;, ставим сразу 3ю версию.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install python3 --with-brewed-openssl
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Проверить версию питона можно командой&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;# Для коробочного питона
+python -V # Узнать версию
+where python # Место расположения
+# Для только что установленного питона 
+python3 -V # Узнать версию
+where python3 # Место расположения
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Установка и настройка virtualenv&lt;/h2&gt;
+&lt;p&gt;Далее устанавливаем два расширения для виртуального окружения. Это нужно для того, чтобы для каждого проекта подтягивались только зависимости проекта.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip3 install virtualenv virtualenvwrapper
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Вставим несколько строк в ~/.bashrc:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Добавляем переменную - то где установлен Python&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python3&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;PYTHONPATH&lt;/span&gt;
+&lt;span class="n"&gt;fi&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Определяем местоположение virtualenvwrapper&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;virtualenvwrapper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;VENVWRAP&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;virtualenvwrapper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt;
+&lt;span class="n"&gt;fi&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;VENVWRAP&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;then&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# virtualenvwrapper&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# убедимся что папка существует&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;HOME&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sites&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mkdir&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;HOME&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sites&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;WORKON_HOME&lt;/span&gt;&lt;span class="o"&gt;=$&lt;/span&gt;&lt;span class="n"&gt;HOME&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sites&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;VENVWRAP&lt;/span&gt;
+
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# virtualenv&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;VIRTUALENV_USE_DISTRIBUTE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;true&lt;/span&gt;
+
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# pip&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PIP_VIRTUALENV_BASE&lt;/span&gt;&lt;span class="o"&gt;=$&lt;/span&gt;&lt;span class="n"&gt;WORKON_HOME&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PIP_REQUIRE_VIRTUALENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;true&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# pip должен выполняться только если активирован virtualenv&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PIP_RESPECT_VIRTUALENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;true&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PIP_DOWNLOAD_CACHE&lt;/span&gt;&lt;span class="o"&gt;=$&lt;/span&gt;&lt;span class="n"&gt;HOME&lt;/span&gt;&lt;span class="o"&gt;/.&lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;# Кешируем пакеты чтобы избежать повторной загрузки&lt;/span&gt;
+&lt;span class="n"&gt;fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Создаём файл ~/sites/env/postactivate и добавляем в него следующее:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;proj_name=&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;VIRTUAL_ENV&lt;/span&gt;&lt;span class="c1"&gt;##*/&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;
+
+#&lt;span class="w"&gt; &lt;/span&gt;Добавляем&lt;span class="w"&gt; &lt;/span&gt;для&lt;span class="w"&gt; &lt;/span&gt;активного&lt;span class="w"&gt; &lt;/span&gt;проекта&lt;span class="w"&gt; &lt;/span&gt;PYTHONPATH
+if&lt;span class="w"&gt; &lt;/span&gt;[&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;~/sites/env/&lt;span class="nv"&gt;$proj_name&lt;/span&gt;/lib/python3.5/site-packages&lt;span class="w"&gt; &lt;/span&gt;];&lt;span class="w"&gt; &lt;/span&gt;then
+add2virtualenv&lt;span class="w"&gt; &lt;/span&gt;~/sites/env/&lt;span class="nv"&gt;$proj_name&lt;/span&gt;/lib/python3.5/site-packages
+fi
+
+#&lt;span class="w"&gt; &lt;/span&gt;делаем&lt;span class="w"&gt; &lt;/span&gt;&amp;quot;cd&amp;quot;&lt;span class="w"&gt; &lt;/span&gt;в&lt;span class="w"&gt; &lt;/span&gt;виртуальное&lt;span class="w"&gt; &lt;/span&gt;окружение
+if&lt;span class="w"&gt; &lt;/span&gt;[&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;~/sites/env/&lt;span class="nv"&gt;$proj_name&lt;/span&gt;/project&lt;span class="w"&gt; &lt;/span&gt;];&lt;span class="w"&gt; &lt;/span&gt;then
+cd&lt;span class="w"&gt; &lt;/span&gt;~/sites/env/&lt;span class="nv"&gt;$proj_name&lt;/span&gt;/project
+else
+cd&lt;span class="w"&gt; &lt;/span&gt;~/sites/env/&lt;span class="nv"&gt;$proj_name&lt;/span&gt;
+fi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Использование virtualenv&lt;/h2&gt;
+&lt;p&gt;После этого остаётся перезагрузить bash-окружение&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;source ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;В результате мы можем следующее:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Создать виртуальную среду с именем "test" в ~/sites/env/&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;mkvirtualenv test&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Активировать созданную среду&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;workon test&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Перейти в каталог активной среды&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cdvirtualenv&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Это всё, что нужно сделать для удобной и гибкой работы с Python. Напоминаю, что если у вас возникли вопросы, то задавайте их в комментариях ниже.&lt;/p&gt;</content><category term="Компы и сети"></category><category term="homebrew"></category><category term="Mac OS X"></category><category term="python"></category><category term="Sierra"></category><category term="virtualenv"></category><category term="virtualenvwrapper"></category></entry><entry><title>Steam. Танцы с бубном и установка на Ubuntu.</title><link href="https://warmwave.ru/steam-tancy-s-bubnom-i-ustanovka-na-ubuntu.html" rel="alternate"></link><published>2016-10-20T17:56:00+03:00</published><updated>2016-10-20T17:56:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2016-10-20:/steam-tancy-s-bubnom-i-ustanovka-na-ubuntu.html</id><summary type="html">&lt;p&gt;Всё началось с того, что мой друг, играющий в компьютерные игры, замучился с тормозами системы, вирусами и непонятно откуда взявшимися приложениями от mail.ru. Дружище как раз играл в Steam-игры. А к OC Windows у меня давно сложившееся негативное отношение...&lt;!--more--&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Итак, задача: установить Steam на Linux.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Заход первый (совершенно неправильный …&lt;/h2&gt;</summary><content type="html">&lt;p&gt;Всё началось с того, что мой друг, играющий в компьютерные игры, замучился с тормозами системы, вирусами и непонятно откуда взявшимися приложениями от mail.ru. Дружище как раз играл в Steam-игры. А к OC Windows у меня давно сложившееся негативное отношение...&lt;!--more--&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Итак, задача: установить Steam на Linux.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Заход первый (совершенно неправильный):&lt;/h2&gt;
+&lt;p&gt;Первым делом мы начали гуглить и выяснили, что SteamOS основана на Debian. Кроме того узналось, что есть установщик для винды, который не работал. Я даже не удивился)&lt;/p&gt;
+&lt;p&gt;Так как на компе было 4ГБ оперативной памяти, решили не усложнять себе жизнь и поставить Debian8 32bit.&lt;/p&gt;
+&lt;p&gt;Далее поставили Steam, который просто не запускался(&lt;/p&gt;
+&lt;h2&gt;Заход второй (неправильный):&lt;/h2&gt;
+&lt;p&gt;Понятное дело поставили Debian8 64bit и понеслось:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Добавили "non-free" репозиторий в &lt;code&gt;/etc/apt/sources.list&lt;/code&gt;&lt;/tt&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;deb&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;http://http.debian.net/debian/&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kp"&gt;jessie&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kp"&gt;main&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kp"&gt;contrib&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kp"&gt;non-free&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Включили &lt;a href="https://wiki.debian.org/ru/Multiarch/HOWTO"&gt;Multi-Arch&lt;/a&gt;, обновили список пакетов и установили Steam:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;dpkg --add-architecture i386
+aptitude update
+aptitude install steam
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;"О, круто!" - подумалось нам, - "Steam запускается, игрушки качаются". &lt;strong&gt;НО&lt;/strong&gt; тяжёлые игры не запускались.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Вывод: нужны драйвера на видео-карту.&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Ок, устанавливаем видео-дрова.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;aptitude install libgl1-nvidia-glx:i386
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;И всё!!! Система начала сносить добрую часть x64-приложений, а апогеем стала не рабочая видео-система, ну и, конечно, GNOME не запускался...&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Вывод:&lt;/strong&gt; &lt;strong&gt;битность системы тому виной&lt;/strong&gt;, в частности:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;dpkg --add-architecture i386
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Третий заход (почти правильный):&lt;/h2&gt;
+&lt;p&gt;После 15-ой попытки решить проблему с помощью перебора всех возможных вариантов Debain 7/8 - i386/x64 и скачавания дров с оф.сайтов, родилась мысль поставить Ubuntu. Взяли для верности Ubuntu 16.04 i386.&lt;/p&gt;
+&lt;p&gt;Поставили, сразу для верности поставили драйвера&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo apt-get update &amp;amp;&amp;amp; sudo apt-get install nvidia-304 nvidia-settings
+sudo nvidia-xconfig
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Всё ок.&lt;/p&gt;
+&lt;p&gt;Поставили Steam, скачав официальный deb-пакет у сайта, но почти та же история - тяжёлые игрушки запускались с "битыми" текстурами. Плюс система висла на каждом шагу.&lt;/p&gt;
+&lt;p&gt;Глянув, наконец, системные требования к играм увидели - &lt;strong&gt;x64&lt;/strong&gt;&lt;/p&gt;
+&lt;h2&gt;Четвёртый заход (правильный):&lt;/h2&gt;
+&lt;p&gt;Тут, наконец-то, всё просто.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Устанавливаем Ubuntu 16.04 x64.&lt;/li&gt;
+&lt;li&gt;Качаем Steam с оф.сайта, устанавливаем через "Установка пакетов"&lt;/li&gt;
+&lt;li&gt;Устанавливаем дрова&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo apt-get update &amp;amp;&amp;amp; sudo apt-get install nvidia-304 nvidia-settings
+sudo nvidia-xconfig
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;либо, можно скачать установщик с сайта NVIDIA.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;В итоге, всё ок. Друг счастлив, а я спокоен, и за друга и за МелкоМягких))) &lt;/strong&gt;Отзывы и вопросы и возможные правки оставляйте ниже.&lt;/p&gt;</content><category term="Компы и сети"></category><category term="Debian"></category><category term="Steam"></category><category term="SteamOS"></category><category term="Ubuntu"></category></entry><entry><title>Metasploit Framework. Установка на OS X. Старая версия</title><link href="https://warmwave.ru/metasploit-framework-ustanovka-na-os-x.html" rel="alternate"></link><published>2014-12-24T05:35:00+03:00</published><updated>2014-12-24T05:35:00+03:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2014-12-24:/metasploit-framework-ustanovka-na-os-x.html</id><content type="html">&lt;p&gt;Сегодня устанавливаем Metasploit Framework.&lt;/p&gt;
+&lt;p&gt;В этом нам поможет скрипт проекта&lt;!--more--&gt; - &lt;a href="https://github.com/darkoperator/MSF-Installer.git"&gt;https://github.com/darkoperator/MSF-Installer.git&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;git clone https://github.com/darkoperator/MSF-Installer.git
+cd MSF-Installer/ 
+chmod +x msf_install.sh
+./msf_install.sh -i
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;У меня вылетело следующее:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Metasploit Framework. Установка на OS X." src="images/v29JZBksz75jAG.png"&gt;&lt;/p&gt;
+&lt;p&gt;решается просто:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;xcode-select --install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;после повторяем "./msf_install.sh -i"&lt;/p&gt;</content><category term="Компы и сети"></category><category term="Mac OS X"></category><category term="Metasploit Framework"></category></entry><entry><title>Исправляем проблему запуска Apache(MAMP Pro) в Yosemite</title><link href="https://warmwave.ru/ispravlyaem-problemu-zapuska-apachemamp-pro-v-yosemite.html" rel="alternate"></link><published>2014-10-13T15:15:00+04:00</published><updated>2014-10-13T15:15:00+04:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2014-10-13:/ispravlyaem-problemu-zapuska-apachemamp-pro-v-yosemite.html</id><content type="html">&lt;p&gt;Опять купертиновцы намудрили))). На этот раз - не запускается apache из набора MAMP Pro в Yosemite.&lt;!--more--&gt;&lt;/p&gt;
+&lt;p&gt;Идём в папку &lt;strong&gt;/Applications/MAMP/Library/bin&lt;/strong&gt;. Там находим файлик &lt;strong&gt;envvars&lt;/strong&gt; и переименовываем его, например в &lt;strong&gt;_envvars&lt;/strong&gt;&lt;/p&gt;</content><category term="Компы и сети"></category><category term="Apache"></category><category term="MAMP Pro"></category><category term="Yosemite"></category></entry><entry><title>Не работает M-Audio ProFire 610 в Yosemite</title><link href="https://warmwave.ru/ne-rabotaet-m-audio-profire-610-v-yosemite.html" rel="alternate"></link><published>2014-10-12T16:42:00+04:00</published><updated>2014-10-12T16:42:00+04:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2014-10-12:/ne-rabotaet-m-audio-profire-610-v-yosemite.html</id><summary type="html">&lt;p&gt;Попробовал я тут поставить Yosemite. Это уже вторая попытка заюзать новую систему.&lt;!--more--&gt; Первая оказалась неудачной т.к. система была, на тот момент, реально сырой. Сейчас всё более-менее. Но всё-же обнаружил одну проблему. У меня не работала звуковая карта - M-Audio ProFire 610.&lt;/p&gt;
+&lt;p&gt;Пробема, как всегда решилась просто:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo nvram boot-args=&amp;quot;kext-dev-mode …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Попробовал я тут поставить Yosemite. Это уже вторая попытка заюзать новую систему.&lt;!--more--&gt; Первая оказалась неудачной т.к. система была, на тот момент, реально сырой. Сейчас всё более-менее. Но всё-же обнаружил одну проблему. У меня не работала звуковая карта - M-Audio ProFire 610.&lt;/p&gt;
+&lt;p&gt;Пробема, как всегда решилась просто:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo nvram boot-args=&amp;quot;kext-dev-mode=1&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Шумы и звуки"></category><category term="M-Audio"></category><category term="Yosemite"></category></entry><entry><title>Редирект с http на https для nginx</title><link href="https://warmwave.ru/redirekt-s-http-na-https-dlya-nginx.html" rel="alternate"></link><published>2014-10-09T09:36:00+04:00</published><updated>2014-10-09T09:36:00+04:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2014-10-09:/redirekt-s-http-na-https-dlya-nginx.html</id><content type="html">&lt;p&gt;Как-то встала задача - редирект с http на https. Задача решается просто, просто добавлением нескольких строк в директиву location / {}&lt;!--more--&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nt"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="nt"&gt;scheme&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;http&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;rewrite&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="err"&gt;^/(.*)$&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;permanent&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;теперь при заходе на http://domain.com будет происходить редирект на https://domain.com&lt;/p&gt;</content><category term="Компы и сети"></category><category term="nginx"></category></entry><entry><title>Меняем root-пароль MySQL в MAC OS X</title><link href="https://warmwave.ru/menyaem-root-parol-mysql-v-mac-os-x.html" rel="alternate"></link><published>2014-08-22T19:10:00+04:00</published><updated>2014-08-22T19:10:00+04:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2014-08-22:/menyaem-root-parol-mysql-v-mac-os-x.html</id><summary type="html">&lt;p&gt;Устанавливал я как-то MySQL на OS X, и толи я запарил, толи одно из двух… но пароль который я вводил не подходил(((&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;Решаем проблему:&lt;br&gt;
+Сначала останавливаем службу:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo /Library/StartupItems/MySQLCOM/MySQLCOM stop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Далее выполняем:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/usr/local/mysql/bin/mysqld_safe --skip-grant-tables
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;А для старых версий MySQL:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/usr/local/mysql/bin …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Устанавливал я как-то MySQL на OS X, и толи я запарил, толи одно из двух… но пароль который я вводил не подходил(((&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;Решаем проблему:&lt;br&gt;
+Сначала останавливаем службу:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo /Library/StartupItems/MySQLCOM/MySQLCOM stop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Далее выполняем:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/usr/local/mysql/bin/mysqld_safe --skip-grant-tables
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;А для старых версий MySQL:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/usr/local/mysql/bin/safe_mysqld --skip-grant-tables
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Теперь открываем ЕЩЁ ОДНО окно терминала и выполняем:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/usr/local/mysql/bin/mysql mysql
+use mysql;
+UPDATE user SET Password=PASSWORD(‘YOUR_PASSWORD’) WHERE Host=’localhost’ AND User=’root’;
+flush privileges;
+quit
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Всё. Перезапускаем службу:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo /Library/StartupItems/MySQLCOM/MySQLCOM restart
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;P.S. Остановку и запуск можно выполнять через «Системные настройки»&lt;/p&gt;</content><category term="Компы и сети"></category><category term="Mac OS X"></category><category term="MySQL"></category><category term="перевод"></category><category term="Сбрасываем пароль MySQL"></category></entry><entry><title>Удаляем Homebrew</title><link href="https://warmwave.ru/udalyaem-homebrew.html" rel="alternate"></link><published>2014-08-22T14:33:00+04:00</published><updated>2014-08-22T14:33:00+04:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2014-08-22:/udalyaem-homebrew.html</id><summary type="html">&lt;p&gt;Случилось так что нужно удалить Homebrew, окей. Решить задачу, как всегда, можно несколькими способами.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;Первый способ. Для этого нужно выполнить в консоли:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cd `brew --prefix`
+rm -rf Cellar
+brew prune
+rm `git ls-files`
+rm -r Library/Homebrew Library/Aliases Library/Formula Library/Contributions
+rm -rf .git
+rm -rf ~/Library/Caches …&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</summary><content type="html">&lt;p&gt;Случилось так что нужно удалить Homebrew, окей. Решить задачу, как всегда, можно несколькими способами.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;Первый способ. Для этого нужно выполнить в консоли:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cd `brew --prefix`
+rm -rf Cellar
+brew prune
+rm `git ls-files`
+rm -r Library/Homebrew Library/Aliases Library/Formula Library/Contributions
+rm -rf .git
+rm -rf ~/Library/Caches/Homebrew
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Второй способ. Так же существует скрипт, который так и называется - «&lt;a href="https://gist.github.com/mxcl/1173223/download#"&gt;uninstall_homebrew.sh&lt;/a&gt;»&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="ch"&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class="c1"&gt;# Just copy and paste the lines below (all at once, it won&amp;#39;t work line by line!)&lt;/span&gt;
+&lt;span class="c1"&gt;# MAKE SURE YOU ARE HAPPY WITH WHAT IT DOES FIRST! THERE IS NO WARRANTY!&lt;/span&gt;
+
+&lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;abort&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="nv"&gt;$1&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nb"&gt;exit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;1&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+
+&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-e
+
+/usr/bin/which&lt;span class="w"&gt; &lt;/span&gt;-s&lt;span class="w"&gt; &lt;/span&gt;git&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;abort&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;brew install git first!&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;test&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;/usr/local/.git&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;abort&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;brew update first!&amp;quot;&lt;/span&gt;
+
+&lt;span class="nb"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;brew&lt;span class="w"&gt; &lt;/span&gt;--prefix&lt;span class="sb"&gt;`&lt;/span&gt;
+git&lt;span class="w"&gt; &lt;/span&gt;checkout&lt;span class="w"&gt; &lt;/span&gt;master
+git&lt;span class="w"&gt; &lt;/span&gt;ls-files&lt;span class="w"&gt; &lt;/span&gt;-z&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;pbcopy
+rm&lt;span class="w"&gt; &lt;/span&gt;-rf&lt;span class="w"&gt; &lt;/span&gt;Cellar
+bin/brew&lt;span class="w"&gt; &lt;/span&gt;prune
+pbpaste&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;xargs&lt;span class="w"&gt; &lt;/span&gt;-0&lt;span class="w"&gt; &lt;/span&gt;rm
+rm&lt;span class="w"&gt; &lt;/span&gt;-r&lt;span class="w"&gt; &lt;/span&gt;Library/Homebrew&lt;span class="w"&gt; &lt;/span&gt;Library/Aliases&lt;span class="w"&gt; &lt;/span&gt;Library/Formula&lt;span class="w"&gt; &lt;/span&gt;Library/Contributions&lt;span class="w"&gt; &lt;/span&gt;
+&lt;span class="nb"&gt;test&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;Library/LinkedKegs&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;rm&lt;span class="w"&gt; &lt;/span&gt;-r&lt;span class="w"&gt; &lt;/span&gt;Library/LinkedKegs
+rmdir&lt;span class="w"&gt; &lt;/span&gt;-p&lt;span class="w"&gt; &lt;/span&gt;bin&lt;span class="w"&gt; &lt;/span&gt;Library&lt;span class="w"&gt; &lt;/span&gt;share/man/man1&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;/dev/null
+rm&lt;span class="w"&gt; &lt;/span&gt;-rf&lt;span class="w"&gt; &lt;/span&gt;.git
+rm&lt;span class="w"&gt; &lt;/span&gt;-rf&lt;span class="w"&gt; &lt;/span&gt;~/Library/Caches/Homebrew
+rm&lt;span class="w"&gt; &lt;/span&gt;-rf&lt;span class="w"&gt; &lt;/span&gt;~/Library/Logs/Homebrew
+rm&lt;span class="w"&gt; &lt;/span&gt;-rf&lt;span class="w"&gt; &lt;/span&gt;/Library/Caches/Homebrew
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content><category term="Компы и сети"></category><category term="homebrew"></category><category term="Mac OS X"></category><category term="Удаляем Homebrew"></category></entry><entry><title>Разбираем WD My Cloud</title><link href="https://warmwave.ru/razbiraem-wd-cloud.html" rel="alternate"></link><published>2014-07-14T09:40:00+04:00</published><updated>2014-07-14T09:40:00+04:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2014-07-14:/razbiraem-wd-cloud.html</id><summary type="html">&lt;p&gt;У нас две задачи - разобрать и не сломать пока разбираем. Буду делать это с уже пустой коробкой, т.к. не зачем лишний раз кантовать диск).&lt;!--more--&gt;&lt;/p&gt;
+&lt;p&gt;Делать это будем положив девайс на бок.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Разбираем WD My Cloud. Step 1" src="images/wpid-20140713_194811.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;А в качестве инструмента подойдёт пластиковая карта. Таким образом в случае резкого движения мы не поцарапаем корпус или …&lt;/p&gt;</summary><content type="html">&lt;p&gt;У нас две задачи - разобрать и не сломать пока разбираем. Буду делать это с уже пустой коробкой, т.к. не зачем лишний раз кантовать диск).&lt;!--more--&gt;&lt;/p&gt;
+&lt;p&gt;Делать это будем положив девайс на бок.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Разбираем WD My Cloud. Step 1" src="images/wpid-20140713_194811.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;А в качестве инструмента подойдёт пластиковая карта. Таким образом в случае резкого движения мы не поцарапаем корпус или не сломаем лапки-крепления. В общем пластиковая карта идеально подходит для нашего случая.&lt;/p&gt;
+&lt;p&gt;Подсовываем карту...&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Разбираем WD My Cloud. Step 2" src="images/wpid-20140713_194917-e1412464385967.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;И методом рычага раздвигаем.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Разбираем WD My Cloud. Step 3" src="images/wpid-20140713_195111-e1412464378927.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;Далее проделываем это по всей плоскости.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Разбираем WD My Cloud. Step 4" src="images/wpid-20140713_1951341-e1412464368424.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;Затем переворачиваем на другую сторону и повторяем действия.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Разбираем WD My Cloud. Step 5" src="images/wpid-20140713_1952181-e1412464350572.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;Почти готово&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Разбираем WD My Cloud. Step 6" src="images/wpid-20140713_1952591-e1412464339103.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;Теперь можно выдвинуть на себя.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Разбираем WD My Cloud. Step 7" src="images/wpid-20140713_1953231-e1412464307772.jpg"&gt;&lt;/p&gt;
+&lt;p&gt;Готово. Вынуть сам диск задача нетривиальная.&lt;/p&gt;</content><category term="Компы и сети"></category><category term="Hardware"></category><category term="WD My Cloud"></category><category term="Разборка"></category></entry><entry><title>Roland MV-8800: выходная маршрутизация</title><link href="https://warmwave.ru/roland-mv-8800-vykhodnaya-marshrutizaciya.html" rel="alternate"></link><published>2013-12-05T23:40:00+04:00</published><updated>2013-12-05T23:40:00+04:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2013-12-05:/roland-mv-8800-vykhodnaya-marshrutizaciya.html</id><content type="html">&lt;p&gt;О том как получить 4-ре моно выхода: два из аналога и два из цифрового(spdif или optical).  &lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;Кому-то может быть мало одного стерео выхода). Но не беда, их количество можно удвоить штатными способоми. Это первое видео, так что просьба строго не судить). Комментарии и вопросы оставляем ниже.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.youtube.com/watch?v=kLYReYpAVRo"&gt;&lt;img alt="Audi R8" src="http://img.youtube.com/vi/kLYReYpAVRo/0.jpg"&gt;&lt;/a&gt;&lt;/p&gt;</content><category term="Шумы и звуки"></category><category term="Roland MV"></category><category term="видео"></category></entry><entry><title>Настройка Python и Django в Mac</title><link href="https://warmwave.ru/nastrojjka-python-django-v-mac.html" rel="alternate"></link><published>2013-07-20T23:44:00+04:00</published><updated>2013-07-20T23:44:00+04:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2013-07-20:/nastrojjka-python-django-v-mac.html</id><summary type="html">&lt;p&gt;Настраиваем связку Python/Django. Нам помогает Homebrew, virtualenv. А ещё virtualenvwrapper - очень прикольное разшерение для виртуального окружения.&lt;!--more--&gt;&lt;/p&gt;
+&lt;h2&gt;Подготовка&lt;/h2&gt;
+&lt;p&gt;С выходом Lion больше нет папки “Sites” по умолчанию, раньше она располагалась в папке пользователя. Но это легко исправить...&lt;br&gt;
+Открываем терминал:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mkdir ~/Sites
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Следущая "фишка", пришедшая в месте с Lion - это теперь …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Настраиваем связку Python/Django. Нам помогает Homebrew, virtualenv. А ещё virtualenvwrapper - очень прикольное разшерение для виртуального окружения.&lt;!--more--&gt;&lt;/p&gt;
+&lt;h2&gt;Подготовка&lt;/h2&gt;
+&lt;p&gt;С выходом Lion больше нет папки “Sites” по умолчанию, раньше она располагалась в папке пользователя. Но это легко исправить...&lt;br&gt;
+Открываем терминал:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mkdir ~/Sites
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Следущая "фишка", пришедшая в месте с Lion - это теперь скрытая папка \~/Library. Сделать её видимой мы можем с помощью следующей команды (при обновлении системы она вновь станет невидимой, поэтому команду нужно будет выполнить вновь):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;chflags nohidden ~/Library/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;По умолчанию Lion - это полностью 64-х битная система, весь гемор будет в том, что все компиляции должны быть 64 битными. Откроем \~/.bash_profile …&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;vim ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;… и добавим:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Указываем архитектуру ядра&lt;/span&gt;
+&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ARCHFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-arch x86_64&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;На этом наша подготовка закончена, пора делать дело.&lt;/p&gt;
+&lt;h2&gt;Дальше&lt;/h2&gt;
+&lt;p&gt;Раньше установка подобных программ предпологала наличие Xcodе. К счастью, теперь нет нужды это делать. Сейчас нужно, имея Apple ID, пойти в &lt;a href="https://developer.apple.com/downloads"&gt;Developer Downloads&lt;/a&gt; и скачать &lt;em&gt;Command Line Tools for Xcode&lt;/em&gt;, а после чего установить.&lt;/p&gt;
+&lt;p&gt;Если же Xcode уже установлен, то, зайдя в настройки Xcode -&amp;gt; Downloads, установить Command Line Tools прямо через него.&lt;/p&gt;
+&lt;h2&gt;Установка homebrew&lt;/h2&gt;
+&lt;p&gt;Homebrew - это менеджер пакетов. Иногда тебе могут понадобится Linux-приложения - они без GUI, соответственно, работают через коммандную строку. Понятно, что в Mac App Store их нет и никогда не будет. Здесь приходит на помощь &lt;a href="https://github.com/mxcl/homebrew/"&gt;Homebrew&lt;/a&gt;. Есть и другие решения, например, &lt;a href="http://www.macports.org/"&gt;MacPorts&lt;/a&gt;, но это полный бред по сравнению с "хомяком". Занимаясь разработкой на OS X, он нужен по-любому. Так что, давайте запустим Terminal.app и установим его:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ruby -e &amp;quot;$(curl -fsSL https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Теперь Homebrew установлен. Давайте обновимся:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Если при выполнении “brew update” он выдал ошибку, удебитесь в привальности выставленных прав на /usr/local и вновь обновите хомяка:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo chown $USER /usr/local
+brew update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Можно попробовать что-нибудь установить:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install mc wget
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Только что мы установили mc - файловый менеджер и wget - файлокачалку.&lt;/p&gt;
+&lt;h2&gt;Python site-packages&lt;/h2&gt;
+&lt;p&gt;Допустим, вы хотите установить пакет Python, такой как &lt;a href="http://www.virtualenv.org/"&gt;virtualenv&lt;/a&gt; - инструмент изоляции среды. Почти в каждой статье про Python для Mac OS X рассказывается о способе через &lt;code&gt;sudo easy_install virtualenv&lt;/code&gt;. Вот почему я не делаю это так:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Для этого нужны root права&lt;/li&gt;
+&lt;li&gt;Всё барахло устанавливается в глобальную(системную) папку /Library&lt;/li&gt;
+&lt;li&gt;[“]{.dquo}Distribute” имеет меньше ошибок, чем easy_install по умолчанию&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Если я установлю какой-нибудь пакет(пакет Python) и в последствии решу удалить его, я хотел бы иметь возможность использовать Finder, и просто перетащить его в Корзину без каких-либо заморочек с правами. Плюс, держать пакеты Python, изолированными в учетной записи пользователя, просто имеет смысл для меня... Потому что не охота гадить в системе; удалил пользователя, завёл нового и всё чисто. Последнее, но не менее важное, форк питона &lt;a href="http://pypi.python.org/pypi/distribute"&gt;Distribute&lt;/a&gt; имеет меньше багов и является более стабильным.&lt;/p&gt;
+&lt;p&gt;Традиционно, я всегда использовать опцию &lt;code&gt;--user&lt;/code&gt; флаг для установки пакетов Python в \~/.local, это справедливо для Mac, Linux и других UNIX-подобных системах. Другой вариант, поменять флаг &lt;code&gt;--user&lt;/code&gt; для более определенного обозначения места назначения &lt;code&gt;--prefix=~/.local&lt;/code&gt;. Что бы вы ни выбрали, пожалуйста, имейте в виду, что данная инструкци предпологает последнее.&lt;/p&gt;
+&lt;p&gt;Пора установить Distribute:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nx"&gt;mkdir&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;p&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;python2&lt;/span&gt;&lt;span class="m m-Double"&gt;.7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="nx"&gt;site&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;packages&lt;/span&gt;
+&lt;span class="nx"&gt;wget&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;http&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//pypi.python.org/packages/source/d/distribute/distribute-0.6.28.tar.gz&lt;/span&gt;
+&lt;span class="nx"&gt;tar&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="nx"&gt;xzf&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;distribute&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="m m-Double"&gt;0.6.28&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;tar&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;gz&lt;/span&gt;
+&lt;span class="nx"&gt;cd&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;distribute&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="m m-Double"&gt;0.6.28&lt;/span&gt;
+&lt;span class="nx"&gt;python&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;setup&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;py&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="nx"&gt;prefix&lt;/span&gt;&lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;local&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Теперь, после установки Python в  \~/.local, нам нужно указать несколько путей для глобальных переменных. Это делается в .bash_profile…&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;vim ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;…и добавим в него несколько строк:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Добавляем глобальную переменную&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/.&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=~/.&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;PATH&lt;/span&gt;
+&lt;span class="n"&gt;fi&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Добавляем переменную - то где установлен Python&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/.&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PYTHONPATH&lt;/span&gt;&lt;span class="o"&gt;=~/.&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;python2&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;7&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;site&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;packages&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;PYTHONPATH&lt;/span&gt;
+&lt;span class="n"&gt;fi&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Подключаем .bashrc (ниже будет понятно)&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/.&lt;/span&gt;&lt;span class="n"&gt;bashrc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;then&lt;/span&gt;
+&lt;span class="n"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/.&lt;/span&gt;&lt;span class="n"&gt;bashrc&lt;/span&gt;
+&lt;span class="n"&gt;fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Создаём .bashrc в  \~/ и перезагружаем окружение:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;touch ~/.bashrc
+source ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;"Нормальный" easy_install располагается в /usr/bin, нам же нужно переключится на локальный, тот что установлен в \~/.local&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;which easy_install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Тем самым мы активировали его из \~/.local/bin/.&lt;/p&gt;
+&lt;h2&gt;virtualenv и virtualenvwrapper&lt;/h2&gt;
+&lt;p&gt;Пакеты Python установлены в \~/.local are indeed local to the user, но они также являются глобальными в том смысле, что они доступны во всех проектах данного пользователя. Это может быть удобнее в разы, но это также создает и проблемы. Для примера, иногда одним проектам нужна последняя версия Django, в то время как другому проекту нужна, например, версия 1.3 для совместимости с используемыми в проекте разшерениями. Чтобы решить эту проблему, и был разработан. В моей системе только virtualenv, virtualenvwrapper, и Mercurial доступны для Python, а всё остальное ограничивается виртуальным окружением (т.е. virtualenv).&lt;/p&gt;
+&lt;p&gt;Давайте установим virtualenv и virtualenvwrapper:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;easy_install --prefix=~/.local virtualenv virtualenvwrapper
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;теперь откроем/создадим фаил \~/.bashrc …&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;vim ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;… и добавим несколько строк:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Включаем авто-завершение&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bash_completion&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;then&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bash_completion&lt;/span&gt;
+&lt;span class="n"&gt;fi&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Определяем местоположение virtualenvwrapper&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/.&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;virtualenvwrapper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;VENVWRAP&lt;/span&gt;&lt;span class="o"&gt;=~/.&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;virtualenvwrapper&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt;
+&lt;span class="n"&gt;fi&lt;/span&gt;
+
+&lt;span class="k"&gt;if&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;!&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;VENVWRAP&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;];&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;then&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# virtualenvwrapper -------------------------------------------&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# убедимся что папка существует&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;HOME&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sites&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;||&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;mkdir&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;HOME&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sites&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;WORKON_HOME&lt;/span&gt;&lt;span class="o"&gt;=$&lt;/span&gt;&lt;span class="n"&gt;HOME&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sites&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;env&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;$&lt;/span&gt;&lt;span class="n"&gt;VENVWRAP&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# virtualenv --------------------------------------------------&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;VIRTUALENV_USE_DISTRIBUTE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;true&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;# pip ---------------------------------------------------------&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PIP_VIRTUALENV_BASE&lt;/span&gt;&lt;span class="o"&gt;=$&lt;/span&gt;&lt;span class="n"&gt;WORKON_HOME&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PIP_REQUIRE_VIRTUALENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;true&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PIP_RESPECT_VIRTUALENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;true&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PIP_DOWNLOAD_CACHE&lt;/span&gt;&lt;span class="o"&gt;=$&lt;/span&gt;&lt;span class="n"&gt;HOME&lt;/span&gt;&lt;span class="o"&gt;/.&lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;
+&lt;span class="n"&gt;fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Давайте перезагрузим bash окружение, опять:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;source ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Так же добавим две настройки для virtualenv в postactivate скрипт, который определяет, что происходит после активации виртуальной среды:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;vim ~/sites/env/postactivate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Добавьте следующие строки, принимая к сведению комментарии, чтобы понять, что происходит:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;proj_name=&lt;span class="cp"&gt;${&lt;/span&gt;&lt;span class="n"&gt;VIRTUAL_ENV&lt;/span&gt;&lt;span class="c1"&gt;##*/&lt;/span&gt;&lt;span class="cp"&gt;}&lt;/span&gt;
+
+#&lt;span class="w"&gt; &lt;/span&gt;Добавляем&lt;span class="w"&gt; &lt;/span&gt;для&lt;span class="w"&gt; &lt;/span&gt;активного&lt;span class="w"&gt; &lt;/span&gt;проекта&lt;span class="w"&gt; &lt;/span&gt;PYTHONPATH
+if&lt;span class="w"&gt; &lt;/span&gt;[&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;~/sites/env/&lt;span class="nv"&gt;$proj_name&lt;/span&gt;/lib/python2.7/site-packages&lt;span class="w"&gt; &lt;/span&gt;];&lt;span class="w"&gt; &lt;/span&gt;then
+add2virtualenv&lt;span class="w"&gt; &lt;/span&gt;~/sites/env/&lt;span class="nv"&gt;$proj_name&lt;/span&gt;/lib/python2.7/site-packages
+fi
+
+#&lt;span class="w"&gt; &lt;/span&gt;делаем&lt;span class="w"&gt; &lt;/span&gt;&amp;quot;cd&amp;quot;&lt;span class="w"&gt; &lt;/span&gt;в&lt;span class="w"&gt; &lt;/span&gt;виртуальное&lt;span class="w"&gt; &lt;/span&gt;окружение
+if&lt;span class="w"&gt; &lt;/span&gt;[&lt;span class="w"&gt; &lt;/span&gt;-d&lt;span class="w"&gt; &lt;/span&gt;~/sites/env/&lt;span class="nv"&gt;$proj_name&lt;/span&gt;/project&lt;span class="w"&gt; &lt;/span&gt;];&lt;span class="w"&gt; &lt;/span&gt;then
+cd&lt;span class="w"&gt; &lt;/span&gt;~/sites/env/&lt;span class="nv"&gt;$proj_name&lt;/span&gt;/project
+else
+cd&lt;span class="w"&gt; &lt;/span&gt;~/sites/env/&lt;span class="nv"&gt;$proj_name&lt;/span&gt;
+fi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Теперь virtualenv и virtualenvwrapper установлены и готовы для создания новых виртуальных сред, которые будут храниться примерно в \~/sites/env/.&lt;/p&gt;
+&lt;h2&gt;Контроль версий&lt;/h2&gt;
+&lt;p&gt;Lion из коробки уже с &lt;a href="http://git-scm.com/"&gt;git&lt;/a&gt;, это является приятным дополнением, можно использовать его. Но мы будем юзать &lt;a href="http://mercurial.selenic.com/"&gt;Mercurial&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;easy_install --prefix=~/.local Mercurial
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Как минимум, потребуется добавить несколько строк в .hgrc файл, чтобы использовать Mercurial:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;vim ~/.hgrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Измените значения на ваше имя и адрес электронной почты, соответственно:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;[ui]&lt;/span&gt;
+&lt;span class="na"&gt;username&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;YOUR NAME &amp;lt;address@example.com&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Чтобы проверить Mercurial, выполните следующую команду:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;hg debuginstall
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Если последняя строка - “No problems detected”, значит Mercurial установлен и настроен должным образом.&lt;/p&gt;
+&lt;h2&gt;Создание виртуальных окружений&lt;/h2&gt;
+&lt;p&gt;Давайте создадим виртуальное окружение “test”:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mkvirtualenv test
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Команда должна создать новую виртуальную среду и автоматически переключить наш текущий рабочей каталог на только что созданный каталог test виртуальной среды.&lt;/p&gt;
+&lt;p&gt;В будущем, когда вы захотите работать на проектом, содержащимся в виртуальной среде, используйте команду “workon”, за которой следует имя виртуальной среды. В данном случае:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;workon test
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;После активации виртуального окружения окажемся непосредственно в \~/sites/env/test. Если что, с помощью команды “cdvirtualenv” можно перенестись в каталог активной виртуальной среды.&lt;/p&gt;
+&lt;h2&gt;Первый Django-проект&lt;/h2&gt;
+&lt;p&gt;Предполагая, что наш текущий каталог \~/sites/env/test есть наша новая виртуальная среда, давайте создадим папку с названием “project”, который будет содержать все наши, может быть, "версированные" файлы:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mkdir project
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Самый простой способ установить Django…&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip install Django
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;… но мы не ищем лёгких путей. Cоздадим для нашего проекта зависимости, потрадиции они находятся в requirements.txt:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;vim project/requirements.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Сейчас нам нужна только одна зависимость - Django. Поэтому содержание нашего файл должно быть просто: Our requirements at this point are very simple — just Django. So the contents of our  file should just be:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Django
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Прелесть такого способа в том, что когда нужно установить 10/20 зависимостей, мы просто замучаемся вбивать: pip install...pip install...pip install... просто пишем их в requirements.txt и устанавливаем всё разом:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip install -r project/requirements.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Мы будем использовать Django-команду “startproject” для создания нового сайта в нашей папке “project”:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;django-admin.py startproject mysite project/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Теперь мы можем запустить наш Django-проект…&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cd project
+python manage.py runserver
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;… и увидеть результат &lt;a href="http://localhost:8000/"&gt;в браузере&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Первый commit&lt;/h2&gt;
+&lt;p&gt;Теперь, когда имеем Django-проект, самое время чтобы сделать свой первый коммит, используя предпочтительный для вас вариант системы контроль версий. В Mercurial это делается так:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;hg init project
+cd project
+hg add
+hg commit -m &amp;quot;Initial commit&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Фуух!&lt;/h2&gt;
+&lt;p&gt;Поздравляю! Создание нового рабочего пространства занимает немного времени, но того стоит. Эти инструменты мы юзаем каждый день, поэтому имеет смысл сделать их максимально эффективными.&lt;/p&gt;
+&lt;p&gt;Тем не менее то, что сделано хорошо, всегда можно сделать лучше. Оставляйте предложения!&lt;/p&gt;</content><category term="Компы и сети"></category><category term="django"></category><category term="homebrew"></category><category term="Mac OS X"></category><category term="mercurial"></category><category term="python"></category><category term="virtualenv"></category><category term="virtualenvwrapper"></category><category term="перевод"></category></entry><entry><title>Virtualenv на Mac OS X</title><link href="https://warmwave.ru/ustanovka-python-virtualenv-na-mac.html" rel="alternate"></link><published>2013-07-20T23:43:00+04:00</published><updated>2013-07-20T23:43:00+04:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2013-07-20:/ustanovka-python-virtualenv-na-mac.html</id><summary type="html">&lt;p&gt;Virtualenv позволяет создать изолированное окружение для вашего проекта. Своеобразная песочница в которой можно как угодно гадить и не опосаться за установленные модули и/или проекты  &lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;Существует множество способов установки Python и Virtualenv на Mac OS X 10.8 Mountain Lion. Здесь, в этой статье, описан один из них.&lt;/p&gt;
+&lt;h2&gt;Первые шаги …&lt;/h2&gt;</summary><content type="html">&lt;p&gt;Virtualenv позволяет создать изолированное окружение для вашего проекта. Своеобразная песочница в которой можно как угодно гадить и не опосаться за установленные модули и/или проекты  &lt;/p&gt;
+&lt;!--more--&gt;
+
+&lt;p&gt;Существует множество способов установки Python и Virtualenv на Mac OS X 10.8 Mountain Lion. Здесь, в этой статье, описан один из них.&lt;/p&gt;
+&lt;h2&gt;Первые шаги&lt;/h2&gt;
+&lt;p&gt;Предполагается, что вы уже установили Xcode и Homebrew. За подробностями можно обратиться к статье "&lt;a href="/kompy-i-seti/nastrojjka-mac-os-x.html" title="Настройка Mac OS X"&gt;Настройка Mac OS X&lt;/a&gt;''.&lt;/p&gt;
+&lt;h2&gt;Python&lt;/h2&gt;
+&lt;p&gt;Мы будем устанавливать Python с помощью Homebrew. Зачем, спросите вы, ведь с Mac OS X он идёт по умолчанию. Вот несколько причин:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Homebrew всегда имеет самые последние версии (в настоящее время 2.7.5). Версия в комплекте с OS X - 2.7.2.&lt;/li&gt;
+&lt;li&gt;Apple зделала значительные изменения в своем комплекте Python, и потенциально содержит ошибки.&lt;/li&gt;
+&lt;li&gt;"Домороценный" Python включает в себя последние версии инструментов управления пакетами: &lt;a href="http://www.pip-installer.org/"&gt;pip&lt;/a&gt; и &lt;a href="http://pythonhosted.org/setuptools/"&gt;Setuptools&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;В Lion версия OpenSSL (0.9.8r) от февраля 2011 года, так что мы скажим хомяку загрузить последнюю версию OpenSSL и компилировать Python с ним.&lt;/p&gt;
+&lt;p&gt;Используйте следующую команду для установки Python через Homebrew:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install python --with-brewed-openssl
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Вы уже изменяли &lt;code&gt;PATH&lt;/code&gt;, как сказано в "&lt;a href="/kompy-i-seti/nastrojjka-mac-os-x.html" title="Настройка Mac OS X"&gt;Настройка Mac OS X Mountain Lion 10.8&lt;/a&gt;'', верно? Если нет, пожалуйста, сделайте это сейчас.&lt;/p&gt;
+&lt;p&gt;Опционально можно установить Python 3.x рядом с Python 2.x:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;brew install python3 --with-brewed-openssl
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Pip&lt;/h2&gt;
+&lt;p&gt;Допустим, вы хотите установить пакет Python, такой как &lt;a href="http://www.virtualenv.org/"&gt;virtualenv&lt;/a&gt; - инструмент изоляции среды. Почти в каждой статье про Python для Mac OS X рассказывается о способе через &lt;code&gt;sudo easy_install virtualenv&lt;/code&gt;. Вот почему я не делаю это так:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Для этого нужны root права&lt;/li&gt;
+&lt;li&gt;Всё барахло устанавливается в глобальную(системную) папку /Library&lt;/li&gt;
+&lt;li&gt;&lt;a href="http://www.pip-installer.org/"&gt;pip&lt;/a&gt; развивается болле активно нежели Setuptools’овский &lt;code&gt;easy_install&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Используя инструменты предоставленные Homebrew мы получаем более стабильное Python-окружение&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Как вы наверное уже догадались, мы будем использовать инструменты, полученные при установки пакетов Python. Если установка производится с помощью "доморощенного" pip, пакеты будут установлены в /usr/local/lib/python2.7/site-packages, а бинарники будут падать в /usr/local/bin.&lt;/p&gt;
+&lt;h2&gt;Система контроля версий&lt;/h2&gt;
+&lt;p&gt;Я уже давненько юзаю &lt;a href="http://mercurial.selenic.com/"&gt;Mercurial&lt;/a&gt;, а репозитории заливаю на &lt;a href="https://bitbucket.org/j/dotfiles"&gt;Bitbucket&lt;/a&gt; и &lt;a href="https://github.com/justinmayer/dotfiles"&gt;GitHub&lt;/a&gt;, давайте установим &lt;a href="http://mercurial.selenic.com/"&gt;Mercurial&lt;/a&gt; и &lt;a href="http://hg-git.github.com/"&gt;hg-git&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip install Mercurial hg-git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Как минимум, потребуется добавить несколько строк в .hgrc файл, чтобы использовать Mercurial:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;vim ~/.hgrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Измените значения на ваше имя и адрес электронной почты, соответственно:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;[ui]&lt;/span&gt;
+&lt;span class="na"&gt;username&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;YOUR NAME &amp;lt;address@example.com&amp;gt;&lt;/span&gt;&lt;span class="c1"&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Чтобы проверить Mercurial, выполните следующую команду:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;hg debuginstall
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Если последняя строка - “No problems detected”, значит Mercurial установлен и настроен должным образом..&lt;/p&gt;
+&lt;h2&gt;Virtualenv&lt;/h2&gt;
+&lt;p&gt;Пакеты Python установлены в \~/.local are indeed local to the user, но они также являются глобальными в том смысле, что они доступны во всех проектах данного пользователя. Это может быть удобнее в разы, но это также создает и проблемы. Для примера, иногда одним проектам нужна последняя версия Django, в то время как другому проекту нужна, например, версия 1.3 для совместимости с используемыми в проекте разшерениями. Чтобы решить эту проблему, и был разработан. В моей системе только &lt;a href="http://www.virtualenv.org/"&gt;virtualenv&lt;/a&gt;, virtualenvwrapper, и &lt;a href="http://mercurial.selenic.com/"&gt;Mercurial&lt;/a&gt; доступны для Python, а всё остальное ограничивается виртуальным окружением (т.е. virtualenv).&lt;/p&gt;
+&lt;p&gt;Теперь все обьяснения позади, теперьустановим &lt;a href="http://www.virtualenv.org/"&gt;virtualenv&lt;/a&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip install virtualenv
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Создим папки для хранения наших проектов и виртуальных сред, соответственно:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;mkdir -p ~/Projects ~/Virtualenvs
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;откроем \~/.bashrc file…&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;vim ~/.bashrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;… и добавим несколько строк:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# pip должен выполняться только если активирован virtualenv&lt;/span&gt;
+&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PIP_REQUIRE_VIRTUALENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="bp"&gt;true&lt;/span&gt;
+&lt;span class="c1"&gt;# кешируем пакеты чтобы избежать повторной загрузки&lt;/span&gt;
+&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PIP_DOWNLOAD_CACHE&lt;/span&gt;&lt;span class="o"&gt;=$&lt;/span&gt;&lt;span class="n"&gt;HOME&lt;/span&gt;&lt;span class="o"&gt;/.&lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;cache&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Перезагружаем bash:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;source ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Сейчас virtualenv установлен и готов к работе, которые будут храниться в &lt;code&gt;~/Virtualenvs&lt;/code&gt;. Новое окружение создаётся следующим образом:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cd ~/Virtualenvs
+virtualenv test
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Если у нас стоят оба Python, 2.x и 3.x, можно создать виртуальное окружение с Python 3.x:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;virtualenv -p python3 test-py3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;… что облегчит переключение между Python 2.x и 3.x&lt;/p&gt;
+&lt;h2&gt;Ограничение pip витруальным окружением&lt;/h2&gt;
+&lt;p&gt;Что произойдёт, если мы &lt;em&gt;думаем&lt;/em&gt;, что работаем в виртуальном окружении, но на самом деле она не активно, а мы устанавливаем что-нибудь с помощью Pip? Тогда в этом случае пакет установится в глобальный site-packages(/usr/local/lib/python2.7/site-packages), сведя на "нет" всю нашу изоляцию.&lt;/p&gt;
+&lt;p&gt;К счастью pip имеет один малодокументированный параметр который рещит нашу проблему. На самом деле мы им уже воспользовались). Помните, выше мы писали - &lt;code&gt;export PIP_REQUIRE_VIRTUALENV=true&lt;/code&gt;? Например, давайте посмотрим, что происходит, когда мы пытаемся установить пакет в отсутствии активированной виртуальной среды:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;pip&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;markdown
+Could&lt;span class="w"&gt; &lt;/span&gt;not&lt;span class="w"&gt; &lt;/span&gt;find&lt;span class="w"&gt; &lt;/span&gt;an&lt;span class="w"&gt; &lt;/span&gt;activated&lt;span class="w"&gt; &lt;/span&gt;virtualenv&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;required&lt;span class="o"&gt;)&lt;/span&gt;.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Прекрасно! Но, возникает вопрос, как установить или обновить глобальный пакет? Просто добавляя следующие строки в .bashrc:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;gpip&lt;/span&gt;&lt;span class="p"&gt;(){&lt;/span&gt;
+&lt;span class="w"&gt;   &lt;/span&gt;&lt;span class="n"&gt;PIP_REQUIRE_VIRTUALENV&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;$@&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Функция выше позволяет нам сделать это через:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;gpip&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;upgrade&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;no&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;use&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;wheel&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;
+&lt;span class="n"&gt;pip&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;setuptools&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;virtualenv&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Создание нового окружения&lt;/h2&gt;
+&lt;p&gt;Давайте создадим виртуальную среду для &lt;a href="http://getpelican.com/"&gt;Pelican&lt;/a&gt;, генератор статического сайта на основе Python, и установим его:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cd ~/Virtualenvs
+virtualenv pelican
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Активируем среду:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;cd pelican
+. bin/activate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Для установки &lt;a href="http://getpelican.com/"&gt;Pelican&lt;/a&gt; в окружение успользуем pip:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pip install pelican markdown
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Для получения дополнительной информации о виртуальных средах читаем &lt;a href="http://www.virtualenv.org/"&gt;virtualenv docs&lt;/a&gt;.&lt;/p&gt;</content><category term="Компы и сети"></category><category term="Mac OS X"></category><category term="pip"></category><category term="python"></category><category term="virtualenv"></category><category term="перевод"></category></entry><entry><title>Настройка Mac OS X (Xcode, Homebrew etc.)</title><link href="https://warmwave.ru/nastrojjka-mac-os-x.html" rel="alternate"></link><published>2013-07-20T23:42:00+04:00</published><updated>2013-07-20T23:42:00+04:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,2013-07-20:/nastrojjka-mac-os-x.html</id><summary type="html">&lt;p&gt;Хочу начать с инструментов командной строки на Mac OS X. В этом учебнике рассматривается установка Xcode, Homebrew (без него никуда), и другие полезности.&lt;/p&gt;
+&lt;h2&gt;Первые шаги&lt;/h2&gt;
+&lt;p&gt;«Фишка», пришедшая в месте с Lion — это теперь скрытая папка \~/Library. Сделать её видимой мы можем с помощью следующей команды (при обновлении системы она вновь …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Хочу начать с инструментов командной строки на Mac OS X. В этом учебнике рассматривается установка Xcode, Homebrew (без него никуда), и другие полезности.&lt;/p&gt;
+&lt;h2&gt;Первые шаги&lt;/h2&gt;
+&lt;p&gt;«Фишка», пришедшая в месте с Lion — это теперь скрытая папка \~/Library. Сделать её видимой мы можем с помощью следующей команды (при обновлении системы она вновь станет невидимой, поэтому команду нужно будет выполнить вновь):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;chflags nohidden ~/Library/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;По умолчанию Lion — это полностью 64-х битная система, весь гемор в том, что всё должно компилироваться в 64-х битном режиме. Кроме того, поскольку в Lion дэфолтный &lt;code&gt;PATH&lt;/code&gt; — &lt;code&gt;/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin&lt;/code&gt;, нам нужно изменить его так что-бы бинарники Homebrew имели приоритет над бинарниками [OS]{.caps} X. Что бы это сделать, откроем &lt;code&gt;~/.bash_profile&lt;/code&gt; …&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;vim ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;… и добавим:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="c1"&gt;# Указываем архитектуру ядра&lt;/span&gt;
+&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;ARCHFLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;-arch x86_64&amp;quot;&lt;/span&gt;
+&lt;span class="c1"&gt;# Разбираемся с бинарниками&lt;/span&gt;
+&lt;span class="k"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;
+&lt;span class="c1"&gt;# Загружает .bashrc если он существует&lt;/span&gt;
+&lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/.&lt;/span&gt;&lt;span class="n"&gt;bashrc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;source&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;~/.&lt;/span&gt;&lt;span class="n"&gt;bashrc&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Что бы изменения вступили в силу… :&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;source ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Компилятор&lt;/h2&gt;
+&lt;p&gt;Раньше установка подобных программ предпологала наличие Xcodе. К счастью, теперь нет нужды это делать. Сейчас нужно, имея Apple ID, пойти в &lt;a href="https://developer.apple.com/downloads"&gt;Developer Downloads&lt;/a&gt; и скачать &lt;em&gt;Command Line Tools for Xcode&lt;/em&gt;, а после чего установить.&lt;/p&gt;
+&lt;p&gt;Если же Xcode уже установлен, то, зайдя в настройки Xcode -&amp;gt; Downloads, установить Command Line Tools прямо через него.&lt;/p&gt;
+&lt;h2&gt;XQuartz&lt;/h2&gt;
+&lt;p&gt;X11 является обязательной зависимостью для некоторых инструментов. Но мы будем использовать &lt;a href="http://xquartz.macosforge.org/"&gt;XQuartz&lt;/a&gt;, это форк X11.&lt;/p&gt;
+&lt;h2&gt;Homebrew&lt;/h2&gt;
+&lt;p&gt;Homebrew — это менеджер пакетов. Иногда тебе могут понадобится Linux-приложения — они без GUI, соответственно, работают через коммандную строку. Понятно, что в Mac App Store их нет и никогда не будет. Здесь приходит на помощь &lt;a href="https://github.com/mxcl/homebrew/"&gt;Homebrew&lt;/a&gt;. Есть и другие решения, например, &lt;a href="http://www.macports.org/"&gt;MacPorts&lt;/a&gt;, но это полный бред по сравнению с «хомяком». Занимаясь разработкой на OS X, он нужен по-любому. Так что, давайте запустим Terminal.app и установим его:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Устанавливаем Homebrew, введя свой административный пароль, когда потребуется. Затем выполните следующую команду, чтобы убедиться, что не существует каких-либо потенциальных проблем с вашим окружением. Некоторые предупреждения (если таковые имеются) являются информационными…&lt;/p&gt;
+&lt;p&gt;::: {.highlight}
+    brew doctor
+:::&lt;/p&gt;
+&lt;p&gt;Следующая команда обновит до последней версии наш homebrew и его формулы (formulae):&lt;/p&gt;
+&lt;p&gt;::: {.highlight}
+    brew update
+:::&lt;/p&gt;
+&lt;p&gt;Если при выполнении “brew update” он выдал ошибку, удебитесь в привальности выставленных прав на /usr/local и вновь обновите хомяка:&lt;/p&gt;
+&lt;p&gt;::: {.highlight}
+    sudo chown $USER /usr/local
+    brew update
+:::&lt;/p&gt;
+&lt;p&gt;Давайте установим несколько программ:&lt;/p&gt;
+&lt;p&gt;::: {.highlight}
+    brew install bash-completion ssh-copy-id wget
+:::&lt;/p&gt;
+&lt;p&gt;Можно запустить &lt;code&gt;brew info ssh-copy-id&lt;/code&gt;, например, что бы получить информацию по пакету.&lt;/p&gt;
+&lt;p&gt;Что бы включить авто-завершение добавим несколько строк в .bash_profile:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gh"&gt;#&lt;/span&gt; Включаем автозавершение
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Только основы&lt;/h2&gt;
+&lt;p&gt;Очевидно, что все это только основы. Если у вас есть заинтересованность в Python, посмотрите на — &lt;a href="/kompy-i-seti/ustanovka-python-virtualenv-na-mac.html" title="Установка Python и Virtualenv на Mac"&gt;Установка Python и Virtualenv на Mac&lt;/a&gt;.&lt;/p&gt;</content><category term="Компы и сети"></category><category term="homebrew"></category><category term="Mac OS X"></category><category term="перевод"></category></entry><entry><title>Сказать "Спасибо!"</title><link href="https://warmwave.ru/donate.html" rel="alternate"></link><published>1986-09-27T16:04:00+04:00</published><updated>1986-09-27T16:04:00+04:00</updated><author><name>azq</name></author><id>tag:warmwave.ru,1986-09-27:/donate.html</id><content type="html">&lt;p&gt;
+&lt;center&gt;
+&lt;/p&gt;
+
+&lt;iframe width="450" height="216" src="https://money.yandex.ru/quickpay/shop-widget?writer=seller&amp;amp;targets=%D0%A1%D0%BA%D0%B0%D0%B7%D0%B0%D1%82%D1%8C%20%22%D0%A1%D0%BF%D0%B0%D1%81%D0%B8%D0%B1%D0%BE!%22&amp;amp;targets-hint=&amp;amp;default-sum=500&amp;amp;button-text=13&amp;amp;payment-type-choice=on&amp;amp;mobile-payment-type-choice=on&amp;amp;hint=&amp;amp;successURL=http%3A%2F%2Fwarmwave.ru&amp;amp;quickpay=shop&amp;amp;account=41001136439421" frameborder="0" allowtransparency="true" scrolling="no"&gt;&lt;/iframe&gt;
+
+&lt;iframe width="468" height="150" style="border: none;" src="https://funding.webmoney.ru/widgets/horizontal/9e503fb4-d548-4c26-bd22-6e7eaa721a8c?bt=0&amp;amp;hs=1&amp;amp;sum=500" scrolling="no"&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;/center&gt;
+&lt;/p&gt;&lt;/p&gt;</content><category term="misc"></category></entry></feed>
