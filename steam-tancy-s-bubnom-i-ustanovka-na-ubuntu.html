@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Steam. Танцы с бубном и установка на Ubuntu. — Warmwave Blog</title>
+    <meta name="description"
+          content="Title: Steam. Танцы с бубном и установка на Ubuntu.; Date: 2016-10-20; Author: azq">
+    <meta name="author" content="azq">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="https://warmwave.ru/theme/html5.js"></script>
+    <![endif]-->
+    <link href="https://warmwave.ru/theme/css/ipython.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+    <link href="https://warmwave.ru/theme/css/local.css" rel="stylesheet">
+    <link href="https://warmwave.ru/theme/css/pygments.css" rel="stylesheet">
+    <link href="https://warmwave.ru/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="page-header text-center">
+        <a href="/" title="Warmwave Blog" rel="home">
+            <img src="https://warmwave.ru/images/favicon.png" alt="Warmwave Blog">
+        </a>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/category/kompy-i-seti">Компы и сети</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/shumy-i-zvuki">Шумы и звуки</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/tela-i-dushi">Тела и души</a></span>
+        </div>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/archives.html">Весь архив</a></span>
+        </div>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/donate.html">СКАЗАТЬ "СПАСИБО!"</a></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="article-header">
+		<h1 itemprop="name headline" class="article-title">Steam. Танцы с бубном и установка на Ubuntu.</h1>
+		<div>
+			<span itemprop="articleSection" class="pull-left">
+				<i class="fa fa-list"></i>
+				<a href="https://warmwave.ru/category/kompy-i-seti" rel="category">Компы и сети</a>
+			</span>
+
+			<span itemprop="author" itemscope itemtype="http://schema.org/Person" class="pull-left">
+				<div itemprop="name"><i class="fa fa-user"></i> azq</div>
+			</span>
+
+			<i class="fa fa-clock-o"></i>
+			<time datetime="2016-10-20T17:56:00+03:00" itemprop="datePublished">Thu 20 October 2016</time>
+		</div>
+ 
+		<div>
+			<i class="fa fa-tags"></i>
+			<span itemprop="keywords">
+				<a href="https://warmwave.ru/tag/debian" rel="tag">#Debian</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="https://warmwave.ru/tag/steam" rel="tag">#Steam</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="https://warmwave.ru/tag/steamos" rel="tag">#SteamOS</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="https://warmwave.ru/tag/ubuntu" rel="tag">#Ubuntu</a>
+			</span>
+		</div>
+	</div>
+	<div itemprop="articleBody" class="article-body"><p>Всё началось с того, что мой друг, играющий в компьютерные игры, замучился с тормозами системы, вирусами и непонятно откуда взявшимися приложениями от mail.ru. Дружище как раз играл в Steam-игры. А к OC Windows у меня давно сложившееся негативное отношение...<!--more--></p>
+<p><strong>Итак, задача: установить Steam на Linux.</strong></p>
+<h2>Заход первый (совершенно неправильный):</h2>
+<p>Первым делом мы начали гуглить и выяснили, что SteamOS основана на Debian. Кроме того узналось, что есть установщик для винды, который не работал. Я даже не удивился)</p>
+<p>Так как на компе было 4ГБ оперативной памяти, решили не усложнять себе жизнь и поставить Debian8 32bit.</p>
+<p>Далее поставили Steam, который просто не запускался(</p>
+<h2>Заход второй (неправильный):</h2>
+<p>Понятное дело поставили Debian8 64bit и понеслось:</p>
+<ul>
+<li>Добавили "non-free" репозиторий в <code>/etc/apt/sources.list</code></tt></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">deb</span><span class="w"> </span><span class="s">http://http.debian.net/debian/</span><span class="w"> </span><span class="kp">jessie</span><span class="w"> </span><span class="kp">main</span><span class="w"> </span><span class="kp">contrib</span><span class="w"> </span><span class="kp">non-free</span>
+</code></pre></div>
+
+<ul>
+<li>Включили <a href="https://wiki.debian.org/ru/Multiarch/HOWTO">Multi-Arch</a>, обновили список пакетов и установили Steam:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>dpkg --add-architecture i386
+aptitude update
+aptitude install steam
+</code></pre></div>
+
+<p>"О, круто!" - подумалось нам, - "Steam запускается, игрушки качаются". <strong>НО</strong> тяжёлые игры не запускались.</p>
+<p><strong>Вывод: нужны драйвера на видео-карту.</strong></p>
+<ul>
+<li>Ок, устанавливаем видео-дрова.</li>
+</ul>
+<div class="highlight"><pre><span></span><code>aptitude install libgl1-nvidia-glx:i386
+</code></pre></div>
+
+<p>И всё!!! Система начала сносить добрую часть x64-приложений, а апогеем стала не рабочая видео-система, ну и, конечно, GNOME не запускался...</p>
+<p><strong>Вывод:</strong> <strong>битность системы тому виной</strong>, в частности:</p>
+<div class="highlight"><pre><span></span><code>dpkg --add-architecture i386
+</code></pre></div>
+
+<h2>Третий заход (почти правильный):</h2>
+<p>После 15-ой попытки решить проблему с помощью перебора всех возможных вариантов Debain 7/8 - i386/x64 и скачавания дров с оф.сайтов, родилась мысль поставить Ubuntu. Взяли для верности Ubuntu 16.04 i386.</p>
+<p>Поставили, сразу для верности поставили драйвера</p>
+<div class="highlight"><pre><span></span><code>sudo apt-get update &amp;&amp; sudo apt-get install nvidia-304 nvidia-settings
+sudo nvidia-xconfig
+</code></pre></div>
+
+<p>Всё ок.</p>
+<p>Поставили Steam, скачав официальный deb-пакет у сайта, но почти та же история - тяжёлые игрушки запускались с "битыми" текстурами. Плюс система висла на каждом шагу.</p>
+<p>Глянув, наконец, системные требования к играм увидели - <strong>x64</strong></p>
+<h2>Четвёртый заход (правильный):</h2>
+<p>Тут, наконец-то, всё просто.</p>
+<ul>
+<li>Устанавливаем Ubuntu 16.04 x64.</li>
+<li>Качаем Steam с оф.сайта, устанавливаем через "Установка пакетов"</li>
+<li>Устанавливаем дрова</li>
+</ul>
+<div class="highlight"><pre><span></span><code>sudo apt-get update &amp;&amp; sudo apt-get install nvidia-304 nvidia-settings
+sudo nvidia-xconfig
+</code></pre></div>
+
+<p>либо, можно скачать установщик с сайта NVIDIA.</p>
+<p><strong>В итоге, всё ок. Друг счастлив, а я спокоен, и за друга и за МелкоМягких))) </strong>Отзывы и вопросы и возможные правки оставляйте ниже.</p></div>
+	<hr>
+        <ul>
+            <li><a href="https://warmwave.ru/oshibka-gpg-sleduyushhie-podpisi-nevernye-keyexpired.html">Ошибка GPG. Следующие подписи неверные: KEYEXPIRED</a></li>
+        </ul>
+	<!--<h2>Comments</h2>-->
+	<!---->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'blog-warmwave-ru';
+    var disqus_title = 'Steam. Танцы с бубном и установка на Ubuntu.';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+        </div>
+    </div>
+    <!-- <hr> -->
+</div> <!-- /container -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center center-block aw-bottom">
+            <p>© <a href="/">Warmwave Blog</a> 2015 - 2026 </p>
+        </div>
+    </div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("div.collapseheader").click(function () {
+            $header = $(this).children("span").first();
+            $codearea = $(this).children(".input_area");
+            $codearea.slideToggle(500, function () {
+                $header.text(function () {
+                    return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym"); ym(31235428, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/31235428" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+<script>
+	var tazeros_stats_config = {
+		site_id: 1561980341,
+		permission: "yes"
+	};
+ </script>
+ <script async src="https://stats.tazeros.com/v3.js"></script><!---->
+</body>
+</html>

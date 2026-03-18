@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Парсер FL.ru, ver.0.0.1, Python — начало. — Warmwave Blog</title>
+    <meta name="description"
+          content="Title: Парсер FL.ru, ver.0.0.1, Python — начало.; Date: 2018-06-07; Author: azq">
+    <meta name="author" content="azq">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="https://warmwave.ru/theme/html5.js"></script>
+    <![endif]-->
+    <link href="https://warmwave.ru/theme/css/ipython.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/simplex/bootstrap.min.css" rel="stylesheet">
+    <link href="https://warmwave.ru/theme/css/local.css" rel="stylesheet">
+    <link href="https://warmwave.ru/theme/css/pygments.css" rel="stylesheet">
+    <link href="https://warmwave.ru/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="page-header text-center">
+        <a href="/" title="Warmwave Blog" rel="home">
+            <img src="https://warmwave.ru/images/favicon.png" alt="Warmwave Blog">
+        </a>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/category/kompy-i-seti">Компы и сети</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/shumy-i-zvuki">Шумы и звуки</a></span>
+                <span class="menu-item"><a class="menu-link" href="/category/tela-i-dushi">Тела и души</a></span>
+        </div>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/archives.html">Весь архив</a></span>
+        </div>
+        <div class="menu">
+                <span class="menu-item"><a class="menu-link" href="/donate.html">СКАЗАТЬ "СПАСИБО!"</a></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+<div class="article" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="article-header">
+		<h1 itemprop="name headline" class="article-title">Парсер FL.ru, ver.0.0.1, Python — начало.</h1>
+		<div>
+			<span itemprop="articleSection" class="pull-left">
+				<i class="fa fa-list"></i>
+				<a href="https://warmwave.ru/category/kompy-i-seti" rel="category">Компы и сети</a>
+			</span>
+
+			<span itemprop="author" itemscope itemtype="http://schema.org/Person" class="pull-left">
+				<div itemprop="name"><i class="fa fa-user"></i> azq</div>
+			</span>
+
+			<i class="fa fa-clock-o"></i>
+			<time datetime="2018-06-07T13:52:00+03:00" itemprop="datePublished">Thu 07 June 2018</time>
+		</div>
+ 
+		<div>
+			<i class="fa fa-tags"></i>
+			<span itemprop="keywords">
+				<a href="https://warmwave.ru/tag/python" rel="tag">#python</a>
+			</span>
+			<span itemprop="keywords">
+				<a href="https://warmwave.ru/tag/parser" rel="tag">#парсер</a>
+			</span>
+		</div>
+	</div>
+	<div itemprop="articleBody" class="article-body"><p>Наконец-то я "докатился" до того, что начал переписывать парсер фриланс-биржи FL.ru. До этого он был на php, что доставляло мне некоторые неудобства в использовании и поддержки. Теперь он на Python.</p>
+<!--more-->
+
+<p>Что умеет парсер:</p>
+<ul>
+<li><strong>Новые проекты отправляются на email(наверное самая важная функция</strong>)</li>
+<li><strong>Отображает ключевые слова проекта и кол-во вхождений по ним</strong> - это иногда полезно, чтобы понять какие ключи добавить, а какие убрать.</li>
+<li><strong>Разумеется, отображает заголовок и текст проекта</strong>.</li>
+<li><strong>Кроме этого отображает - Дата/время публикации проекта, ID проекта, ссылка на проект, "стаж" заказчика</strong></li>
+</ul>
+<p><img alt="Вывод парсера" src="images/parsers_2018-06-07_13-16-46.png"></p>
+<ul>
+<li>Понятное дело, что <strong>ищет проекты по ключевым словам</strong> - поиск выполняется по регулярному выражению, т.о. нет нужды писать в ключах, например, склонения и/или спряжение, также поиск стал регистроНезависимым.</li>
+</ul>
+<p><img alt="Поиск по регулярным выражениям" src="images/parsers_2018-06-07_12-34-45.png"></p>
+<ul>
+<li><strong>Поиск проектов по заданному кол-ву страниц</strong></li>
+</ul>
+<p><strong><img alt="Поиск проектов по заданному кол-ву страниц" class="aligncenter size-full wp-image-3465" height="100" src="images/parsers_2018-06-07_12-41-06.png" width="638"></strong></p>
+<ul>
+<li><strong>Проекты, в которых ВЫПОЛНЯЛСЯ поиск - игнорируются</strong> - парсер "запоминает" просмотренные проекты, снижая нагрузку на сайт и, тем самым, <strong>меньше обращая на себя внимание</strong>.</li>
+</ul>
+<p><img alt="Проекты в которых ВЫПОЛНЯЛСЯ поиск - игнорируются." class="aligncenter size-full wp-image-3467" height="160" src="images/parsers_2018-06-07_12-48-37.png" width="595"></p>
+<p>Так как парсер написан на python, его можно запустить на любой системе.</p>
+<p><strong>В планах реализовать: отправку в Telegram, сделать десктопный(Tkinter или PyQT) и web-варианты запуска. Ну и, конечно же, автоОтветы.</strong></p></div>
+	<hr>
+        <ul>
+            <li><a href="https://warmwave.ru/zashhita_lokalnoj_seti_s_pomoshyu_dhcp.html">Python-скрипт для "предупреждения вторжения" в локальную сеть по средствам DHCP-сервера.</a></li>
+            <li><a href="https://warmwave.ru/resheno-the-python-ssl-extension-was-not-compiled-missing-the-openssl-lib.html">[Решено] - Ошибки при установке версий python через pyenv.</a></li>
+            <li><a href="https://warmwave.ru/pyenv-na-os-x.html">PyEnv на OS X - Менеджер версий для python</a></li>
+            <li><a href="https://warmwave.ru/python3-and-virtualenv-in-sierra.html">Python3 и virtualenv в Sierra. Установка и настройка</a></li>
+            <li><a href="https://warmwave.ru/nastrojjka-python-django-v-mac.html">Настройка Python и Django в Mac</a></li>
+            <li><a href="https://warmwave.ru/ustanovka-python-virtualenv-na-mac.html">Virtualenv на Mac OS X</a></li>
+        </ul>
+	<!--<h2>Comments</h2>-->
+	<!---->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'blog-warmwave-ru';
+    var disqus_title = 'Парсер FL.ru, ver.0.0.1, Python — начало.';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+</div>
+        </div>
+    </div>
+    <!-- <hr> -->
+</div> <!-- /container -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center center-block aw-bottom">
+            <p>© <a href="/">Warmwave Blog</a> 2015 - 2026 </p>
+        </div>
+    </div>
+</div>
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("div.collapseheader").click(function () {
+            $header = $(this).children("span").first();
+            $codearea = $(this).children(".input_area");
+            $codearea.slideToggle(500, function () {
+                $header.text(function () {
+                    return $codearea.is(":visible") ? "Collapse Code" : "Expand Code";
+                });
+            });
+        });
+    });
+</script>
+
+<!-- Yandex.Metrika counter --> <script type="text/javascript" > (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)}; m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)}) (window, document, "script", "https://cdn.jsdelivr.net/npm/yandex-metrica-watch/tag.js", "ym"); ym(31235428, "init", { clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true, trackHash:true }); </script> <noscript><div><img src="https://mc.yandex.ru/watch/31235428" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+<script>
+	var tazeros_stats_config = {
+		site_id: 1561980341,
+		permission: "yes"
+	};
+ </script>
+ <script async src="https://stats.tazeros.com/v3.js"></script><!---->
+</body>
+</html>
